@@ -10,3 +10,6 @@ object PatinaStroke {
 
 /** Disabled controls are drawn at 50% opacity. */
 internal const val DISABLED_ALPHA = 0.5f
+
+/** Background luminance above which the scheme counts as light. */
+internal const val LIGHT_BACKGROUND = 0.5f

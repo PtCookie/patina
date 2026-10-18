@@ -133,8 +133,14 @@ Components in `patina.ui` (use these instead of the Material ones; they set the 
 - `PatinaTopAppBar`: title on the `background` with an optional back button.
 - `PatinaListItem`: headline, supporting line, leading and trailing slots.
 - `PatinaBadge` (`PatinaBadgeVariant`): a status tint with an icon; always pair status with an icon and a word.
+- `PatinaCheckbox`: `checked`, `onCheckedChange`, `label`, `isError`; the whole row is a 48dp target. Use `PatinaSwitch` for a setting that applies immediately.
+- `PatinaTabs`: `labels`, `selectedIndex`, `onSelectedChange` (two to five short labels); the panels are yours.
+- `PatinaSelect`: `options`, `selectedIndex` (null for none), `onSelectedChange`, `label`, `placeholder`, `isError`; use it for four to fifteen options.
+- `PatinaDropdownMenu` with `PatinaDropdownMenuItem` (`text`, `icon`, `destructive`), `PatinaDropdownMenuLabel` and `PatinaDropdownMenuDivider`: a solid menu, at most one destructive item, last.
+- `PatinaAlert` (`PatinaAlertVariant`: `Default`, `Destructive`, `Success`, `Warning`, `Info`): an inline message with an icon, a title, an optional description and an optional action.
+- `PatinaBottomSheet`: a panel from the bottom edge on the `popover` surface. `PatinaTooltip`: the inverted label, opened by long press. `PatinaDivider`: a hairline. `PatinaSkeleton`: a pulsing `muted` placeholder sized like the content.
 
-Icons are Phosphor, built into `PatinaIcons` (`ArrowLeft`, `Check`, `CheckCircle`, `Info`, `Warning`, `X`, `XCircle`); draw them with `Icon(PatinaIcons.Check, contentDescription = …)` and size them with `Modifier.size(PatinaSize.iconMd)`. For other icons import the official Phosphor SVGs as vector drawables; do not mix in Material Icons.
+Icons are Phosphor, built into `PatinaIcons` (`ArrowLeft`, `CaretDown`, `Check`, `CheckCircle`, `Info`, `Warning`, `X`, `XCircle`); draw them with `Icon(PatinaIcons.Check, contentDescription = …)` and size them with `Modifier.size(PatinaSize.iconMd)`. For other icons import the official Phosphor SVGs as vector drawables; do not mix in Material Icons.
 
 System bars: with `enableEdgeToEdge()` pass a `SystemBarStyle` built from the same resolved dark flag as `PatinaTheme`, or the status bar icons stay dark on a dark screen.
 

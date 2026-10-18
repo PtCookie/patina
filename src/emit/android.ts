@@ -203,7 +203,16 @@ ${entries(set.size).join("\n")}
 }
 
 /** The Phosphor icons (regular weight) that the components draw, by file name in @phosphor-icons/core. */
-export const ANDROID_ICONS = ["arrow-left", "check", "check-circle", "info", "warning", "x", "x-circle"] as const;
+export const ANDROID_ICONS = [
+  "arrow-left",
+  "caret-down",
+  "check",
+  "check-circle",
+  "info",
+  "warning",
+  "x",
+  "x-circle",
+] as const;
 
 /** `svgs` maps an icon name to its SVG source; each regular-weight icon is one `<path d="…">` in a 256 viewBox. */
 export function iconsKt(svgs: Record<string, string>, version: string): string {

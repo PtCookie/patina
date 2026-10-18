@@ -54,7 +54,7 @@ describe("Icons.kt", () => {
 });
 
 describe("the library sources", () => {
-  it("export the tier 1 components and the theme", () => {
+  it("export the tier 1 and tier 2 components and the theme", () => {
     expect(composables).toEqual(
       expect.arrayContaining([
         "PatinaButton",
@@ -67,6 +67,18 @@ describe("the library sources", () => {
         "PatinaTopAppBar",
         "PatinaListItem",
         "PatinaBadge",
+        "PatinaCheckbox",
+        "PatinaTabs",
+        "PatinaSelect",
+        "PatinaDropdownMenu",
+        "PatinaDropdownMenuItem",
+        "PatinaDropdownMenuLabel",
+        "PatinaDropdownMenuDivider",
+        "PatinaAlert",
+        "PatinaBottomSheet",
+        "PatinaTooltip",
+        "PatinaDivider",
+        "PatinaSkeleton",
       ]),
     );
     expect(library["android/PatinaTheme.kt"]).toContain("fun PatinaTheme(");
@@ -99,7 +111,17 @@ describe("the library sources", () => {
 
   it("set the shape and colours of a Material component instead of keeping its defaults", () => {
     // The Material defaults are pills and tonal fills; each wrapper has to pass its own shape.
-    const missing = ["PatinaButton", "PatinaCard", "PatinaFilterChip", "PatinaAlertDialog"].filter((name) => {
+    const missing = [
+      "PatinaButton",
+      "PatinaCard",
+      "PatinaFilterChip",
+      "PatinaAlertDialog",
+      "PatinaCheckbox",
+      "PatinaDropdownMenu",
+      "PatinaSelect",
+      "PatinaAlert",
+      "PatinaBottomSheet",
+    ].filter((name) => {
       const text = files.find(([, source]) => source.includes(`fun ${name}(`))?.[1] ?? "";
       return !/MaterialTheme\.shapes\./.test(text);
     });

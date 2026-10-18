@@ -120,6 +120,3 @@ fun PatinaFilterChip(
         interactionSource = interactionSource,
     )
 }
-
-/** Background luminance above which the scheme counts as light. */
-private const val LIGHT_BACKGROUND = 0.5f
