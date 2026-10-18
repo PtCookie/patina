@@ -1,0 +1,55 @@
+/* The documentation site wears the Patina tokens: the generated token variables (a <style> in every page's head) feed
+   Starlight's own variables, so light and dark follow the same data-theme switch as the previews. */
+
+:root {
+    --sl-font: var(--font-sans);
+    --sl-font-mono: var(--font-mono);
+
+    --sl-color-white: var(--foreground);
+    --sl-color-gray-1: var(--foreground);
+    --sl-color-gray-2: var(--muted-foreground);
+    --sl-color-gray-3: var(--muted-foreground);
+    --sl-color-gray-4: var(--muted-foreground);
+    --sl-color-gray-5: var(--secondary);
+    --sl-color-gray-6: var(--muted);
+    --sl-color-black: var(--background);
+
+    --sl-color-accent-low: var(--secondary);
+    --sl-color-accent: var(--primary);
+    --sl-color-accent-high: var(--link);
+
+    --sl-color-bg-nav: var(--background);
+    --sl-color-bg-sidebar: var(--sidebar);
+    --sl-color-bg-inline-code: var(--muted);
+    --sl-color-hairline: var(--border);
+    --sl-color-hairline-light: var(--border);
+    --sl-color-hairline-shade: var(--border);
+    --sl-content-width: 54rem;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+}
+
+/* A component preview: the card is an iframe, sized from the @dsCard comment of the preview. */
+.preview-frame {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+    background: var(--background);
+}
+
+.preview-open {
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-size: var(--sl-text-sm);
+}
+
+.readme-banner img {
+    max-width: 100%;
+    height: auto;
+}

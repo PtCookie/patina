@@ -1,0 +1,8 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { Content } from "../../../README.ko.md";
+---
+
+<StarlightPage frontmatter={{ title: "Patina", tableOfContents: false }}>
+  <Content />
+</StarlightPage>

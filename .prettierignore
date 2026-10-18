@@ -5,7 +5,9 @@ design-system/
 fonts/
 
 # Generated output
-public/
+/public/
+site/dist/
+site/.astro/
 
 .claude/
 CLAUDE.local.md

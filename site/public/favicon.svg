@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Patina">
+  <style>
+    .slab { fill: #007a55; }
+    .teal { fill: #00bba7; }
+    .ink { fill: #090b0c; }
+    @media (prefers-color-scheme: dark) { .ink { fill: #f9fbfb; } }
+  </style>
+  <rect class="slab" x="3" y="-4" width="10" height="29" rx="2"/>
+  <rect class="teal" x="15" y="12" width="6" height="13" rx="2"/>
+  <rect class="ink" x="23" y="8" width="10" height="17" rx="2"/>
+</svg>

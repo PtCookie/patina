@@ -16,7 +16,8 @@
   ],
   // Static assets only: the generated registry, token files and fonts. No Worker script.
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "not_found_handling": "404-page"
   },
   "observability": {
     "logs": {

@@ -13,6 +13,8 @@
     "scripts": {
         "prepare": "lefthook install",
         "build": "node --import tsx scripts/build.ts",
+        "build:files": "node --import tsx scripts/build.ts --no-site",
+        "site:dev": "pnpm --filter @patina/site dev",
         "smoke": "node --import tsx scripts/smoke.ts",
         "deploy": "pnpm build && wrangler deploy",
         "typecheck": "tsc --noEmit",

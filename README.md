@@ -12,7 +12,7 @@ A design system built on one emerald accent over a calm blue-gray neutral (Mist)
 - **Desktop**: a [Slint](https://slint.dev) token file, with `compact-*` density tokens.
 - **Android**: static Material 3 theme files for Jetpack Compose (no dynamic colour).
 
-> **Status: draft.** The design and tokens are finished, and `pnpm build` already generates the registry base item, the Slint token file and the Android theme files. The font files and all 25 components are built and checked by an automated install test. The deployment is not done yet, so the install commands below describe the planned interface.
+> **Status: draft.** The design and tokens are finished, and `pnpm build` already generates the registry base item, the Slint token file and the Android theme files. The font files and all 25 components are built and checked by an automated install test. The registry is deployed at `https://patina.ptcookie.net`, and so is the documentation site with a preview of every component.
 
 ## What is in this repo
 
@@ -28,6 +28,7 @@ A design system built on one emerald accent over a calm blue-gray neutral (Mist)
 | `registry/ui/` | The shadcn components (Base UI + Tailwind 4): Button, Badge, Input, Card, Label, Separator, Skeleton, Table, Checkbox, Toggle, ToggleGroup, Collapsible, Pagination, Popover, DropdownMenu, Sheet, NavigationMenu, Chart, Kbd, Switch, Alert, Tooltip, Tabs, Select, Article. Each becomes a registry item |
 | `slint/` | The Slint library: `patina.slint` (entry) and `components/` (Button, Input, Badge, Kbd, Tooltip, Separator, TreeRow, ListRow, PaneHeader, Checkbox, Switch, Tabs, Select, Menu, Table, Alert, Card, Collapsible, Toggle). The build adds `tokens.slint` and an archive |
 | `android/` | The Android library: `PatinaTheme.kt` and `components/` (PatinaButton, PatinaCard, PatinaTextField, PatinaSwitch, PatinaRadioButton, PatinaFilterChip, PatinaAlertDialog, PatinaTopAppBar, PatinaListItem, PatinaBadge, PatinaCheckbox, PatinaTabs, PatinaSelect, PatinaDropdownMenu, PatinaAlert, PatinaBottomSheet, PatinaTooltip, PatinaDivider, PatinaSkeleton). The build adds the generated theme files and an archive |
+| `site/` | The documentation site (Astro and Starlight): the README, the guides and a live preview of every component. `pnpm build` builds it into `public/`; `pnpm site:dev` serves it |
 | `docs/` | The sources of the agent documentation, `agent-guide.md` and `agents-snippet.md`, the README header image `header.svg` and the GitHub social preview `social-preview.png` |
 | `tools/` | Reference scripts: oklch to sRGB with WCAG contrast (`cc.py`), Android role mapping (`m3.py`), tokens to CSS (`tokens_css.py`) |
 
@@ -41,7 +42,7 @@ A design system built on one emerald accent over a calm blue-gray neutral (Mist)
 
 Read [`design-system/README.md`](design-system/README.md) for the full guide.
 
-## Planned usage
+## Usage
 
 Everything is served as static files from `https://patina.ptcookie.net`.
 

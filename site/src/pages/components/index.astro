@@ -1,0 +1,27 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { componentGroups } from "../../lib/components";
+
+const groups = componentGroups();
+---
+
+<StarlightPage frontmatter={{ title: "Components", description: "Interactive previews of every Patina component." }}>
+  <p>
+    Each page shows the component's visual spec as a live preview and the rules that go with it. The previews are the
+    design snapshot: static markup with the Patina tokens, with just enough script for menus, selects and tabs.
+  </p>
+  {
+    groups.map(([group, items]) => (
+      <>
+        <h2>{group}</h2>
+        <ul>
+          {items.map((item) => (
+            <li>
+              <a href={`/components/${item.slug}/`}>{item.name}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))
+  }
+</StarlightPage>

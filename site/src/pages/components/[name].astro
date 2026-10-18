@@ -1,0 +1,26 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { componentDocs } from "../../lib/components";
+
+export function getStaticPaths() {
+  return componentDocs().map((doc) => ({ params: { name: doc.slug }, props: { doc } }));
+}
+
+const readmes = import.meta.glob("../../../../design-system/components/*/README.md", { eager: true }) as Record<
+  string,
+  { Content: (props: Record<string, unknown>) => unknown }
+>;
+const { doc } = Astro.props;
+const Readme = readmes[`../../../../design-system/components/${doc.name}/README.md`]?.Content;
+---
+
+<StarlightPage frontmatter={{ title: doc.name, description: `The ${doc.name} component of the Patina design system.` }}>
+  <iframe
+    class="preview-frame"
+    src={`/preview/${doc.slug}/`}
+    title={`${doc.name} preview`}
+    style={`height: ${doc.height}px`}
+    loading="lazy"></iframe>
+  <a class="preview-open" href={`/preview/${doc.slug}/`}>Open the preview in its own page</a>
+  {Readme && <Readme />}
+</StarlightPage>

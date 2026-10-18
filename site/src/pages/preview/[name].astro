@@ -1,0 +1,57 @@
+---
+import "@fontsource-variable/inter/index.css";
+import "@fontsource-variable/jetbrains-mono/index.css";
+import "@fontsource-variable/newsreader/index.css";
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+import tokens from "../../../../design-system/tokens.json";
+import bundleCss from "../../../../design-system/components/bundle.css?url";
+import bundleJs from "../../../../design-system/components/bundle.js?url";
+import { previewCss, type RawTokens } from "../../../../src/emit/previewcss";
+import { componentDocs } from "../../lib/components";
+
+export function getStaticPaths() {
+  return componentDocs().map((doc) => ({ params: { name: doc.slug }, props: { doc } }));
+}
+
+// A preview is a body fragment (Cover and a few others also bring a <style>); the page supplies everything else.
+const sources = import.meta.glob("../../../../design-system/components/*/preview.html", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+const { doc } = Astro.props;
+const html = sources[`../../../../design-system/components/${doc.name}/preview.html`] ?? "";
+const head = /<head[^>]*>([\s\S]*?)<\/head>/i.exec(html)?.[1] ?? "";
+const body = /<body[^>]*>([\s\S]*?)<\/body>/i.exec(html)?.[1] ?? html;
+const styles = [...head.matchAll(/<style[\s\S]*?<\/style>/gi)].map((match) => match[0]).join("\n");
+const themeScript = `(() => {
+  const apply = () => {
+    let theme = "";
+    try { theme = localStorage.getItem("starlight-theme") ?? ""; } catch {}
+    if (theme !== "light" && theme !== "dark") theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.dataset.theme = theme;
+  };
+  apply();
+  addEventListener("storage", apply);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", apply);
+})();`;
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{doc.name} preview</title>
+    <script is:inline set:html={themeScript} />
+    <style is:inline set:html={previewCss(tokens as RawTokens)} />
+    <link rel="stylesheet" href="/fonts/patina-fonts.css" />
+    <link rel="stylesheet" href={bundleCss} />
+    <Fragment set:html={styles} />
+  </head>
+  <body data-pagefind-ignore>
+    <Fragment set:html={body} />
+    <script is:inline src={bundleJs}></script>
+  </body>
+</html>

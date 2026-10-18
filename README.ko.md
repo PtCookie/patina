@@ -12,7 +12,7 @@
 - **데스크톱**: [Slint](https://slint.dev) 토큰 파일. `compact-*` 밀도 토큰을 포함합니다.
 - **Android**: Jetpack Compose용 정적 Material 3 테마 파일(동적 색은 쓰지 않습니다).
 
-> **상태: 초안.** 디자인과 토큰은 끝났고, `pnpm build`는 이미 레지스트리 base 아이템, Slint 토큰 파일, Android 테마 파일을 생성합니다. 서체 파일과 컴포넌트 25개는 만들어져 있고 자동 설치 테스트로 검증합니다. 배포는 아직 되지 않았으므로 아래 설치 명령은 계획된 인터페이스입니다.
+> **상태: 초안.** 디자인과 토큰은 끝났고, `pnpm build`는 이미 레지스트리 base 아이템, Slint 토큰 파일, Android 테마 파일을 생성합니다. 서체 파일과 컴포넌트 25개는 만들어져 있고 자동 설치 테스트로 검증합니다. 레지스트리는 `https://patina.ptcookie.net`에 배포되어 있고, 같은 주소에서 모든 컴포넌트의 미리보기가 있는 문서 사이트를 볼 수 있습니다.
 
 ## 저장소 구성
 
@@ -28,6 +28,7 @@
 | `registry/ui/` | shadcn 컴포넌트(Base UI + Tailwind 4): Button, Badge, Input, Card, Label, Separator, Skeleton, Table, Checkbox, Toggle, ToggleGroup, Collapsible, Pagination, Popover, DropdownMenu, Sheet, NavigationMenu, Chart, Kbd, Switch, Alert, Tooltip, Tabs, Select, Article. 각각 레지스트리 아이템이 됩니다 |
 | `slint/` | Slint 라이브러리: `patina.slint`(진입 파일)와 `components/`(Button, Input, Badge, Kbd, Tooltip, Separator, TreeRow, ListRow, PaneHeader, Checkbox, Switch, Tabs, Select, Menu, Table, Alert, Card, Collapsible, Toggle). 빌드가 `tokens.slint`와 아카이브를 덧붙입니다 |
 | `android/` | Android 라이브러리: `PatinaTheme.kt`와 `components/`(PatinaButton, PatinaCard, PatinaTextField, PatinaSwitch, PatinaRadioButton, PatinaFilterChip, PatinaAlertDialog, PatinaTopAppBar, PatinaListItem, PatinaBadge, PatinaCheckbox, PatinaTabs, PatinaSelect, PatinaDropdownMenu, PatinaAlert, PatinaBottomSheet, PatinaTooltip, PatinaDivider, PatinaSkeleton). 빌드가 생성한 테마 파일과 아카이브를 덧붙입니다 |
+| `site/` | 문서 사이트(Astro, Starlight): README, 가이드, 모든 컴포넌트의 미리보기. `pnpm build`가 `public/`에 빌드하고 `pnpm site:dev`로 로컬에서 띄웁니다 |
 | `docs/` | 에이전트용 문서의 원본(`agent-guide.md`, `agents-snippet.md`), README 헤더 이미지 `header.svg`, GitHub 소셜 프리뷰 `social-preview.png` |
 | `tools/` | 참고용 스크립트: oklch → sRGB 변환과 WCAG 대비(`cc.py`), Android 역할 매핑(`m3.py`), 토큰 → CSS(`tokens_css.py`) |
 
@@ -41,7 +42,7 @@
 
 전체 가이드는 [`design-system/README.md`](design-system/README.md)(영어)를 보세요.
 
-## 사용 계획
+## 사용법
 
 모든 파일은 `https://patina.ptcookie.net`에서 정적 파일로 제공됩니다.
 
