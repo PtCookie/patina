@@ -1,0 +1,111 @@
+import { Theme, Typography } from "../tokens.slint";
+import { FocusRing } from "focus-ring.slint";
+
+// A 16px checkbox with an optional label to its right: radius-sm, `control-strong` fill when off, `primary` with a
+// `primary-foreground` check when on. The whole row (box and label) toggles; Space toggles it from the keyboard.
+// `invalid` adds the 3px `invalid-ring`. For a setting that applies immediately use a Switch.
+//
+// The component is a transparent slot that is at least 28px tall; the row is centered in it.
+export component Checkbox inherits Rectangle {
+    in property <string> text;
+    in-out property <bool> checked: false;
+    in property <bool> enabled: true;
+    in property <bool> invalid: false;
+    out property <bool> has-hover: touch.has-hover;
+    callback toggled(bool);
+
+    property <bool> keyboard-focus: false;
+
+    min-height: Theme.compact-control;
+    vertical-stretch: 0;
+    horizontal-stretch: 0;
+    preferred-width: row.preferred-width;
+    accessible-role: AccessibleRole.checkbox;
+    accessible-label: root.text;
+    accessible-checkable: true;
+    accessible-checked: root.checked;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { root.toggle(); }
+
+    function toggle() {
+        root.checked = !root.checked;
+        root.toggled(root.checked);
+    }
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: Theme.icon-md;
+        opacity: root.enabled ? 1 : 0.5;
+
+        row := HorizontalLayout {
+            spacing: Theme.space-2;
+            alignment: start;
+            box := Rectangle {
+                width: Theme.icon-md;
+                height: Theme.icon-md;
+                background: root.checked ? Theme.current.primary : Theme.current.control-strong;
+                border-radius: Theme.radius-sm;
+                border-width: 1px;
+                border-color: root.invalid ? Theme.current.invalid-border : transparent;
+
+                if root.checked : Path {
+                    width: parent.width;
+                    height: parent.height;
+                    viewbox-width: 16;
+                    viewbox-height: 16;
+                    commands: "M3.5 8.5 L6.5 11.5 L12.5 4.5";
+                    stroke: Theme.current.primary-foreground;
+                    stroke-width: 1.5px;
+                    stroke-line-cap: round;
+                    stroke-line-join: round;
+                    fill: transparent;
+                }
+
+                if root.invalid : Rectangle {
+                    x: -3px;
+                    y: -3px;
+                    width: parent.width + 6px;
+                    height: parent.height + 6px;
+                    border-radius: Theme.radius-sm + 3px;
+                    border-width: 3px;
+                    border-color: Theme.current.invalid-ring;
+                }
+
+                if root.keyboard-focus : FocusRing {
+                    radius: Theme.radius-sm;
+                    host-width: parent.width;
+                    host-height: parent.height;
+                }
+            }
+            if root.text != "" : Text {
+                text: root.text;
+                color: Theme.current.foreground;
+                font-family: Typography.compact-body.font-family;
+                font-size: Typography.compact-body.font-size;
+                font-weight: Typography.compact-body.font-weight;
+                vertical-alignment: center;
+            }
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: root.enabled ? MouseCursor.pointer : MouseCursor.default;
+        clicked => { root.toggle(); }
+    }
+
+    FocusScope {
+        enabled: root.enabled;
+        focus-on-click: false;
+        focus-gained(reason) => { root.keyboard-focus = reason == FocusReason.tab-navigation; }
+        focus-lost(reason) => { root.keyboard-focus = false; }
+        key-pressed(event) => {
+            if (event.text == " ") {
+                root.toggle();
+                return accept;
+            }
+            return reject;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 // Development gallery for the Patina Slint library. Not shipped. Render it with `pnpm slint:shot` (see AGENTS.md).
-import { Theme, Typography, Badge, BadgeVariant, Button, ButtonVariant, Input, Kbd, PaneHeader, ListRow, Separator, TreeRow, Tooltip } from "@patina";
+import { Theme, Typography, Badge, BadgeVariant, Button, ButtonVariant, Checkbox, Input, Kbd, Menu, MenuItem, MenuLabel, MenuSeparator, PaneHeader, ListRow, Select, Separator, Switch, Table, Tabs, TreeRow, Tooltip } from "@patina";
 
 // load-data reaches a global only when the file exports it.
 export { Theme }
@@ -222,14 +222,99 @@ export component Board inherits Window {
     }
 }
 
+// Every state of the tier 2 components, for visual review. The Menu is drawn open in place; a Select and a PopupWindow
+// cannot be rendered headless, so check those through the MCP server (see AGENTS.md).
+export component Controls inherits Window {
+    width: 780px;
+    height: 460px;
+    background: Theme.current.background;
+
+    VerticalLayout {
+        padding: Theme.space-4;
+        spacing: Theme.space-4;
+        alignment: start;
+
+        HorizontalLayout {
+            spacing: Theme.space-6;
+            alignment: start;
+            Checkbox { text: "Unchecked"; }
+            Checkbox { text: "Checked"; checked: true; }
+            Checkbox { text: "Invalid"; invalid: true; }
+            Checkbox { text: "Disabled"; checked: true; enabled: false; }
+            Checkbox { }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-6;
+            alignment: start;
+            Switch { text: "Off"; }
+            Switch { text: "On"; checked: true; }
+            Switch { text: "Disabled"; checked: true; enabled: false; }
+            Switch { }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-6;
+            alignment: start;
+            Tabs { model: ["Changes", "History", "Stashes"]; current-index: 0; }
+            Tabs { model: ["Unified", "Split"]; current-index: 1; }
+            Tabs { model: ["One", "Two"]; enabled: false; }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Select { model: ["main", "develop", "feature/diff-view"]; current-index: 0; width: 180px; }
+            Select { model: ["main", "develop"]; placeholder-text: "Branch"; width: 140px; }
+            Select { model: ["main", "develop"]; current-index: 1; pill: true; width: 140px; }
+            Select { model: ["main"]; placeholder-text: "Invalid"; invalid: true; width: 120px; }
+            Select { model: ["main"]; current-index: 0; enabled: false; width: 120px; }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-6;
+            alignment: start;
+            Menu {
+                width: 220px;
+                horizontal-stretch: 0;
+                MenuLabel { text: "Branch"; }
+                MenuItem { text: "Checkout"; shortcut: "⌘O"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+                MenuItem { text: "Rename"; shortcut: "F2"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/tag.svg"); highlighted: true; }
+                MenuItem { text: "Merge into main"; enabled: false; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-commit.svg"); }
+                MenuSeparator { }
+                MenuItem { text: "Delete"; destructive: true; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/x.svg"); }
+            }
+            Table {
+                horizontal-stretch: 1;
+                height: 150px;
+                columns: [
+                    { title: "Commit", width: 72px, mono: true },
+                    { title: "Message" },
+                    { title: "Author", width: 80px },
+                    { title: "Files", width: 40px, numeric: true },
+                ];
+                rows: [
+                    ["a1b2c3d", "Add the diff view", "Minsup", "4"],
+                    ["e4f5a6b", "Fix the staging bug", "Minsup", "1"],
+                    ["0f9e8d7", "Tighten the radius scale", "Claude", "12"],
+                    ["7c6b5a4", "Update the lockfile", "Minsup", "1"],
+                ];
+                selected-row: 1;
+            }
+        }
+    }
+}
+
 // Callbacks and focus, for checking through the MCP server (see AGENTS.md).
 export component Interactive inherits Window {
     width: 360px;
-    height: 220px;
+    height: 460px;
     background: Theme.current.background;
     property <int> clicks: 0;
     property <string> echo: "";
     property <int> selected: 0;
+    property <bool> checked: false;
+    property <bool> on: false;
+    property <int> tab: 0;
+    property <int> option: -1;
+    property <int> picked-row: -1;
+    property <string> menu: "";
 
     VerticalLayout {
         padding: Theme.space-4;
@@ -246,5 +331,36 @@ export component Interactive inherits Window {
         Text { text: "clicks=\{root.clicks} echo=\{root.echo} selected=\{root.selected}"; color: Theme.current.foreground; accessible-role: AccessibleRole.text; accessible-label: self.text; }
         TreeRow { text: "One"; selected: root.selected == 1; clicked => { root.selected = 1; } }
         TreeRow { text: "Two"; selected: root.selected == 2; clicked => { root.selected = 2; } }
+        Text { text: "checked=\{root.checked ? 1 : 0} on=\{root.on ? 1 : 0} tab=\{root.tab} option=\{root.option} row=\{root.picked-row} menu=\{root.menu}"; color: Theme.current.foreground; accessible-role: AccessibleRole.text; accessible-label: self.text; }
+        HorizontalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Checkbox { text: "Check"; toggled(value) => { root.checked = value; } }
+            Switch { text: "Switch"; toggled(value) => { root.on = value; } }
+        }
+        Tabs { model: ["A", "B", "C"]; selected(index) => { root.tab = index; } }
+        HorizontalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            select := Select { model: ["main", "develop", "release"]; placeholder-text: "Branch"; width: 140px; selected(index) => { root.option = index; } }
+            Button { text: "Menu"; variant: ButtonVariant.outline; clicked => { menu-popup.show(); } }
+        }
+        Table {
+            height: 84px;
+            columns: [{ title: "Name" }, { title: "Count", width: 56px, numeric: true }];
+            rows: [["alpha", "1"], ["beta", "22"]];
+            row-clicked(index) => { root.picked-row = index; }
+        }
+    }
+
+    menu-popup := PopupWindow {
+        x: 200px;
+        y: 120px;
+        width: 180px;
+        height: 90px;
+        Menu {
+            MenuItem { text: "Rename"; clicked => { root.menu = "rename"; menu-popup.close(); } }
+            MenuItem { text: "Delete"; destructive: true; clicked => { root.menu = "delete"; menu-popup.close(); } }
+        }
     }
 }

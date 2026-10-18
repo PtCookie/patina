@@ -1,0 +1,147 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// The surface of a dropdown menu: opaque `popover`, radius-2xl, a 1px `border` instead of the web's shadow ring (the
+// library has no shadows), at least 192px wide. Its rows run edge to edge and the surface clips them to its
+// corners. Put MenuItem, MenuLabel and MenuSeparator inside, and show it in a PopupWindow placed under the control
+// that opens it (`x` and `y` are relative to the PopupWindow's parent element):
+//
+//     popup := PopupWindow {
+//         x: 0px;
+//         y: trigger.height + Theme.space-1;
+//         width: 192px;
+//         Menu {
+//             MenuItem { text: "Rename"; clicked => { popup.close(); } }
+//             MenuSeparator { }
+//             MenuItem { text: "Delete"; destructive: true; }
+//         }
+//     }
+//     Button { clicked => { popup.show(); } }
+export component Menu inherits Rectangle {
+    preferred-width: 192px;
+    min-width: 0px;
+    background: Theme.current.popover;
+    border-radius: Theme.radius-2xl;
+    border-width: 1px;
+    border-color: Theme.current.border;
+    clip: true;
+    accessible-role: AccessibleRole.list;
+
+    VerticalLayout {
+        alignment: start;
+        @children
+    }
+}
+
+// A menu row: 28px (`compact-row`), full width, no radius. An optional leading icon, the label (`compact-label`), a
+// trailing `shortcut` in `muted-foreground` with 0.1em letter-spacing, and a trailing check when `checked` (the
+// chosen option of a Select). Hover and `highlighted` (for keyboard navigation) fill the whole row with `accent`. A
+// `destructive` item is `destructive` text on the `destructive-muted` tint, and belongs last.
+export component MenuItem inherits Rectangle {
+    in property <string> text;
+    in property <image> icon;
+    in property <string> shortcut;
+    in property <bool> destructive: false;
+    in property <bool> checked: false;
+    in property <bool> highlighted: false;
+    in property <bool> enabled: true;
+    out property <bool> has-hover: touch.has-hover;
+    callback clicked();
+
+    property <bool> lit: root.enabled && (root.highlighted || touch.has-hover);
+    property <color> content-color: root.destructive ? Theme.current.destructive
+        : root.lit ? Theme.current.accent-foreground : Theme.current.popover-foreground;
+
+    height: Theme.compact-row;
+    background: root.lit ? (root.destructive ? Theme.current.destructive-muted : Theme.current.accent) : transparent;
+    opacity: root.enabled ? 1 : 0.5;
+    accessible-role: AccessibleRole.list-item;
+    accessible-label: root.text;
+    accessible-item-selectable: true;
+    accessible-item-selected: root.checked;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { root.clicked(); }
+
+    HorizontalLayout {
+        padding-left: Theme.space-3;
+        padding-right: Theme.space-3;
+        spacing: Theme.space-2-5;
+        if root.icon.width > 0 : Image {
+            source: root.icon;
+            colorize: root.content-color;
+            width: Theme.icon-md;
+            height: Theme.icon-md;
+            y: (parent.height - self.height) / 2;
+        }
+        Text {
+            text: root.text;
+            color: root.content-color;
+            font-family: Typography.compact-label.font-family;
+            font-size: Typography.compact-label.font-size;
+            font-weight: Typography.compact-label.font-weight;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+        if root.shortcut != "" : Text {
+            text: root.shortcut;
+            color: Theme.current.muted-foreground;
+            font-family: Typography.caption-regular.font-family;
+            font-size: Typography.caption-regular.font-size;
+            font-weight: Typography.caption-regular.font-weight;
+            letter-spacing: Typography.caption-regular.font-size * 0.1;
+            horizontal-alignment: right;
+            vertical-alignment: center;
+        }
+        if root.checked : Path {
+            width: Theme.icon-md;
+            height: Theme.icon-md;
+            y: (parent.height - self.height) / 2;
+            viewbox-width: 16;
+            viewbox-height: 16;
+            commands: "M3.5 8.5 L6.5 11.5 L12.5 4.5";
+            stroke: root.content-color;
+            stroke-width: 1.5px;
+            stroke-line-cap: round;
+            stroke-line-join: round;
+            fill: transparent;
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: MouseCursor.pointer;
+        clicked => { root.clicked(); }
+    }
+}
+
+// A group label above a run of items: `caption-regular` in `muted-foreground`.
+export component MenuLabel inherits Rectangle {
+    in property <string> text;
+
+    preferred-height: label.preferred-height + Theme.space-2 + Theme.space-1;
+    accessible-role: AccessibleRole.text;
+    accessible-label: root.text;
+
+    label := Text {
+        x: Theme.space-3;
+        y: Theme.space-2;
+        width: parent.width - 2 * Theme.space-3;
+        text: root.text;
+        color: Theme.current.muted-foreground;
+        font-family: Typography.caption-regular.font-family;
+        font-size: Typography.caption-regular.font-size;
+        font-weight: Typography.caption-regular.font-weight;
+        overflow: elide;
+    }
+}
+
+// A full-width `border` hairline with `space-1` above and below.
+export component MenuSeparator inherits Rectangle {
+    preferred-height: 1px + 2 * Theme.space-1;
+    accessible-role: AccessibleRole.none;
+
+    Rectangle {
+        y: Theme.space-1;
+        height: 1px;
+        background: Theme.current.border;
+    }
+}

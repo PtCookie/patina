@@ -1,0 +1,107 @@
+import { Theme, Typography } from "../tokens.slint";
+import { FocusRing } from "focus-ring.slint";
+
+component TabTrigger inherits Rectangle {
+    in property <string> text;
+    in property <bool> active;
+    in property <bool> enabled: true;
+    callback clicked();
+
+    height: Theme.control-xs;
+    preferred-width: label.preferred-width + 2 * Theme.space-3;
+    background: root.active ? Theme.current.tab-active : transparent;
+    border-radius: Theme.radius-full;
+    opacity: root.enabled ? 1 : 0.5;
+    accessible-role: AccessibleRole.tab;
+    accessible-label: root.text;
+    accessible-item-selectable: true;
+    accessible-item-selected: root.active;
+    accessible-action-default => { root.clicked(); }
+
+    label := Text {
+        text: root.text;
+        color: root.active || touch.has-hover ? Theme.current.foreground : Theme.current.tab-foreground;
+        font-family: Typography.compact-label.font-family;
+        font-size: Typography.compact-label.font-size;
+        font-weight: Typography.compact-label.font-weight;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: MouseCursor.pointer;
+        clicked => { root.clicked(); }
+    }
+}
+
+// A `muted` pill track (28px, the compact `compact-control`) holding pill triggers; the active trigger lifts onto
+// `tab-active`. Inactive labels are `tab-foreground`, full `foreground` on hover. Use two to five short labels; the
+// panels they switch belong to the caller (`current-index` tells it which one to show). Left and Right arrows move
+// the selection while the tabs have keyboard focus.
+//
+// The component is a transparent slot that is at least 28px tall; the track is centered in it.
+export component Tabs inherits Rectangle {
+    in property <[string]> model;
+    in-out property <int> current-index: 0;
+    in property <bool> enabled: true;
+    callback selected(int);
+
+    property <bool> keyboard-focus: false;
+
+    min-height: Theme.compact-control;
+    vertical-stretch: 0;
+    horizontal-stretch: 0;
+    preferred-width: row.preferred-width + 2 * Theme.space-0-5;
+    accessible-role: AccessibleRole.tab-list;
+
+    function select(index: int) {
+        if (index >= 0 && index < root.model.length && index != root.current-index) {
+            root.current-index = index;
+            root.selected(index);
+        }
+    }
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: Theme.compact-control;
+        background: Theme.current.muted;
+        border-radius: Theme.radius-full;
+        opacity: root.enabled ? 1 : 0.5;
+
+        row := HorizontalLayout {
+            padding: Theme.space-0-5;
+            for label[index] in root.model : TabTrigger {
+                text: label;
+                active: index == root.current-index;
+                enabled: root.enabled;
+                clicked => { root.select(index); }
+            }
+        }
+
+        FocusScope {
+            enabled: root.enabled;
+            focus-on-click: false;
+            focus-gained(reason) => { root.keyboard-focus = reason == FocusReason.tab-navigation; }
+            focus-lost(reason) => { root.keyboard-focus = false; }
+            key-pressed(event) => {
+                if (event.text == Key.LeftArrow) {
+                    root.select(root.current-index - 1);
+                    return accept;
+                }
+                if (event.text == Key.RightArrow) {
+                    root.select(root.current-index + 1);
+                    return accept;
+                }
+                return reject;
+            }
+        }
+
+        if root.keyboard-focus : FocusRing {
+            radius: Theme.radius-full;
+            host-width: parent.width;
+            host-height: parent.height;
+        }
+    }
+}

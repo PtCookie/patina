@@ -1,0 +1,108 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// One column of a Table. `width` is fixed when it is above zero, and a column with zero width shares what is left
+// with the other flexible columns. `numeric` right-aligns the column; `mono` sets its cells in `mono-sm` (SHAs, IDs,
+// timestamps).
+export struct TableColumn {
+    title: string,
+    width: length,
+    numeric: bool,
+    mono: bool,
+}
+
+// The compact data table: a 32px header (`compact-head`, `compact-label` in `muted-foreground`) over 28px rows
+// (`compact-row`) in `compact-body`, divided by `border` hairlines with no zebra stripes and no vertical rules. A row
+// takes `muted-hover` while the pointer is over it and `muted` when selected. Cells do not wrap: they truncate, so
+// give long values a tooltip. Give the table a height and the rows scroll under the fixed header.
+//
+//     Table {
+//         columns: [{ title: "Commit", width: 72px, mono: true }, { title: "Message" }, { title: "Files", width: 48px, numeric: true }];
+//         rows: [["a1b2c3d", "Add the diff view", "4"], ["e4f5a6b", "Fix the staging bug", "1"]];
+//         row-clicked(index) => { self.selected-row = index; }
+//     }
+export component Table inherits Rectangle {
+    in property <[TableColumn]> columns;
+    in property <[[string]]> rows;
+    in-out property <int> selected-row: -1;
+    callback row-clicked(int);
+
+    accessible-role: AccessibleRole.table;
+
+    VerticalLayout {
+        alignment: stretch;
+        Rectangle {
+            height: Theme.compact-head;
+            vertical-stretch: 0;
+            HorizontalLayout {
+                padding-left: Theme.compact-pad;
+                padding-right: Theme.compact-pad;
+                spacing: Theme.compact-pad;
+                for column in root.columns : Text {
+                    text: column.title;
+                    color: Theme.current.muted-foreground;
+                    font-family: Typography.compact-label.font-family;
+                    font-size: Typography.compact-label.font-size;
+                    font-weight: Typography.compact-label.font-weight;
+                    horizontal-alignment: column.numeric ? TextHorizontalAlignment.right : TextHorizontalAlignment.left;
+                    vertical-alignment: center;
+                    overflow: elide;
+                    horizontal-stretch: column.width > 0px ? 0 : 1;
+                    min-width: column.width;
+                    max-width: column.width > 0px ? column.width : 100000px;
+                    accessible-label: column.title;
+                }
+            }
+            Rectangle {
+                y: parent.height - 1px;
+                height: 1px;
+                background: Theme.current.border;
+            }
+        }
+
+        Flickable {
+            content-height: body.preferred-height;
+            body := VerticalLayout {
+                alignment: start;
+                for row[index] in root.rows : Rectangle {
+                    height: Theme.compact-row;
+                    background: index == root.selected-row ? Theme.current.muted
+                        : touch.has-hover ? Theme.current.muted-hover : transparent;
+                    accessible-role: AccessibleRole.list-item;
+                    accessible-item-selectable: true;
+                    accessible-item-selected: index == root.selected-row;
+                    accessible-action-default => { root.row-clicked(index); }
+
+                    HorizontalLayout {
+                        padding-left: Theme.compact-pad;
+                        padding-right: Theme.compact-pad;
+                        spacing: Theme.compact-pad;
+                        for column[position] in root.columns : Text {
+                            text: row[position];
+                            color: Theme.current.foreground;
+                            font-family: column.mono ? Typography.mono-sm.font-family : Typography.compact-body.font-family;
+                            font-size: column.mono ? Typography.mono-sm.font-size : Typography.compact-body.font-size;
+                            font-weight: column.mono ? Typography.mono-sm.font-weight : Typography.compact-body.font-weight;
+                            horizontal-alignment: column.numeric ? TextHorizontalAlignment.right : TextHorizontalAlignment.left;
+                            vertical-alignment: center;
+                            overflow: elide;
+                            horizontal-stretch: column.width > 0px ? 0 : 1;
+                            min-width: column.width;
+                            max-width: column.width > 0px ? column.width : 100000px;
+                        }
+                    }
+
+                    Rectangle {
+                        y: parent.height - 1px;
+                        height: 1px;
+                        background: Theme.current.border;
+                    }
+
+                    touch := TouchArea {
+                        mouse-cursor: MouseCursor.pointer;
+                        clicked => { root.row-clicked(index); }
+                    }
+                }
+            }
+        }
+    }
+}

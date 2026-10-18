@@ -35,11 +35,18 @@ const compile = (entry: string, source: string) => {
   return slint.loadFile(app, { libraryPaths: { patina: entry } });
 };
 
-/** The components that `patina.slint` re-exports from components/*.slint. */
+/** The components, enums and structs that `patina.slint` re-exports from components/*.slint. */
 const exported = [...(library["slint/patina.slint"] ?? "").matchAll(/export \{([^}]*)\} from "components\//g)]
   .flatMap((match) => (match[1] ?? "").split(","))
   .map((name) => name.trim())
   .filter(Boolean);
+
+/** Names that are types, not elements: they cannot be instantiated on their own. */
+const types = new Set(
+  Object.values(library).flatMap((text) =>
+    [...text.matchAll(/export (?:struct|enum) (\w+)/g)].map((match) => match[1]),
+  ),
+);
 
 describe("the library sources", () => {
   const files = Object.entries(library);
@@ -59,6 +66,16 @@ describe("the library sources", () => {
         "TreeRow",
         "ListRow",
         "PaneHeader",
+        "Checkbox",
+        "Switch",
+        "Tabs",
+        "Select",
+        "Menu",
+        "MenuItem",
+        "MenuLabel",
+        "MenuSeparator",
+        "Table",
+        "TableColumn",
       ]),
     );
   });
@@ -94,7 +111,7 @@ describe("the Slint compiler", () => {
     const entry = install("full");
     const ui = compile(
       entry,
-      `import { Theme, ThemeMode, Typography, Button, ButtonVariant, Input, Badge, BadgeVariant, Kbd, Separator, Tooltip, TreeRow, ListRow, PaneHeader } from "@patina";
+      `import { Theme, ThemeMode, Typography, Button, ButtonVariant, Input, Badge, BadgeVariant, Kbd, Separator, Tooltip, TreeRow, ListRow, PaneHeader, Checkbox, Switch, Tabs, Select, Menu, MenuItem, MenuLabel, MenuSeparator, Table } from "@patina";
 export component App inherits Window {
     in-out property <ThemeMode> mode <=> Theme.current-mode;
     background: Theme.current.background;
@@ -108,6 +125,12 @@ export component App inherits Window {
         Tooltip { text: "Hint"; shortcut: "⌘S"; }
         TreeRow { text: "main"; count: "2"; selected: true; }
         ListRow { text: "repo.rs"; detail: "src/git"; }
+        Checkbox { text: "Stage"; checked: true; }
+        Switch { text: "Auto fetch"; }
+        Tabs { model: ["Changes", "History"]; }
+        Select { model: ["main", "develop"]; placeholder-text: "Branch"; }
+        Menu { MenuLabel { text: "Branch"; } MenuItem { text: "Rename"; shortcut: "F2"; } MenuSeparator { } MenuItem { text: "Delete"; destructive: true; } }
+        Table { columns: [{ title: "Name" }, { title: "Size", width: 48px, numeric: true }]; rows: [["a.rs", "12"]]; }
         Text { font-family: Typography.body.font-family; text: "x"; }
     }
 }
@@ -119,7 +142,7 @@ export component App inherits Window {
   it("compiles every component on its own", () => {
     const entry = install("each");
     const uncompiled = exported
-      .filter((name) => !name.endsWith("Variant") && name !== "Theme")
+      .filter((name) => !types.has(name) && name !== "Theme")
       .filter((name) => {
         const ui = compile(
           entry,
@@ -136,6 +159,8 @@ export component App inherits Window {
     const ui = slint.loadFile(gallery, { libraryPaths: { patina: entry } }) as Record<string, unknown>;
     expect(typeof ui.Shell).toBe("function");
     expect(typeof ui.Board).toBe("function");
+    expect(typeof ui.Controls).toBe("function");
+    expect(typeof ui.Interactive).toBe("function");
   });
 
   it("rejects a component that reads a token which does not exist (negative control)", () => {

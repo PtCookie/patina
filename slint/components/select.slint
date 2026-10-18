@@ -1,0 +1,153 @@
+import { Theme, Typography } from "../tokens.slint";
+import { FocusRing } from "focus-ring.slint";
+import { Menu, MenuItem } from "menu.slint";
+
+// A trigger that looks like an Input (`control` fill, 28px, radius-md, `pill` for fully round) and opens a Menu under
+// itself, `space-1` below. The chosen option shows a trailing check; with nothing chosen (`current-index` -1) the
+// trigger shows `placeholder-text` in `muted-foreground`. Use it for four to fifteen options; for fewer use Tabs.
+// With keyboard focus Up and Down change the value and Enter or Space open the list.
+//
+// The component is a transparent slot that is at least 28px tall; the trigger is centered in it.
+export component Select inherits Rectangle {
+    in property <[string]> model;
+    in-out property <int> current-index: -1;
+    in property <string> placeholder-text;
+    in property <bool> enabled: true;
+    in property <bool> invalid: false;
+    in property <bool> pill: false;
+    out property <bool> open;
+    callback selected(int);
+
+    property <bool> keyboard-focus: false;
+    property <length> corner: root.pill ? Theme.radius-full : Theme.radius-md;
+    property <string> value: root.current-index >= 0 && root.current-index < root.model.length ? root.model[root.current-index] : "";
+
+    min-height: Theme.compact-control;
+    vertical-stretch: 0;
+    min-width: 96px;
+    accessible-role: AccessibleRole.combobox;
+    accessible-label: root.placeholder-text;
+    accessible-value: root.value;
+    accessible-expanded: root.open;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { root.show(); }
+
+    function show() {
+        if (root.enabled) {
+            popup.show();
+            root.open = true;
+        }
+    }
+
+    function choose(index: int) {
+        if (index >= 0 && index < root.model.length && index != root.current-index) {
+            root.current-index = index;
+            root.selected(index);
+        }
+    }
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: Theme.compact-control;
+        background: Theme.current.control;
+        border-radius: root.corner;
+        border-width: 1px;
+        border-color: root.invalid ? Theme.current.invalid-border : transparent;
+        opacity: root.enabled ? 1 : 0.5;
+
+        HorizontalLayout {
+            padding-left: Theme.compact-pad;
+            padding-right: Theme.compact-pad;
+            spacing: Theme.space-1-5;
+            Text {
+                text: root.value != "" ? root.value : root.placeholder-text;
+                color: root.value != "" ? Theme.current.foreground : Theme.current.muted-foreground;
+                font-family: Typography.compact-body.font-family;
+                font-size: Typography.compact-body.font-size;
+                font-weight: Typography.compact-body.font-weight;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+            // caret-down
+            Path {
+                width: Theme.icon-md;
+                height: Theme.icon-md;
+                y: (parent.height - self.height) / 2;
+                viewbox-width: 16;
+                viewbox-height: 16;
+                commands: "M4 6.5 L8 10.5 L12 6.5";
+                stroke: Theme.current.muted-foreground;
+                stroke-width: 1.5px;
+                stroke-line-cap: round;
+                stroke-line-join: round;
+                fill: transparent;
+            }
+        }
+
+        if root.invalid : Rectangle {
+            x: -3px;
+            y: -3px;
+            width: parent.width + 6px;
+            height: parent.height + 6px;
+            border-radius: root.corner + 3px;
+            border-width: 3px;
+            border-color: Theme.current.invalid-ring;
+        }
+
+        touch := TouchArea {
+            enabled: root.enabled;
+            mouse-cursor: root.enabled ? MouseCursor.pointer : MouseCursor.default;
+            clicked => { root.show(); }
+        }
+
+        FocusScope {
+            enabled: root.enabled;
+            focus-on-click: false;
+            focus-gained(reason) => { root.keyboard-focus = reason == FocusReason.tab-navigation; }
+            focus-lost(reason) => { root.keyboard-focus = false; }
+            key-pressed(event) => {
+                if (event.text == Key.DownArrow) {
+                    root.choose(root.current-index + 1);
+                    return accept;
+                }
+                if (event.text == Key.UpArrow) {
+                    root.choose(root.current-index - 1);
+                    return accept;
+                }
+                if (event.text == " " || event.text == Key.Return) {
+                    root.show();
+                    return accept;
+                }
+                return reject;
+            }
+        }
+
+        if root.keyboard-focus : FocusRing {
+            radius: root.corner;
+            host-width: parent.width;
+            host-height: parent.height;
+        }
+
+        popup := PopupWindow {
+            // Relative to the trigger.
+            x: 0px;
+            y: parent.height + Theme.space-1;
+            width: parent.width;
+            height: list.preferred-height;
+            close-policy: PopupClosePolicy.close-on-click-outside;
+            list := Menu {
+                width: parent.width;
+                for option[index] in root.model : MenuItem {
+                    text: option;
+                    checked: index == root.current-index;
+                    clicked => {
+                        root.choose(index);
+                        root.open = false;
+                        popup.close();
+                    }
+                }
+            }
+        }
+    }
+}
