@@ -1,0 +1,20 @@
+<!-- @dsCard group="Navigation" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>NavigationMenu — preview</title></head>
+<body>
+<div style="padding:16px;display:flex;flex-direction:column;gap:6px">
+  <nav class="pt-nav" aria-label="Main" data-pt-current>
+    <a class="pt-nav-item" aria-current="page" href="#">Home</a>
+    <button class="pt-nav-item" data-pt-toggle="#work" data-popup-flag data-popup-open aria-expanded="true">Work<svg class="ph" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"/><polyline points="208 96 128 176 48 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg></button>
+    <a class="pt-nav-item" href="#">Posts</a><a class="pt-nav-item" href="#">About</a>
+  </nav>
+  <div class="pt-nav-panel" id="work" data-pt-popup>
+    <a class="pt-nav-link" href="#" data-pt-close><b>PathPoint</b><span>Desktop Git client in Slint.</span></a>
+    <a class="pt-nav-link" href="#" data-pt-close><b>GroupGrid</b><span>Database browser for the desktop.</span></a>
+    <a class="pt-nav-link" href="#" data-pt-close><b>Axgit</b><span>A cgit port on Astro and Axum.</span></a>
+    <a class="pt-nav-link" href="#" data-pt-close><b>Bond screener</b><span>KRX bond search and charts.</span></a>
+  </div>
+</div>
+</body>
+</html>

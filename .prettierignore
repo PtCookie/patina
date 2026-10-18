@@ -1,0 +1,16 @@
+# Byte-faithful snapshot of the design source; never reformat it
+design-system/
+
+# Official font files and their checksums
+fonts/
+
+# Generated output
+public/
+
+.claude/
+CLAUDE.local.md
+
+*.md
+pnpm-lock.yaml
+wrangler.jsonc
+skills-lock.json

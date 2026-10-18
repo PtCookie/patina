@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "android-cli": {
+      "source": "android/skills",
+      "sourceType": "github",
+      "skillPath": "devtools/android-cli/SKILL.md",
+      "computedHash": "1197759e24bcabbe7e2111b51a46f04f95866c65f3dc906ded53384e3b239e81"
+    },
+    "slint": {
+      "source": "slint-ui/ai-plugins",
+      "sourceType": "github",
+      "skillPath": "skills/slint/SKILL.md",
+      "computedHash": "a016cbdd1aaf29bbfd91a02c049fd8af5f6d774f0c501c473135940f319d9588"
+    }
+  }
+}

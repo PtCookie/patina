@@ -1,0 +1,15 @@
+<!-- @dsCard group="Forms" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Input — preview</title></head>
+<body>
+<div class="pt-stage" style="align-items:flex-start;gap:24px">
+  <label class="pt-field"><span class="pt-label">Repository name</span><input class="pt-input" placeholder="pathpoint"><span class="pt-desc">Lowercase, no spaces.</span></label>
+  <label class="pt-field"><span class="pt-label">Remote URL</span><input class="pt-input" value="git@example:repo" aria-invalid="true"><span class="pt-desc" style="color:var(--destructive)">Unreachable host.</span></label>
+  <div class="pt-field"><span class="pt-label">Search</span><div class="pt-input-group"><svg class="ph" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"/><circle cx="112" cy="112" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg><input placeholder="Filter commits"><span class="pt-kbd">⌘K</span></div></div>
+  <div class="pt-field"><span class="pt-label">Search (pill)</span><div class="pt-input-group pt-input-group--pill"><svg class="ph" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"/><circle cx="112" cy="112" r="80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><line x1="168.57" y1="168.57" x2="224" y2="224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg><input placeholder="Filter commits"></div></div>
+  <label class="pt-field"><span class="pt-label">Tag (pill)</span><input class="pt-input pt-input--pill" placeholder="v0.5.0"></label>
+  <label class="pt-field" style="min-width:300px"><span class="pt-label">Commit message</span><textarea class="pt-textarea" placeholder="Describe the change"></textarea></label>
+</div>
+</body>
+</html>

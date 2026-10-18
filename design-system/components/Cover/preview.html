@@ -1,0 +1,53 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Patina</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--background); color:var(--foreground); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .brand { fill:var(--primary); }
+  .teal { fill:var(--chart-2); }
+  .mint { fill:var(--chart-1); }
+  .ink { fill:var(--foreground); }
+  .dot { fill:var(--background); }
+  .blk { rx:var(--radius-3xl); }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-family:var(--font-heading); font-size:112px; line-height:1; font-weight:600; letter-spacing:-.03em; color:var(--foreground); }
+  .tag { margin:var(--space-2) 0 0 4px; font-size:14px; line-height:20px; color:var(--muted-foreground); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      primary 168×290 slab bled off the top (the identity hue, largest) · chart-2 teal 112×160 · foreground ink 168×224 bleeding off the right edge · chart-1 mint 112×48 pill — ≈35% of 960×288
+  arrangement one tall emerald slab with satellites, bottoms on one line space-6 above the edge, space-4 gutters
+  pattern     dot grid, from "precise, technical, mono headings, a 4px grid": 35 dots cut out of the ink block in `background` at a space-4 (16px) pitch
+  scales      sides in space-4 multiples (168 = 10.5×16 rounded to the slab, 112 = 7×16, 48 = 3×16); gutters space-4; pitch space-4; corners radius-3xl, the pill rx = half its 48px side
+-->
+<rect class="brand blk" x="24" y="-26" width="168" height="290" rx="16"/>
+<rect class="mint" x="208" y="40" width="112" height="48" rx="24"/>
+<rect class="teal blk" x="208" y="104" width="112" height="160" rx="16"/>
+<rect class="ink blk" x="336" y="40" width="168" height="224" rx="16"/>
+<g class="dot">
+<circle cx="360" cy="72" r="2"/><circle cx="376" cy="72" r="2"/><circle cx="392" cy="72" r="2"/><circle cx="408" cy="72" r="2"/><circle cx="424" cy="72" r="2"/><circle cx="440" cy="72" r="2"/><circle cx="456" cy="72" r="2"/>
+<circle cx="360" cy="88" r="2"/><circle cx="376" cy="88" r="2"/><circle cx="392" cy="88" r="2"/><circle cx="408" cy="88" r="2"/><circle cx="424" cy="88" r="2"/><circle cx="440" cy="88" r="2"/><circle cx="456" cy="88" r="2"/>
+<circle cx="360" cy="104" r="2"/><circle cx="376" cy="104" r="2"/><circle cx="392" cy="104" r="2"/><circle cx="408" cy="104" r="2"/><circle cx="424" cy="104" r="2"/><circle cx="440" cy="104" r="2"/><circle cx="456" cy="104" r="2"/>
+<circle cx="360" cy="120" r="2"/><circle cx="376" cy="120" r="2"/><circle cx="392" cy="120" r="2"/><circle cx="408" cy="120" r="2"/><circle cx="424" cy="120" r="2"/><circle cx="440" cy="120" r="2"/><circle cx="456" cy="120" r="2"/>
+<circle cx="360" cy="136" r="2"/><circle cx="376" cy="136" r="2"/><circle cx="392" cy="136" r="2"/><circle cx="408" cy="136" r="2"/><circle cx="424" cy="136" r="2"/><circle cx="440" cy="136" r="2"/><circle cx="456" cy="136" r="2"/>
+</g>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Patina</h1>
+<p class="tag">Mist neutrals, one emerald.</p>
+</div>
+</div>
+</body>
+</html>

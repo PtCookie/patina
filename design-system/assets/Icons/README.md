@@ -1,0 +1,3 @@
+Phosphor Icons, Regular weight — the icons the component previews use, as the official SVGs (MIT, see `assets/Licenses/Phosphor-MIT.txt`). Each draws in `currentColor`, so it shows black when loaded through `<img>`; inline the SVG or use the icon font to inherit text color.
+
+Previews inline these SVGs as `<svg class="ph" viewBox="0 0 256 256">…</svg>`; `svg.ph` in `components/bundle.css` sizes them to 1em, so set the size with `font-size` (`icon-sm`, `icon-md`, `icon-lg`). No icon font and no CDN — both fail inside sandboxed preview frames. Web apps use `@phosphor-icons/react`; Slint apps import the SVGs from `@phosphor-icons/core` (`assets/regular/<name>.svg`).

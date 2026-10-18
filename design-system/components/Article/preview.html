@@ -1,0 +1,26 @@
+<!-- @dsCard group="Long-form" height=560 page -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Article — preview</title>
+<style>
+  .pt-article { max-width: 640px; padding: var(--space-8) var(--space-6); font-family: var(--font-serif); color: var(--foreground); }
+  .pt-article .eyebrow { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 500; color: var(--muted-foreground); }
+  .pt-article h1, .pt-article h2 { font-family: var(--font-heading); text-wrap: balance; color: var(--foreground); }
+  .pt-article h1 { margin: var(--space-2) 0 var(--space-4); font-size: 30px; line-height: 36px; font-weight: 600; letter-spacing: -0.02em; }
+  .pt-article h2 { margin: var(--space-6) 0 var(--space-3); font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; }
+  .pt-article p { margin: 0 0 var(--space-4); font-size: 17px; line-height: 28px; }
+  .pt-article blockquote { margin: 0 0 var(--space-4); padding-left: var(--space-4); border-left: 2px solid var(--border); font-style: italic; color: var(--muted-foreground); font-size: 17px; line-height: 28px; }
+  .pt-article code { font-family: var(--font-mono); font-size: 14px; background: var(--muted); padding: 1px var(--space-1); border-radius: var(--radius-sm); }
+</style></head>
+<body>
+<article class="pt-article">
+  <div class="eyebrow">Release notes · 2026-10-07</div>
+  <h1>Notes on rebasing 리베이스에 관하여</h1>
+  <p>A branch is a movable pointer to a commit. <code>git rebase</code> replays your commits on top of another base, so the history reads as if you had started there.</p>
+  <p>브랜치는 커밋을 가리키는 움직이는 포인터입니다. 리베이스는 내 커밋을 다른 기준점 위에 다시 쌓아서, 처음부터 거기서 시작한 것처럼 기록을 정리합니다.</p>
+  <h2>Rebase vs merge 리베이스와 병합</h2>
+  <p>Merging keeps every branch point; rebasing rewrites them into a straight line.</p>
+  <blockquote>Make it work, make it right, make it fast.</blockquote>
+</article>
+</body>
+</html>
