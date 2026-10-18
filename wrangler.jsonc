@@ -2,6 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "patina",
   "compatibility_date": "2026-08-15",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
   "workers_dev": false,
   "preview_urls": true,
   "routes": [
@@ -13,5 +17,14 @@
   // Static assets only: the generated registry, token files and fonts. No Worker script.
   "assets": {
     "directory": "./public"
+  },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": true
+    }
   }
 }
