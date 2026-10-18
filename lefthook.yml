@@ -1,0 +1,22 @@
+# https://lefthook.dev/configuration/
+
+pre-commit:
+  parallel: true
+  commands:
+    check-types:
+      glob: "*.{js,mjs,ts,tsx}"
+      run: pnpm exec tsc --noEmit
+    eslint:
+      glob: "*.{js,cjs,mjs,ts,tsx}"
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+    prettier:
+      glob: "*.{js,ts,tsx,css,json,yml,jsonc}"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+
+pre-push:
+  commands:
+    vitest:
+      glob: "*.{js,cjs,mjs,ts,tsx}"
+      run: pnpm test --run

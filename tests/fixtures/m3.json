@@ -1,0 +1,292 @@
+{
+    "source": "tools/m3.py",
+    "snapshot": "1792158781-4d76",
+    "contrast": {
+        "light": [
+            {
+                "foreground": "onPrimary",
+                "background": "primary",
+                "min": 4.5,
+                "ratio": 5.09112802587077
+            },
+            {
+                "foreground": "onPrimaryContainer",
+                "background": "primaryContainer",
+                "min": 4.5,
+                "ratio": 6.398105004773788
+            },
+            {
+                "foreground": "primary",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 5.367398961440311
+            },
+            {
+                "foreground": "primary",
+                "background": "surfaceContainer",
+                "min": 4.5,
+                "ratio": 4.824073569122017
+            },
+            {
+                "foreground": "onSecondaryContainer",
+                "background": "secondaryContainer",
+                "min": 4.5,
+                "ratio": 15.610875523399168
+            },
+            {
+                "foreground": "onTertiary",
+                "background": "tertiary",
+                "min": 4.5,
+                "ratio": 5.488820392942427
+            },
+            {
+                "foreground": "onTertiaryContainer",
+                "background": "tertiaryContainer",
+                "min": 4.5,
+                "ratio": 4.908457563421286
+            },
+            {
+                "foreground": "onError",
+                "background": "error",
+                "min": 4.5,
+                "ratio": 5.60060628596329
+            },
+            {
+                "foreground": "onErrorContainer",
+                "background": "errorContainer",
+                "min": 4.5,
+                "ratio": 4.686604153946176
+            },
+            {
+                "foreground": "error",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 5.84747193226363
+            },
+            {
+                "foreground": "onSurface",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 19.714313714184392
+            },
+            {
+                "foreground": "onSurfaceVariant",
+                "background": "surfaceVariant",
+                "min": 4.5,
+                "ratio": 4.704362599099368
+            },
+            {
+                "foreground": "onSurfaceVariant",
+                "background": "surfaceContainerHighest",
+                "min": 4.5,
+                "ratio": 4.501715435977563
+            },
+            {
+                "foreground": "inverseOnSurface",
+                "background": "inverseSurface",
+                "min": 4.5,
+                "ratio": 19.714313714184392
+            },
+            {
+                "foreground": "inversePrimary",
+                "background": "inverseSurface",
+                "min": 4.5,
+                "ratio": 7.999981806510091
+            },
+            {
+                "foreground": "outline",
+                "background": "surface",
+                "min": 3,
+                "ratio": 3.914747494817229
+            },
+            {
+                "foreground": "outline",
+                "background": "surfaceContainerHighest",
+                "min": 3,
+                "ratio": 3.366906449852725
+            }
+        ],
+        "dark": [
+            {
+                "foreground": "onPrimary",
+                "background": "primary",
+                "min": 4.5,
+                "ratio": 6.1422113423645
+            },
+            {
+                "foreground": "onPrimaryContainer",
+                "background": "primaryContainer",
+                "min": 4.5,
+                "ratio": 7.188929419840258
+            },
+            {
+                "foreground": "primary",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 7.999981806510091
+            },
+            {
+                "foreground": "primary",
+                "background": "surfaceContainer",
+                "min": 4.5,
+                "ratio": 7.04830278342075
+            },
+            {
+                "foreground": "onSecondaryContainer",
+                "background": "secondaryContainer",
+                "min": 4.5,
+                "ratio": 14.250782370864563
+            },
+            {
+                "foreground": "onTertiary",
+                "background": "tertiary",
+                "min": 4.5,
+                "ratio": 6.367081558164427
+            },
+            {
+                "foreground": "onTertiaryContainer",
+                "background": "tertiaryContainer",
+                "min": 4.5,
+                "ratio": 5.951384043988272
+            },
+            {
+                "foreground": "onError",
+                "background": "error",
+                "min": 4.5,
+                "ratio": 6.816315845850642
+            },
+            {
+                "foreground": "onErrorContainer",
+                "background": "errorContainer",
+                "min": 4.5,
+                "ratio": 4.90656426563259
+            },
+            {
+                "foreground": "error",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 6.816315845850642
+            },
+            {
+                "foreground": "onSurface",
+                "background": "surface",
+                "min": 4.5,
+                "ratio": 19.00447150651851
+            },
+            {
+                "foreground": "onSurfaceVariant",
+                "background": "surfaceVariant",
+                "min": 4.5,
+                "ratio": 6.0548946783992506
+            },
+            {
+                "foreground": "onSurfaceVariant",
+                "background": "surfaceContainerHighest",
+                "min": 4.5,
+                "ratio": 6.0548946783992506
+            },
+            {
+                "foreground": "inverseOnSurface",
+                "background": "inverseSurface",
+                "min": 4.5,
+                "ratio": 19.00447150651851
+            },
+            {
+                "foreground": "inversePrimary",
+                "background": "inverseSurface",
+                "min": 4.5,
+                "ratio": 5.17413804536434
+            },
+            {
+                "foreground": "outline",
+                "background": "surface",
+                "min": 3,
+                "ratio": 4.272280343074727
+            },
+            {
+                "foreground": "outline",
+                "background": "surfaceContainerHighest",
+                "min": 3,
+                "ratio": 3.2036322281099805
+            }
+        ]
+    },
+    "colors": {
+        "light": {
+            "primary": "#007A55",
+            "onPrimary": "#ECFDF5",
+            "primaryContainer": "#E0EFEB",
+            "onPrimaryContainer": "#006045",
+            "inversePrimary": "#00BC7D",
+            "secondary": "#5E6F73",
+            "onSecondary": "#FFFFFF",
+            "secondaryContainer": "#F1F3F3",
+            "onSecondaryContainer": "#161B1D",
+            "tertiary": "#0069A8",
+            "onTertiary": "#F0F9FF",
+            "tertiaryContainer": "#E0EDF5",
+            "onTertiaryContainer": "#0069A8",
+            "error": "#CD000E",
+            "onError": "#FAFAFA",
+            "errorContainer": "#F9E0E2",
+            "onErrorContainer": "#CD000E",
+            "background": "#FFFFFF",
+            "onBackground": "#090B0C",
+            "surface": "#FFFFFF",
+            "onSurface": "#090B0C",
+            "surfaceVariant": "#F1F3F3",
+            "onSurfaceVariant": "#5E6F73",
+            "surfaceTint": "#FFFFFF",
+            "inverseSurface": "#090B0C",
+            "inverseOnSurface": "#FFFFFF",
+            "outline": "#738488",
+            "outlineVariant": "#E3E7E8",
+            "scrim": "#000000",
+            "surfaceContainerLowest": "#FFFFFF",
+            "surfaceContainerLow": "#F9FBFB",
+            "surfaceContainer": "#F1F3F3",
+            "surfaceContainerHigh": "#EEF1F1",
+            "surfaceContainerHighest": "#EBEEEF",
+            "surfaceDim": "#E3E7E8",
+            "surfaceBright": "#FFFFFF"
+        },
+        "dark": {
+            "primary": "#00BC7D",
+            "onPrimary": "#002C22",
+            "primaryContainer": "#006045",
+            "onPrimaryContainer": "#ECFDF5",
+            "inversePrimary": "#007A55",
+            "secondary": "#9CA8AB",
+            "onSecondary": "#090B0C",
+            "secondaryContainer": "#22292B",
+            "onSecondaryContainer": "#F9FBFB",
+            "tertiary": "#00BCFF",
+            "onTertiary": "#052F4A",
+            "tertiaryContainer": "#073546",
+            "onTertiaryContainer": "#00BCFF",
+            "error": "#FF6467",
+            "onError": "#090B0C",
+            "errorContainer": "#442022",
+            "onErrorContainer": "#FF6467",
+            "background": "#090B0C",
+            "onBackground": "#F9FBFB",
+            "surface": "#090B0C",
+            "onSurface": "#F9FBFB",
+            "surfaceVariant": "#22292B",
+            "onSurfaceVariant": "#9CA8AB",
+            "surfaceTint": "#090B0C",
+            "inverseSurface": "#F9FBFB",
+            "inverseOnSurface": "#090B0C",
+            "outline": "#67787C",
+            "outlineVariant": "#222324",
+            "scrim": "#000000",
+            "surfaceContainerLowest": "#090B0C",
+            "surfaceContainerLow": "#101314",
+            "surfaceContainer": "#161B1D",
+            "surfaceContainerHigh": "#1C2223",
+            "surfaceContainerHighest": "#22292B",
+            "surfaceDim": "#090B0C",
+            "surfaceBright": "#22292B"
+        }
+    }
+}

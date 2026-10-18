@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "patina",
+  "compatibility_date": "2026-08-15",
+  "workers_dev": false,
+  "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "patina.ptcookie.net",
+      "custom_domain": true
+    }
+  ],
+  // Static assets only: the generated registry, token files and fonts. No Worker script.
+  "assets": {
+    "directory": "./public"
+  }
+}
