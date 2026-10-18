@@ -1,0 +1,18 @@
+// Patina for Slint: the design tokens and the compact desktop components.
+//
+// Vendor this folder into your project and register this file as a library, then import from `@patina`:
+//     slint_build::CompilerConfiguration::new().with_library_paths(HashMap::from([
+//         ("patina".to_string(), std::path::PathBuf::from("ui/patina/patina.slint")),
+//     ]))
+//     import { Theme, Typography, Button } from "@patina";
+// Colours, spacing and sizes come from `Theme`, never from literals. `Theme.current-mode` switches light and dark.
+
+export { ThemeMode, ThemeColors, TextStyle, Theme, Typography } from "tokens.slint";
+export { Badge, BadgeVariant } from "components/badge.slint";
+export { Button, ButtonVariant } from "components/button.slint";
+export { Input } from "components/input.slint";
+export { Kbd } from "components/kbd.slint";
+export { PaneHeader } from "components/pane-header.slint";
+export { ListRow, TreeRow } from "components/rows.slint";
+export { Separator } from "components/separator.slint";
+export { Tooltip } from "components/tooltip.slint";

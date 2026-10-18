@@ -1,0 +1,127 @@
+import { Theme, Typography } from "../tokens.slint";
+import { FocusRing } from "focus-ring.slint";
+import { TooltipPopup } from "tooltip.slint";
+
+export enum ButtonVariant { primary, outline, secondary, ghost, destructive, link }
+
+// A compact button for desktop tools: 28px tall (`compact-control`), radius `radius-md`, `compact-label` text.
+// `primary` is for the one main action of a view; `destructive` is a tint, never a solid fill. With an icon and
+// no text it is a 28px square: give it a `tooltip`, which also names it for screen readers.
+// `pill` switches to the fully rounded shape; apply it to a whole group of controls at once.
+//
+// The component is a transparent slot that is at least 28px tall; the visible button is centered in it. In a
+// HorizontalLayout the slot takes the height of the row, so the button sits in the middle of a toolbar.
+export component Button inherits Rectangle {
+    in property <string> text;
+    in property <image> icon;
+    in property <ButtonVariant> variant: ButtonVariant.primary;
+    in property <bool> pill: false;
+    in property <bool> enabled: true;
+    // A short label shown after the pointer rests on the button, with an optional shortcut as a Kbd.
+    in property <string> tooltip;
+    in property <string> tooltip-shortcut;
+    out property <bool> has-hover: touch.has-hover;
+    out property <bool> pressed: touch.pressed;
+    callback clicked();
+
+    property <bool> icon-only: root.text == "" && root.icon.width > 0;
+    property <bool> keyboard-focus: false;
+    property <brush> fill: root.variant == ButtonVariant.primary ? (root.has-hover ? Theme.current.primary-hover : Theme.current.primary)
+        : root.variant == ButtonVariant.secondary ? (root.has-hover ? Theme.current.secondary-hover : Theme.current.secondary)
+        : root.variant == ButtonVariant.outline ? (root.has-hover ? Theme.current.outline-hover : Theme.current.outline-fill)
+        : root.variant == ButtonVariant.ghost ? (root.has-hover ? Theme.current.ghost-hover : transparent)
+        : root.variant == ButtonVariant.destructive ? (root.has-hover ? Theme.current.destructive-muted-hover : Theme.current.destructive-muted)
+        : transparent;
+    property <color> content-color: root.variant == ButtonVariant.primary ? Theme.current.primary-foreground
+        : root.variant == ButtonVariant.secondary ? Theme.current.secondary-foreground
+        : root.variant == ButtonVariant.destructive ? Theme.current.destructive
+        : root.variant == ButtonVariant.link ? Theme.current.link
+        : Theme.current.foreground;
+    property <length> corner: root.pill ? Theme.radius-full : Theme.radius-md;
+
+    min-height: Theme.compact-control;
+    vertical-stretch: 0;
+    min-width: Theme.compact-control;
+    horizontal-stretch: 0;
+    preferred-width: root.icon-only ? Theme.compact-control : row.preferred-width + 2px;
+    accessible-role: AccessibleRole.button;
+    accessible-label: root.text != "" ? root.text : root.tooltip;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { root.clicked(); }
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: Theme.compact-control;
+        background: root.fill;
+        border-radius: root.corner;
+        border-width: 1px;
+        border-color: root.variant == ButtonVariant.outline ? Theme.current.border : transparent;
+        opacity: root.enabled ? 1 : 0.5;
+
+        // The content moves down 1px while pressed, as the web buttons do.
+        Rectangle {
+            y: root.pressed ? 1px : 0px;
+            width: parent.width;
+            height: parent.height;
+            row := HorizontalLayout {
+                alignment: center;
+                padding-left: root.icon-only ? 0px : Theme.compact-pad;
+                padding-right: root.icon-only ? 0px : Theme.compact-pad;
+                spacing: Theme.space-1-5;
+                if root.icon.width > 0 : Image {
+                    source: root.icon;
+                    colorize: root.content-color;
+                    width: Theme.icon-md;
+                    height: Theme.icon-md;
+                    y: (parent.height - self.height) / 2;
+                }
+                if root.text != "" : Text {
+                    text: root.text;
+                    color: root.content-color;
+                    font-family: Typography.compact-label.font-family;
+                    font-size: Typography.compact-label.font-size;
+                    font-weight: Typography.compact-label.font-weight;
+                    vertical-alignment: center;
+                    overflow: elide;
+                }
+            }
+        }
+
+        touch := TouchArea {
+            enabled: root.enabled;
+            mouse-cursor: root.enabled ? MouseCursor.pointer : MouseCursor.default;
+            clicked => { root.clicked(); }
+        }
+
+        FocusScope {
+            enabled: root.enabled;
+            focus-on-click: false;
+            focus-gained(reason) => { root.keyboard-focus = reason == FocusReason.tab-navigation; }
+            focus-lost(reason) => { root.keyboard-focus = false; }
+            key-pressed(event) => {
+                if (event.text == " " || event.text == Key.Return) {
+                    root.clicked();
+                    return accept;
+                }
+                return reject;
+            }
+        }
+
+        if root.keyboard-focus : FocusRing {
+            radius: root.corner;
+            host-width: parent.width;
+            host-height: parent.height;
+        }
+
+        if root.tooltip != "" : TooltipPopup {
+            x: 0px;
+            y: 0px;
+            width: parent.width;
+            height: parent.height;
+            text: root.tooltip;
+            shortcut: root.tooltip-shortcut;
+            hovered: root.has-hover && !root.pressed;
+        }
+    }
+}

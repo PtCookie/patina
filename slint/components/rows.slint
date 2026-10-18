@@ -1,0 +1,114 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// A row of a sidebar tree or navigation list: 28px (`compact-row`), radius-sm, an optional leading icon and a
+// trailing count. Hover and selection fill `sidebar-accent`; the selected row is medium weight. Inset the rows
+// 6px from the pane edge (`padding-left`/`padding-right` of the layout that holds them).
+export component TreeRow inherits Rectangle {
+    in property <string> text;
+    in property <image> icon;
+    in property <string> count;
+    in property <bool> selected: false;
+    in property <bool> enabled: true;
+    callback clicked();
+
+    height: Theme.compact-row;
+    background: root.selected || touch.has-hover ? Theme.current.sidebar-accent : transparent;
+    border-radius: Theme.radius-sm;
+    opacity: root.enabled ? 1 : 0.5;
+    accessible-role: AccessibleRole.list-item;
+    accessible-label: root.text;
+    accessible-item-selectable: true;
+    accessible-item-selected: root.selected;
+    accessible-action-default => { root.clicked(); }
+
+    HorizontalLayout {
+        padding-left: Theme.space-2;
+        padding-right: Theme.space-2;
+        spacing: Theme.space-2;
+        if root.icon.width > 0 : Image {
+            source: root.icon;
+            colorize: Theme.current.muted-foreground;
+            width: Theme.icon-md;
+            height: Theme.icon-md;
+            y: (parent.height - self.height) / 2;
+        }
+        Text {
+            text: root.text;
+            color: root.selected ? Theme.current.sidebar-accent-foreground : Theme.current.sidebar-foreground;
+            font-family: Typography.compact-body.font-family;
+            font-size: Typography.compact-body.font-size;
+            font-weight: root.selected ? 500 : Typography.compact-body.font-weight;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+        if root.count != "" : Text {
+            text: root.count;
+            color: Theme.current.muted-foreground;
+            font-family: Typography.caption-regular.font-family;
+            font-size: Typography.caption-regular.font-size;
+            font-weight: Typography.caption-regular.font-weight;
+            vertical-alignment: center;
+            horizontal-alignment: right;
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: MouseCursor.pointer;
+        clicked => { root.clicked(); }
+    }
+}
+
+// A row of a list pane (files, commits, results): a title with an optional second line of `mono-sm` detail, at least
+// 44px tall, divided from the next by a `border` hairline. The selected row is on `accent`.
+export component ListRow inherits Rectangle {
+    in property <string> text;
+    in property <string> detail;
+    in property <bool> selected: false;
+    in property <bool> enabled: true;
+    callback clicked();
+
+    min-height: 44px;
+    preferred-height: 44px;
+    background: root.selected ? Theme.current.accent : (touch.has-hover ? Theme.current.sidebar-accent : transparent);
+    opacity: root.enabled ? 1 : 0.5;
+    accessible-role: AccessibleRole.list-item;
+    accessible-label: root.detail != "" ? "\{root.text}, \{root.detail}" : root.text;
+    accessible-item-selectable: true;
+    accessible-item-selected: root.selected;
+    accessible-action-default => { root.clicked(); }
+
+    VerticalLayout {
+        padding-left: Theme.space-3;
+        padding-right: Theme.space-3;
+        alignment: center;
+        Text {
+            text: root.text;
+            color: root.selected ? Theme.current.accent-foreground : Theme.current.foreground;
+            font-family: Typography.compact-body.font-family;
+            font-size: Typography.compact-body.font-size;
+            font-weight: root.selected ? 500 : Typography.compact-body.font-weight;
+            overflow: elide;
+        }
+        if root.detail != "" : Text {
+            text: root.detail;
+            color: Theme.current.muted-foreground;
+            font-family: Typography.mono-sm.font-family;
+            font-size: Typography.mono-sm.font-size;
+            font-weight: Typography.mono-sm.font-weight;
+            overflow: elide;
+        }
+    }
+
+    Rectangle {
+        y: parent.height - 1px;
+        height: 1px;
+        background: Theme.current.border;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: MouseCursor.pointer;
+        clicked => { root.clicked(); }
+    }
+}

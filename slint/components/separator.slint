@@ -1,0 +1,16 @@
+import { Theme } from "../tokens.slint";
+
+// A 1px `border` hairline. Horizontal fills the width of its row, vertical the height. Use it to divide groups
+// inside one surface; between whole sections use spacing instead.
+export component Separator inherits Rectangle {
+    in property <Orientation> orientation: Orientation.horizontal;
+
+    background: Theme.current.border;
+    min-height: root.orientation == Orientation.horizontal ? 1px : 0px;
+    max-height: root.orientation == Orientation.horizontal ? 1px : 100000px;
+    min-width: root.orientation == Orientation.vertical ? 1px : 0px;
+    max-width: root.orientation == Orientation.vertical ? 1px : 100000px;
+    preferred-height: root.orientation == Orientation.horizontal ? 1px : 0px;
+    preferred-width: root.orientation == Orientation.vertical ? 1px : 0px;
+    accessible-role: AccessibleRole.none;
+}

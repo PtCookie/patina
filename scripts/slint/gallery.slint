@@ -1,0 +1,250 @@
+// Development gallery for the Patina Slint library. Not shipped. Render it with `pnpm slint:shot` (see AGENTS.md).
+import { Theme, Typography, Badge, BadgeVariant, Button, ButtonVariant, Input, Kbd, PaneHeader, ListRow, Separator, TreeRow, Tooltip } from "@patina";
+
+// load-data reaches a global only when the file exports it.
+export { Theme }
+
+component Diff inherits Rectangle {
+    in property <string> text;
+    in property <color> fill: transparent;
+    height: 18px;
+    background: root.fill;
+    HorizontalLayout {
+        padding-left: Theme.space-3;
+        Text {
+            text: root.text;
+            color: Theme.current.foreground;
+            font-family: Typography.mono-sm.font-family;
+            font-size: 12px;
+            vertical-alignment: center;
+        }
+    }
+}
+
+// The DesktopShell preview built from the library.
+export component Shell inherits Window {
+    width: 960px;
+    height: 440px;
+    background: Theme.current.background;
+
+    VerticalLayout {
+        Rectangle {
+            height: 41px;
+            background: Theme.current.sidebar;
+            HorizontalLayout {
+                padding-left: Theme.space-3;
+                padding-right: Theme.space-2;
+                spacing: Theme.space-1;
+                alignment: stretch;
+                Text {
+                    text: "pathpoint";
+                    color: Theme.current.foreground;
+                    font-family: Theme.font-heading;
+                    font-size: 13px;
+                    font-weight: 600;
+                    vertical-alignment: center;
+                    horizontal-stretch: 0;
+                }
+                Rectangle { width: Theme.space-2; horizontal-stretch: 0; }
+                Button { text: "Fetch"; variant: ButtonVariant.ghost; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/arrow-down.svg"); }
+                Button { text: "Push"; variant: ButtonVariant.ghost; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/arrow-up.svg"); }
+                Button { text: "main"; variant: ButtonVariant.ghost; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+                Rectangle { }
+                Input {
+                    placeholder-text: "Filter";
+                    width: 180px;
+                    horizontal-stretch: 0;
+                }
+                Button {
+                    text: "Commit";
+                    icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-commit.svg");
+                }
+            }
+            Rectangle {
+                y: parent.height - 1px;
+                height: 1px;
+                background: Theme.current.border;
+            }
+        }
+
+        HorizontalLayout {
+            Rectangle {
+                width: 199px;
+                background: Theme.current.sidebar;
+                VerticalLayout {
+                    alignment: start;
+                    PaneHeader { text: "Workspace"; }
+                    VerticalLayout {
+                        padding-left: Theme.space-1-5;
+                        padding-right: Theme.space-1-5;
+                        TreeRow { text: "Changes"; count: "4"; selected: true; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/file.svg"); }
+                        TreeRow { text: "History"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/clock-counter-clockwise.svg"); }
+                        TreeRow { text: "Stashes"; count: "2"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/archive.svg"); }
+                    }
+                    PaneHeader { text: "Branches"; }
+                    VerticalLayout {
+                        padding-left: Theme.space-1-5;
+                        padding-right: Theme.space-1-5;
+                        TreeRow { text: "main"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+                        TreeRow { text: "feature/diff-view"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+                        TreeRow { text: "v0.4.2"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/tag.svg"); }
+                    }
+                }
+            }
+            Separator { orientation: Orientation.vertical; }
+            Rectangle {
+                width: 259px;
+                VerticalLayout {
+                    alignment: start;
+                    PaneHeader {
+                        text: "Staged · 2";
+                        Button {
+                            variant: ButtonVariant.ghost;
+                            icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/arrow-down.svg");
+                            tooltip: "Unstage all";
+                        }
+                    }
+                    ListRow { text: "diff-view.slint"; detail: "ui/components"; selected: true; }
+                    ListRow { text: "repo.rs"; detail: "src/git"; }
+                    PaneHeader { text: "Unstaged · 2"; }
+                    ListRow { text: "Cargo.toml"; detail: "."; }
+                    ListRow { text: "theme.slint"; detail: "ui"; }
+                }
+            }
+            Separator { orientation: Orientation.vertical; }
+            VerticalLayout {
+                padding: Theme.space-4;
+                spacing: Theme.space-3;
+                alignment: start;
+                HorizontalLayout {
+                    spacing: Theme.space-2;
+                    alignment: start;
+                    Text {
+                        text: "diff-view.slint";
+                        color: Theme.current.foreground;
+                        font-family: Theme.font-heading;
+                        font-size: 14px;
+                        font-weight: 500;
+                        vertical-alignment: center;
+                    }
+                    Badge { text: "12"; variant: BadgeVariant.success; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/plus.svg"); }
+                    Badge { text: "3"; variant: BadgeVariant.destructive; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/minus.svg"); }
+                }
+                Rectangle {
+                    background: Theme.current.card;
+                    border-radius: Theme.radius-xl;
+                    clip: true;
+                    VerticalLayout {
+                        Diff { text: "@@ -14,6 +14,9 @@"; fill: Theme.current.muted; }
+                        Diff { text: "    in property <string> path;"; }
+                        Diff { text: "-   background: #ffffff;"; fill: Theme.current.destructive-muted; }
+                        Diff { text: "+   background: Theme.current.card;"; fill: Theme.current.success-muted; }
+                        Diff { text: "+   border-radius: Radius.r-2xl;"; fill: Theme.current.success-muted; }
+                        Diff { text: "    callback stage();"; }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Every variant and state of the tier 1 components, for visual review.
+export component Board inherits Window {
+    width: 780px;
+    height: 400px;
+    background: Theme.current.background;
+
+    VerticalLayout {
+        padding: Theme.space-4;
+        spacing: Theme.space-4;
+        alignment: start;
+
+        HorizontalLayout {
+            spacing: Theme.space-2;
+            alignment: start;
+            Button { text: "Commit"; }
+            Button { text: "Outline"; variant: ButtonVariant.outline; }
+            Button { text: "Secondary"; variant: ButtonVariant.secondary; }
+            Button { text: "Ghost"; variant: ButtonVariant.ghost; }
+            Button { text: "Delete branch"; variant: ButtonVariant.destructive; }
+            Button { text: "Link"; variant: ButtonVariant.link; }
+            Button { text: "Disabled"; enabled: false; }
+            Button { icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/plus.svg"); variant: ButtonVariant.outline; tooltip: "New branch"; }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-2;
+            alignment: start;
+            Button { text: "Pill primary"; pill: true; }
+            Button { text: "Pill outline"; pill: true; variant: ButtonVariant.outline; }
+            Button { text: "Fetch"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/arrow-down.svg"); variant: ButtonVariant.outline; }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-2;
+            alignment: start;
+            Badge { text: "Default"; }
+            Badge { text: "Secondary"; variant: BadgeVariant.secondary; }
+            Badge { text: "Outline"; variant: BadgeVariant.outline; }
+            Badge { text: "Merged"; variant: BadgeVariant.success; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/check-circle.svg"); }
+            Badge { text: "Conflict"; variant: BadgeVariant.warning; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/tag.svg"); }
+            Badge { text: "Failed"; variant: BadgeVariant.destructive; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/x.svg"); }
+            Badge { text: "Info"; variant: BadgeVariant.info; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/gear.svg"); }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Input { placeholder-text: "Filter"; width: 180px; }
+            Input { placeholder-text: "Pill"; width: 140px; pill: true; }
+            Input { text: "origin/main"; width: 140px; }
+            Input { text: "bad name"; invalid: true; width: 140px; }
+            Input { placeholder-text: "Disabled"; enabled: false; width: 120px; }
+        }
+        HorizontalLayout {
+            spacing: Theme.space-1;
+            alignment: start;
+            Kbd { text: "⌘"; }
+            Kbd { text: "K"; }
+            Kbd { text: "Shift"; }
+            Kbd { text: "Enter"; }
+            Rectangle { width: Theme.space-6; }
+            Rectangle {
+                background: Theme.current.foreground;
+                width: 0px;
+            }
+        }
+        Tooltip { text: "Stage all changes"; shortcut: "⌘S"; horizontal-stretch: 0; width: self.preferred-width; }
+        HorizontalLayout {
+            height: 20px;
+            Text { text: "Changes"; color: Theme.current.foreground; vertical-alignment: center; horizontal-stretch: 0; }
+            Separator { orientation: Orientation.vertical; }
+            Text { text: "History"; color: Theme.current.foreground; vertical-alignment: center; horizontal-stretch: 0; }
+        }
+        Separator { }
+    }
+}
+
+// Callbacks and focus, for checking through the MCP server (see AGENTS.md).
+export component Interactive inherits Window {
+    width: 360px;
+    height: 220px;
+    background: Theme.current.background;
+    property <int> clicks: 0;
+    property <string> echo: "";
+    property <int> selected: 0;
+
+    VerticalLayout {
+        padding: Theme.space-4;
+        spacing: Theme.space-2;
+        alignment: start;
+        HorizontalLayout {
+            spacing: Theme.space-2;
+            alignment: start;
+            Button { text: "First"; clicked => { root.clicks += 1; } }
+            Button { text: "Second"; variant: ButtonVariant.outline; clicked => { root.clicks += 10; } }
+            Button { text: "Off"; enabled: false; clicked => { root.clicks += 1000; } }
+        }
+        Input { placeholder-text: "Type"; edited(text) => { root.echo = text; } }
+        Text { text: "clicks=\{root.clicks} echo=\{root.echo} selected=\{root.selected}"; color: Theme.current.foreground; accessible-role: AccessibleRole.text; accessible-label: self.text; }
+        TreeRow { text: "One"; selected: root.selected == 1; clicked => { root.selected = 1; } }
+        TreeRow { text: "Two"; selected: root.selected == 2; clicked => { root.selected = 2; } }
+    }
+}

@@ -1,0 +1,28 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// The title row of a pane: 32px (`compact-head`), `compact-label` in `muted-foreground`. Children are placed at
+// the trailing end, for example an icon Button.
+export component PaneHeader inherits Rectangle {
+    in property <string> text;
+
+    height: Theme.compact-head;
+    accessible-role: AccessibleRole.groupbox;
+    accessible-label: root.text;
+
+    HorizontalLayout {
+        padding-left: Theme.space-3;
+        padding-right: Theme.compact-pad;
+        spacing: Theme.space-1;
+        Text {
+            text: root.text;
+            color: Theme.current.muted-foreground;
+            font-family: Typography.compact-label.font-family;
+            font-size: Typography.compact-label.font-size;
+            font-weight: Typography.compact-label.font-weight;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+        Rectangle { }
+        @children
+    }
+}

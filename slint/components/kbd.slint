@@ -1,0 +1,32 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// A keycap: 22px tall (at least 22px wide), radius-sm, `muted` fill with muted `caption` text. `inverted` flips it
+// to the page colours for use inside a Tooltip.
+export component Kbd inherits Rectangle {
+    in property <string> text;
+    in property <bool> inverted: false;
+
+    min-height: 22px;
+    vertical-stretch: 0;
+    min-width: 22px;
+    horizontal-stretch: 0;
+    preferred-width: label.preferred-width + 2 * Theme.space-1-5;
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: 22px;
+        background: root.inverted ? Theme.current.background : Theme.current.muted;
+        border-radius: Theme.radius-sm;
+
+        label := Text {
+            text: root.text;
+            color: root.inverted ? Theme.current.foreground : Theme.current.muted-foreground;
+            font-family: Typography.caption.font-family;
+            font-size: Typography.caption.font-size;
+            font-weight: Typography.caption.font-weight;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+    }
+}

@@ -1,0 +1,83 @@
+import { Theme, Typography } from "../tokens.slint";
+import { Kbd } from "kbd.slint";
+
+// The tooltip bubble: `foreground` fill with `background` text, `caption-regular`, radius-md. Use it through a
+// component's `tooltip` property; build it directly only for a custom popup.
+export component Tooltip inherits Rectangle {
+    in property <string> text;
+    // A shortcut shown as a Kbd on the inverted colours.
+    in property <string> shortcut;
+
+    background: Theme.current.foreground;
+    border-radius: Theme.radius-md;
+    preferred-width: row.preferred-width;
+    preferred-height: row.preferred-height;
+    accessible-role: AccessibleRole.text;
+    accessible-label: root.text;
+
+    row := HorizontalLayout {
+        padding-left: Theme.space-3;
+        padding-right: Theme.space-3;
+        padding-top: Theme.space-1-5;
+        padding-bottom: Theme.space-1-5;
+        spacing: Theme.space-1-5;
+        alignment: center;
+        Text {
+            text: root.text;
+            color: Theme.current.background;
+            font-family: Typography.caption-regular.font-family;
+            font-size: Typography.caption-regular.font-size;
+            font-weight: Typography.caption-regular.font-weight;
+            vertical-alignment: center;
+        }
+        if root.shortcut != "" : Kbd {
+            text: root.shortcut;
+            inverted: true;
+        }
+    }
+}
+
+// Shows a Tooltip above the parent element once `hovered` has been true for `delay`. Put it inside the element that
+// the tooltip describes, make it fill that element (`width: parent.width; height: parent.height`) and bind
+// `hovered` to its hover state.
+export component TooltipPopup inherits Rectangle {
+    in property <string> text;
+    in property <string> shortcut;
+    in property <bool> hovered;
+    in property <duration> delay: 500ms;
+    // Opens the popup immediately, for previews and tests.
+    in property <bool> force-open: false;
+
+    timer := Timer {
+        interval: root.delay;
+        running: root.hovered && !root.force-open;
+        triggered => {
+            popup.show();
+            self.running = false;
+        }
+    }
+
+    popup := PopupWindow {
+        close-policy: PopupClosePolicy.no-auto-close;
+        // Relative to this element, which fills the element the tooltip describes.
+        x: (root.width - self.width) / 2;
+        y: -self.height - Theme.space-1-5;
+        width: bubble.preferred-width;
+        height: bubble.preferred-height;
+        bubble := Tooltip {
+            text: root.text;
+            shortcut: root.shortcut;
+        }
+    }
+
+    changed hovered => {
+        if (!root.hovered) {
+            popup.close();
+        }
+    }
+    init => {
+        if (root.force-open) {
+            popup.show();
+        }
+    }
+}
