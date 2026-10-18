@@ -4,6 +4,8 @@
 import { gzipSync } from "node:zlib";
 
 const BLOCK = 512;
+const GZIP_OS_BYTE = 9; // the last byte of the 10-byte gzip header
+const GZIP_OS_UNIX = 3;
 
 function field(text: string, length: number): Buffer {
   const buffer = Buffer.alloc(length);
@@ -41,7 +43,9 @@ export function tarGz(files: Record<string, string>): Buffer {
     parts.push(header(path, body.length), body, Buffer.alloc((BLOCK - (body.length % BLOCK)) % BLOCK));
   }
   parts.push(Buffer.alloc(BLOCK * 2)); // end of archive
-  return gzipSync(Buffer.concat(parts), { level: 9 });
+  const gz = gzipSync(Buffer.concat(parts), { level: 9 });
+  gz[GZIP_OS_BYTE] = GZIP_OS_UNIX; // zlib writes the host OS here (3 on Linux, 19 on macOS), which would change the bytes per machine
+  return gz;
 }
 
 /** The Slint library as an archive that unpacks to `patina/…`; only the files below `slint/`. */

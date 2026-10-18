@@ -44,6 +44,11 @@ describe("tarGz", () => {
     expect(tarGz(reordered).equals(tarGz(files))).toBe(true);
   });
 
+  it("writes the same gzip header on every machine", () => {
+    // magic, deflate, no flags, mtime 0, best compression, OS unix; zlib would write the host OS (19 on macOS) here
+    expect([...tarGz(files).subarray(0, 10)]).toEqual([0x1f, 0x8b, 8, 0, 0, 0, 0, 0, 2, 3]);
+  });
+
   it("rejects a path that does not fit a ustar header", () => {
     expect(() => tarGz({ [`patina/${"x".repeat(120)}.slint`]: "" })).toThrow(/longer than 100/);
   });
