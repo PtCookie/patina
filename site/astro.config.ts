@@ -1,6 +1,7 @@
 import { copyFileSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { unified } from "@astrojs/markdown-remark";
+import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import { previewCss, type RawTokens } from "../src/emit/previewcss";
@@ -19,6 +20,8 @@ export default defineConfig({
   site: "https://patina.ptcookie.net",
   markdown: { processor: unified({ rehypePlugins: [rehypeLinks] }) },
   integrations: [
+    // The preview pages are iframe contents (noindex): keep them out of the sitemap too.
+    sitemap({ filter: (page) => !page.includes("/preview/") }),
     starlight({
       title: "Patina",
       description:
