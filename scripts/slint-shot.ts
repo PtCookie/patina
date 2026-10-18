@@ -33,7 +33,7 @@ try {
   for (const mode of ["light", "dark"]) {
     const data = join(temp, `${mode}.json`);
     writeFileSync(data, JSON.stringify({ "Theme.current-mode": mode }));
-    for (const component of ["Shell", "Board", "Controls"]) {
+    for (const component of ["Shell", "Board", "Controls", "Panels"]) {
       const target = join(out, `${component.toLowerCase()}-${mode}.png`);
       const result = run("slint-viewer", [
         "-L",

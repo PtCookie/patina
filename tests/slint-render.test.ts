@@ -49,8 +49,8 @@ describe.skipIf(!hasViewer)("slint-viewer", () => {
     return readFileSync(out);
   }
 
-  it("renders the shell, the board and the controls as PNG files", () => {
-    for (const component of ["Shell", "Board", "Controls"]) {
+  it("renders the shell, the board, the controls and the panels as PNG files", () => {
+    for (const component of ["Shell", "Board", "Controls", "Panels"]) {
       expect(render(component, "light").subarray(0, 4).equals(PNG)).toBe(true);
     }
   });

@@ -76,6 +76,11 @@ describe("the library sources", () => {
         "MenuSeparator",
         "Table",
         "TableColumn",
+        "Alert",
+        "AlertVariant",
+        "Card",
+        "Collapsible",
+        "Toggle",
       ]),
     );
   });
@@ -111,7 +116,7 @@ describe("the Slint compiler", () => {
     const entry = install("full");
     const ui = compile(
       entry,
-      `import { Theme, ThemeMode, Typography, Button, ButtonVariant, Input, Badge, BadgeVariant, Kbd, Separator, Tooltip, TreeRow, ListRow, PaneHeader, Checkbox, Switch, Tabs, Select, Menu, MenuItem, MenuLabel, MenuSeparator, Table } from "@patina";
+      `import { Theme, ThemeMode, Typography, Button, ButtonVariant, Input, Badge, BadgeVariant, Kbd, Separator, Tooltip, TreeRow, ListRow, PaneHeader, Checkbox, Switch, Tabs, Select, Menu, MenuItem, MenuLabel, MenuSeparator, Table, Alert, AlertVariant, Card, Collapsible, Toggle } from "@patina";
 export component App inherits Window {
     in-out property <ThemeMode> mode <=> Theme.current-mode;
     background: Theme.current.background;
@@ -130,6 +135,9 @@ export component App inherits Window {
         Tabs { model: ["Changes", "History"]; }
         Select { model: ["main", "develop"]; placeholder-text: "Branch"; }
         Menu { MenuLabel { text: "Branch"; } MenuItem { text: "Rename"; shortcut: "F2"; } MenuSeparator { } MenuItem { text: "Delete"; destructive: true; } }
+        Alert { title: "Heads up"; variant: AlertVariant.warning; }
+        Card { title: "Repository"; Toggle { text: "Wrap"; } }
+        Collapsible { text: "Branches"; open: true; Text { text: "main"; } }
         Table { columns: [{ title: "Name" }, { title: "Size", width: 48px, numeric: true }]; rows: [["a.rs", "12"]]; }
         Text { font-family: Typography.body.font-family; text: "x"; }
     }
@@ -160,6 +168,7 @@ export component App inherits Window {
     expect(typeof ui.Shell).toBe("function");
     expect(typeof ui.Board).toBe("function");
     expect(typeof ui.Controls).toBe("function");
+    expect(typeof ui.Panels).toBe("function");
     expect(typeof ui.Interactive).toBe("function");
   });
 

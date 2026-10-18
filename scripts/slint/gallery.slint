@@ -1,5 +1,5 @@
 // Development gallery for the Patina Slint library. Not shipped. Render it with `pnpm slint:shot` (see AGENTS.md).
-import { Theme, Typography, Badge, BadgeVariant, Button, ButtonVariant, Checkbox, Input, Kbd, Menu, MenuItem, MenuLabel, MenuSeparator, PaneHeader, ListRow, Select, Separator, Switch, Table, Tabs, TreeRow, Tooltip } from "@patina";
+import { Theme, Typography, Alert, AlertVariant, Badge, BadgeVariant, Button, ButtonVariant, Card, Checkbox, Collapsible, Input, Kbd, Menu, MenuItem, MenuLabel, MenuSeparator, PaneHeader, ListRow, Select, Separator, Switch, Table, Tabs, Toggle, TreeRow, Tooltip } from "@patina";
 
 // load-data reaches a global only when the file exports it.
 export { Theme }
@@ -301,10 +301,71 @@ export component Controls inherits Window {
     }
 }
 
+// Every state of the tier 3 components, for visual review.
+export component Panels inherits Window {
+    width: 780px;
+    height: 520px;
+    background: Theme.current.background;
+
+    HorizontalLayout {
+        padding: Theme.space-4;
+        spacing: Theme.space-4;
+        VerticalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Alert { title: "Heads up"; description: "Alerts pair a tone with an icon and a word."; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/info.svg"); }
+            Alert { title: "Push rejected"; description: "The remote has commits you do not have."; variant: AlertVariant.destructive; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/x-circle.svg"); }
+            Alert { title: "Merged"; variant: AlertVariant.success; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/check-circle.svg"); }
+            Alert {
+                title: "Conflicts in 2 files";
+                description: "Resolve them before you commit.";
+                variant: AlertVariant.warning;
+                icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/warning.svg");
+                Button { text: "Resolve"; variant: ButtonVariant.outline; }
+            }
+            Alert { title: "Update available"; variant: AlertVariant.info; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/info.svg"); }
+        }
+        VerticalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Card {
+                title: "Repository";
+                description: "Settings for this checkout.";
+                Checkbox { text: "Fetch on focus"; checked: true; }
+                Separator { }
+                HorizontalLayout {
+                    spacing: Theme.space-2;
+                    alignment: end;
+                    Button { text: "Cancel"; variant: ButtonVariant.ghost; }
+                    Button { text: "Save"; }
+                }
+            }
+            HorizontalLayout {
+                spacing: Theme.space-1;
+                alignment: start;
+                Toggle { text: "Wrap"; }
+                Toggle { text: "Hidden"; checked: true; }
+                Toggle { text: "Outline"; outline: true; }
+                Toggle { text: "Outline on"; outline: true; checked: true; }
+                Toggle { icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/tag.svg"); tooltip: "Show tags"; }
+                Toggle { text: "Off"; enabled: false; }
+            }
+            Collapsible {
+                text: "Branches";
+                open: true;
+                TreeRow { text: "main"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+                TreeRow { text: "develop"; icon: @image-url("../../node_modules/@phosphor-icons/core/assets/regular/git-branch.svg"); }
+            }
+            Separator { }
+            Collapsible { text: "Tags"; }
+        }
+    }
+}
+
 // Callbacks and focus, for checking through the MCP server (see AGENTS.md).
 export component Interactive inherits Window {
     width: 360px;
-    height: 460px;
+    height: 560px;
     background: Theme.current.background;
     property <int> clicks: 0;
     property <string> echo: "";
@@ -315,6 +376,8 @@ export component Interactive inherits Window {
     property <int> option: -1;
     property <int> picked-row: -1;
     property <string> menu: "";
+    property <bool> pinned: false;
+    property <bool> expanded: false;
 
     VerticalLayout {
         padding: Theme.space-4;
@@ -345,6 +408,13 @@ export component Interactive inherits Window {
             select := Select { model: ["main", "develop", "release"]; placeholder-text: "Branch"; width: 140px; selected(index) => { root.option = index; } }
             Button { text: "Menu"; variant: ButtonVariant.outline; clicked => { menu-popup.show(); } }
         }
+        HorizontalLayout {
+            spacing: Theme.space-3;
+            alignment: start;
+            Toggle { text: "Pin"; toggled(value) => { root.pinned = value; } }
+            Collapsible { text: "More"; width: 120px; toggled(value) => { root.expanded = value; } Text { text: "Details"; color: Theme.current.foreground; } }
+        }
+        Text { text: "pinned=\{root.pinned ? 1 : 0} expanded=\{root.expanded ? 1 : 0}"; color: Theme.current.foreground; accessible-role: AccessibleRole.text; accessible-label: self.text; }
         Table {
             height: 84px;
             columns: [{ title: "Name" }, { title: "Count", width: 56px, numeric: true }];

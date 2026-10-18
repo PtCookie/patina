@@ -1,0 +1,44 @@
+import { Theme, Typography } from "../tokens.slint";
+
+// A `card` surface for grouping content in a pane: radius-xl, a 1px `border` instead of the web's shadow ring (the
+// library has no shadows), padding and gap `space-4`. An optional `title` (the heading font at `label` size) and
+// `description` (`muted-foreground`) form the header; the children are the content. Do not nest cards: divide inside
+// one with a Separator.
+export component Card inherits Rectangle {
+    in property <string> title;
+    in property <string> description;
+
+    preferred-height: layout.preferred-height;
+    background: Theme.current.card;
+    border-radius: Theme.radius-xl;
+    border-width: 1px;
+    border-color: Theme.current.border;
+    accessible-role: AccessibleRole.groupbox;
+    accessible-label: root.title;
+
+    layout := VerticalLayout {
+        padding: Theme.space-4;
+        spacing: Theme.space-3;
+        alignment: start;
+        if root.title != "" || root.description != "" : VerticalLayout {
+            spacing: Theme.space-1;
+            if root.title != "" : Text {
+                text: root.title;
+                color: Theme.current.card-foreground;
+                font-family: Theme.font-heading;
+                font-size: Typography.label.font-size;
+                font-weight: Typography.label.font-weight;
+                overflow: elide;
+            }
+            if root.description != "" : Text {
+                text: root.description;
+                color: Theme.current.muted-foreground;
+                font-family: Typography.compact-body.font-family;
+                font-size: Typography.compact-body.font-size;
+                font-weight: Typography.compact-body.font-weight;
+                wrap: word-wrap;
+            }
+        }
+        @children
+    }
+}

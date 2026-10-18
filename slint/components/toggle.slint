@@ -1,0 +1,112 @@
+import { Theme, Typography } from "../tokens.slint";
+import { FocusRing } from "focus-ring.slint";
+import { TooltipPopup } from "tooltip.slint";
+
+// A two-state button for a setting that applies at once (wrap lines, show hidden files): off is transparent with
+// `muted-foreground` content, on fills `muted` with `foreground` content. 28px tall, radius-md; `outline` adds the
+// `input` hairline. Give an icon-only toggle a `tooltip`, which also names it for screen readers. For an action use
+// a Button; for one choice among several use Tabs.
+//
+// The component is a transparent slot that is at least 28px tall; the visible toggle is centered in it.
+export component Toggle inherits Rectangle {
+    in property <string> text;
+    in property <image> icon;
+    in-out property <bool> checked: false;
+    in property <bool> outline: false;
+    in property <bool> enabled: true;
+    in property <string> tooltip;
+    in property <string> tooltip-shortcut;
+    out property <bool> has-hover: touch.has-hover;
+    callback toggled(bool);
+
+    property <bool> icon-only: root.text == "" && root.icon.width > 0;
+    property <bool> keyboard-focus: false;
+    property <color> content-color: root.checked ? Theme.current.foreground : Theme.current.muted-foreground;
+
+    min-height: Theme.compact-control;
+    vertical-stretch: 0;
+    min-width: Theme.compact-control;
+    horizontal-stretch: 0;
+    preferred-width: root.icon-only ? Theme.compact-control : row.preferred-width + 2px;
+    accessible-role: AccessibleRole.button;
+    accessible-label: root.text != "" ? root.text : root.tooltip;
+    accessible-checkable: true;
+    accessible-checked: root.checked;
+    accessible-enabled: root.enabled;
+    accessible-action-default => { root.toggle(); }
+
+    function toggle() {
+        root.checked = !root.checked;
+        root.toggled(root.checked);
+    }
+
+    body := Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: parent.width;
+        height: Theme.compact-control;
+        background: root.checked ? Theme.current.muted : (touch.has-hover ? Theme.current.muted-hover : transparent);
+        border-radius: Theme.radius-md;
+        border-width: 1px;
+        border-color: root.outline ? Theme.current.input : transparent;
+        opacity: root.enabled ? 1 : 0.5;
+
+        row := HorizontalLayout {
+            alignment: center;
+            padding-left: root.icon-only ? 0px : Theme.compact-pad;
+            padding-right: root.icon-only ? 0px : Theme.compact-pad;
+            spacing: Theme.space-1-5;
+            if root.icon.width > 0 : Image {
+                source: root.icon;
+                colorize: root.content-color;
+                width: Theme.icon-md;
+                height: Theme.icon-md;
+                y: (parent.height - self.height) / 2;
+            }
+            if root.text != "" : Text {
+                text: root.text;
+                color: root.content-color;
+                font-family: Typography.compact-label.font-family;
+                font-size: Typography.compact-label.font-size;
+                font-weight: Typography.compact-label.font-weight;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+        }
+
+        touch := TouchArea {
+            enabled: root.enabled;
+            mouse-cursor: root.enabled ? MouseCursor.pointer : MouseCursor.default;
+            clicked => { root.toggle(); }
+        }
+
+        FocusScope {
+            enabled: root.enabled;
+            focus-on-click: false;
+            focus-gained(reason) => { root.keyboard-focus = reason == FocusReason.tab-navigation; }
+            focus-lost(reason) => { root.keyboard-focus = false; }
+            key-pressed(event) => {
+                if (event.text == " " || event.text == Key.Return) {
+                    root.toggle();
+                    return accept;
+                }
+                return reject;
+            }
+        }
+
+        if root.keyboard-focus : FocusRing {
+            radius: Theme.radius-md;
+            host-width: parent.width;
+            host-height: parent.height;
+        }
+
+        if root.tooltip != "" : TooltipPopup {
+            x: 0px;
+            y: 0px;
+            width: parent.width;
+            height: parent.height;
+            text: root.tooltip;
+            shortcut: root.tooltip-shortcut;
+            hovered: root.has-hover;
+        }
+    }
+}

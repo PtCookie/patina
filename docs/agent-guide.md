@@ -96,6 +96,8 @@ Components exported by `@patina`:
 - `Tabs`: `model` (two to five short labels), `current-index`, `selected(int)`. The panels are yours: show the one that `current-index` names.
 - `Select`: `model`, `current-index` (-1 for none), `placeholder-text`, `invalid`, `pill`, `enabled`, `selected(int)`. Use it for four to fifteen options.
 - `Menu` with `MenuItem` (`text`, `icon`, `shortcut`, `destructive`, `checked`, `enabled`, `clicked()`), `MenuLabel` and `MenuSeparator`: the surface and rows of a dropdown. Show it in a `PopupWindow` whose `y` is the trigger's height plus `Theme.space-1`, and call `popup.close()` in `clicked`. At most one destructive item, last.
+- `Alert` (`AlertVariant`: `default`, `destructive`, `success`, `warning`, `info`): `title`, `description`, `icon`; a child such as a `Button` becomes its action at the trailing end. Always give it an icon and a word.
+- `Card`: `title`, `description`, children as content; divide inside it with a `Separator` and do not nest cards. `Collapsible`: `text`, `open`, `toggled(bool)`, children shown while open. `Toggle`: `text`, `icon`, `checked`, `outline`, `tooltip`, `toggled(bool)`; a two-state button for a setting that applies at once.
 - `Table` with `TableColumn` (`title`, `width`, `numeric`, `mono`): `columns`, `rows` (a list of string lists), `selected-row`, `row-clicked(int)`. A column with zero width shares the free space; give the table a height and the rows scroll under the header.
 
 Layout: each control is a transparent slot at least 28px tall with the visible control centred in it, so in a `HorizontalLayout` toolbar the controls sit in the middle of the row without extra code. Inset sidebar rows 6px from the pane edge. Shadows are not part of the Slint library.

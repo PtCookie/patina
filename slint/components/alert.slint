@@ -1,0 +1,68 @@
+import { Theme, Typography } from "../tokens.slint";
+
+export enum AlertVariant { default, destructive, success, warning, info }
+
+// An inline message: an `icon` (20px, in the tone colour), a one-line `title` (`compact-label`), an optional
+// `description`, and an optional action: a child such as a Button is placed at the trailing end. radius-xl, padding
+// `space-3`. `default` and `destructive` are the `card` surface with a `border` hairline (destructive turns the text
+// `destructive`); `success`, `warning` and `info` are their `-muted` tint with no border, the status colour on icon and
+// title and `foreground` on the description. Always give it an icon and a word, never colour alone.
+export component Alert inherits Rectangle {
+    in property <string> title;
+    in property <string> description;
+    in property <image> icon;
+    in property <AlertVariant> variant: AlertVariant.default;
+
+    property <bool> tinted: root.variant == AlertVariant.success || root.variant == AlertVariant.warning || root.variant == AlertVariant.info;
+    property <color> tone: root.variant == AlertVariant.destructive ? Theme.current.destructive
+        : root.variant == AlertVariant.success ? Theme.current.success
+        : root.variant == AlertVariant.warning ? Theme.current.warning
+        : root.variant == AlertVariant.info ? Theme.current.info
+        : Theme.current.card-foreground;
+
+    preferred-height: row.preferred-height;
+    background: root.variant == AlertVariant.success ? Theme.current.success-muted
+        : root.variant == AlertVariant.warning ? Theme.current.warning-muted
+        : root.variant == AlertVariant.info ? Theme.current.info-muted
+        : Theme.current.card;
+    border-radius: Theme.radius-xl;
+    border-width: 1px;
+    border-color: root.tinted ? transparent : Theme.current.border;
+    accessible-role: AccessibleRole.text;
+    accessible-label: root.description != "" ? "\{root.title}. \{root.description}" : root.title;
+
+    row := HorizontalLayout {
+        padding: Theme.space-3;
+        spacing: Theme.space-3;
+        if root.icon.width > 0 : Image {
+            source: root.icon;
+            colorize: root.tone;
+            width: Theme.icon-lg;
+            height: Theme.icon-lg;
+            y: 0px;
+        }
+        VerticalLayout {
+            spacing: Theme.space-0-5;
+            alignment: start;
+            Text {
+                text: root.title;
+                color: root.tone;
+                font-family: Typography.compact-label.font-family;
+                font-size: Typography.compact-label.font-size;
+                font-weight: Typography.compact-label.font-weight;
+                vertical-alignment: center;
+                min-height: Theme.icon-lg;
+            }
+            if root.description != "" : Text {
+                text: root.description;
+                color: root.variant == AlertVariant.destructive ? Theme.current.destructive
+                    : root.tinted ? Theme.current.foreground : Theme.current.muted-foreground;
+                font-family: Typography.compact-body.font-family;
+                font-size: Typography.compact-body.font-size;
+                font-weight: Typography.compact-body.font-weight;
+                wrap: word-wrap;
+            }
+        }
+        @children
+    }
+}
