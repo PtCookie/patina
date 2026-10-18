@@ -28,7 +28,7 @@ A design system built on one emerald accent over a calm blue-gray neutral (Mist)
 | `registry/ui/` | The shadcn components (Base UI + Tailwind 4): Button, Badge, Input, Card, Label, Separator, Skeleton, Table, Checkbox, Toggle, ToggleGroup, Collapsible, Pagination, Popover, DropdownMenu, Sheet, NavigationMenu, Chart, Kbd, Switch, Alert, Tooltip, Tabs, Select, Article. Each becomes a registry item |
 | `slint/` | The Slint library: `patina.slint` (entry) and `components/` (Button, Input, Badge, Kbd, Tooltip, Separator, TreeRow, ListRow, PaneHeader). The build adds `tokens.slint` and an archive |
 | `android/` | The Android library: `PatinaTheme.kt` and `components/` (PatinaButton, PatinaCard, PatinaTextField, PatinaSwitch, PatinaRadioButton, PatinaFilterChip, PatinaAlertDialog, PatinaTopAppBar, PatinaListItem, PatinaBadge). The build adds the generated theme files and an archive |
-| `docs/` | The sources of the agent documentation, `agent-guide.md` and `agents-snippet.md`, and the README header image `header.svg` |
+| `docs/` | The sources of the agent documentation, `agent-guide.md` and `agents-snippet.md`, the README header image `header.svg` and the GitHub social preview `social-preview.png` |
 | `tools/` | Reference scripts: oklch to sRGB with WCAG contrast (`cc.py`), Android role mapping (`m3.py`), tokens to CSS (`tokens_css.py`) |
 
 ## Principles

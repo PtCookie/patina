@@ -28,7 +28,7 @@
 | `registry/ui/` | shadcn 컴포넌트(Base UI + Tailwind 4): Button, Badge, Input, Card, Label, Separator, Skeleton, Table, Checkbox, Toggle, ToggleGroup, Collapsible, Pagination, Popover, DropdownMenu, Sheet, NavigationMenu, Chart, Kbd, Switch, Alert, Tooltip, Tabs, Select, Article. 각각 레지스트리 아이템이 됩니다 |
 | `slint/` | Slint 라이브러리: `patina.slint`(진입 파일)와 `components/`(Button, Input, Badge, Kbd, Tooltip, Separator, TreeRow, ListRow, PaneHeader). 빌드가 `tokens.slint`와 아카이브를 덧붙입니다 |
 | `android/` | Android 라이브러리: `PatinaTheme.kt`와 `components/`(PatinaButton, PatinaCard, PatinaTextField, PatinaSwitch, PatinaRadioButton, PatinaFilterChip, PatinaAlertDialog, PatinaTopAppBar, PatinaListItem, PatinaBadge). 빌드가 생성한 테마 파일과 아카이브를 덧붙입니다 |
-| `docs/` | 에이전트용 문서의 원본(`agent-guide.md`, `agents-snippet.md`)과 README 헤더 이미지 `header.svg` |
+| `docs/` | 에이전트용 문서의 원본(`agent-guide.md`, `agents-snippet.md`), README 헤더 이미지 `header.svg`, GitHub 소셜 프리뷰 `social-preview.png` |
 | `tools/` | 참고용 스크립트: oklch → sRGB 변환과 WCAG 대비(`cc.py`), Android 역할 매핑(`m3.py`), 토큰 → CSS(`tokens_css.py`) |
 
 ## 원칙
