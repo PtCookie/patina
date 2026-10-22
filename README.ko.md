@@ -12,7 +12,7 @@
 - **데스크톱**: [Slint](https://slint.dev) 토큰 파일. `compact-*` 밀도 토큰을 포함합니다.
 - **Android**: Jetpack Compose용 정적 Material 3 테마 파일(동적 색은 쓰지 않습니다).
 
-> **상태: 초안.** 디자인과 토큰은 끝났고, `pnpm build`는 이미 레지스트리 base 아이템, Slint 토큰 파일, Android 테마 파일을 생성합니다. 서체 파일과 컴포넌트 25개는 만들어져 있고 자동 설치 테스트로 검증합니다. 레지스트리는 `https://patina.ptcookie.net`에 배포되어 있고, 같은 주소에서 모든 컴포넌트의 미리보기가 있는 문서 사이트를 볼 수 있습니다.
+> **상태: 초안.** 디자인과 토큰은 끝났고, `pnpm build`는 토큰을 검증한 뒤 레지스트리(base 아이템과 컴포넌트 25개), Slint 라이브러리, Android 라이브러리를 생성합니다. 레지스트리 컴포넌트는 자동 설치 테스트로, Android 라이브러리는 ktlint와 detekt로 검증합니다. 모두 `https://patina.ptcookie.net`에 배포되어 있고, 같은 주소에서 모든 컴포넌트의 미리보기가 있는 문서 사이트를 볼 수 있습니다.
 
 ## 저장소 구성
 
@@ -75,6 +75,14 @@ Patina 컴포넌트를 스톡 컴포넌트보다 먼저 설치하세요. Patina 
 | Slint | `/slint/patina-slint.tar.gz` (토큰과 compact 컴포넌트. 풀어서 `patina.slint`를 라이브러리 `patina`로 등록하고 `@patina`에서 import) |
 | Android | `/android/patina-android.tar.gz` (Compose 테마, 토큰, 아이콘, 컴포넌트. 소스 폴더에 풀어서 사용) |
 
+Android 파일은 패키지 `patina.theme`과 `patina.ui`를 선언하고, `patina/theme/`와 `patina/ui/`로 풀립니다.
+
+```bash
+mkdir -p app/src/main/kotlin && curl -L https://patina.ptcookie.net/android/patina-android.tar.gz | tar xz -C app/src/main/kotlin
+```
+
+기본 `ktlint_official` 스타일의 ktlint와 기본 규칙의 detekt를 통과합니다. 단 composable 이름은 PascalCase를 허용해야 합니다(detekt의 `FunctionNaming`이 `@Composable`을 무시하게 하고, `.editorconfig`에 `ktlint_function_naming_ignore_when_annotated_with = Composable`을 둡니다). 그래서 가져온 파일을 lint하는 앱도 제외 설정이 필요 없습니다.
+
 생성된 모든 파일의 머리말에는 출처가 된 토큰 스냅샷이 적혀 있습니다.
 
 ## AI 에이전트용
@@ -105,6 +113,8 @@ Pretendard, D2Coding, 마루부리는 SIL OFL의 Reserved Font Name이 있습니
 pnpm build   # 토큰 검증 후 레지스트리, tokens.slint, Android 파일을 public/에 생성
 pnpm check   # 타입 검사, lint, 포맷 검사, 테스트(대비, 파생 토큰, 생성 파일)
 pnpm smoke   # 생성한 레지스트리 아이템을 실제 shadcn CLI로 임시 Astro 프로젝트에 설치(네트워크 필요)
+pnpm android:lint  # 파일을 빌드한 뒤 Android 라이브러리에 ktlint와 detekt 실행(JDK 필요)
+pnpm slint:shot    # Slint 갤러리를 라이트·다크로 렌더링(slint-viewer 필요)
 pnpm deploy  # 빌드 후 Cloudflare Workers에 배포
 ```
 

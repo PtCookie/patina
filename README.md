@@ -12,7 +12,7 @@ A design system built on one emerald accent over a calm blue-gray neutral (Mist)
 - **Desktop**: a [Slint](https://slint.dev) token file, with `compact-*` density tokens.
 - **Android**: static Material 3 theme files for Jetpack Compose (no dynamic colour).
 
-> **Status: draft.** The design and tokens are finished, and `pnpm build` already generates the registry base item, the Slint token file and the Android theme files. The font files and all 25 components are built and checked by an automated install test. The registry is deployed at `https://patina.ptcookie.net`, and so is the documentation site with a preview of every component.
+> **Status: draft.** The design and tokens are finished, and `pnpm build` verifies them and generates the registry (the base item and all 25 components), the Slint library and the Android library. The registry components are checked by an automated install test and the Android library by ktlint and detekt. Everything is deployed at `https://patina.ptcookie.net`, together with the documentation site and a preview of every component.
 
 ## What is in this repo
 
@@ -75,6 +75,14 @@ Install Patina's components before stock ones. Each Patina item has the name of 
 | Slint | `/slint/patina-slint.tar.gz` (the tokens and the compact components; unpack it, register `patina.slint` as the library `patina`, import from `@patina`) |
 | Android | `/android/patina-android.tar.gz` (the Compose theme, tokens, icons and components; unpack it into your sources) |
 
+The Android files declare the packages `patina.theme` and `patina.ui` and unpack to `patina/theme/` and `patina/ui/`:
+
+```bash
+mkdir -p app/src/main/kotlin && curl -L https://patina.ptcookie.net/android/patina-android.tar.gz | tar xz -C app/src/main/kotlin
+```
+
+They pass ktlint in its default `ktlint_official` style and detekt with its default rules, as long as composables may be PascalCase (`FunctionNaming` ignores `@Composable` in detekt, `ktlint_function_naming_ignore_when_annotated_with = Composable` in `.editorconfig`), so an app that lints the files it vendors needs no exclusion.
+
 Every generated file carries a header with the token snapshot it came from.
 
 ## For AI agents
@@ -105,6 +113,8 @@ Pretendard, D2Coding and MaruBuri have Reserved Font Names under the SIL OFL: us
 pnpm build   # verify the tokens, then generate the registry, tokens.slint and Android files into public/
 pnpm check   # typecheck, lint, format check and tests (contrast, derived tokens, generated files)
 pnpm smoke   # install the generated registry item into a scratch Astro project with the real shadcn CLI (needs the network)
+pnpm android:lint  # build the files, then run ktlint and detekt on the Android library (needs a JDK)
+pnpm slint:shot    # render the Slint gallery in light and dark (needs slint-viewer)
 pnpm deploy  # build, then deploy to Cloudflare Workers
 ```
 
