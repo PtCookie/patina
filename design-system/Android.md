@@ -89,7 +89,7 @@ val PatinaLight = lightColorScheme(
     surfaceContainerHigh = Color(0xFFEEF1F1),
     surfaceContainerHighest = Color(0xFFEBEEEF),
     surfaceDim = Color(0xFFE3E7E8),
-    surfaceBright = Color(0xFFFFFFFF)
+    surfaceBright = Color(0xFFFFFFFF),
 )
 val PatinaDark = darkColorScheme(
     primary = Color(0xFF00BC7D),
@@ -127,7 +127,7 @@ val PatinaDark = darkColorScheme(
     surfaceContainerHigh = Color(0xFF1C2223),
     surfaceContainerHighest = Color(0xFF22292B),
     surfaceDim = Color(0xFF090B0C),
-    surfaceBright = Color(0xFF22292B)
+    surfaceBright = Color(0xFF22292B),
 )
 ```
 
@@ -161,7 +161,7 @@ val PatinaShapes = Shapes(
     small = RoundedCornerShape(8.dp),       // radius: buttons, text fields, chips
     medium = RoundedCornerShape(12.dp),     // radius-2xl: menus, popovers
     large = RoundedCornerShape(16.dp),      // radius-3xl: cards
-    extraLarge = RoundedCornerShape(16.dp)  // radius-3xl: dialogs, bottom sheets
+    extraLarge = RoundedCornerShape(16.dp), // radius-3xl: dialogs, bottom sheets
 )
 ```
 
