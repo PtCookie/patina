@@ -18,11 +18,7 @@ import androidx.compose.ui.Modifier
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PatinaTooltip(
-    text: String,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
+fun PatinaTooltip(text: String, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     TooltipBox(
         positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
@@ -30,13 +26,13 @@ fun PatinaTooltip(
             PlainTooltip(
                 shape = MaterialTheme.shapes.extraSmall,
                 containerColor = scheme.inverseSurface,
-                contentColor = scheme.inverseOnSurface,
+                contentColor = scheme.inverseOnSurface
             ) {
                 Text(text = text, style = MaterialTheme.typography.bodySmall)
             }
         },
         state = rememberTooltipState(),
         modifier = modifier,
-        content = content,
+        content = content
     )
 }

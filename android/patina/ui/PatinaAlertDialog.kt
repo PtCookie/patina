@@ -12,6 +12,7 @@ import patina.theme.PatinaTheme
  * A modal dialog: the `popover` surface, `radius-3xl`, the `overlay` scrim, a `heading-md` title and muted body
  * text. Put at most one primary action in [confirmButton] and use a Ghost [PatinaButton] for [dismissButton].
  */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaAlertDialog(
     onDismissRequest: () -> Unit,
@@ -19,7 +20,7 @@ fun PatinaAlertDialog(
     modifier: Modifier = Modifier,
     dismissButton: (@Composable () -> Unit)? = null,
     title: (@Composable () -> Unit)? = null,
-    text: (@Composable () -> Unit)? = null,
+    text: (@Composable () -> Unit)? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
@@ -38,6 +39,6 @@ fun PatinaAlertDialog(
         containerColor = colors.popover,
         titleContentColor = colors.onPopover,
         textContentColor = scheme.onSurfaceVariant,
-        tonalElevation = 0.dp,
+        tonalElevation = 0.dp
     )
 }

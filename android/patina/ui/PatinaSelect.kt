@@ -39,6 +39,7 @@ import patina.theme.PatinaTheme
  * ([selectedIndex] null) the trigger shows [placeholder]. Use it for four to fifteen options; for fewer use
  * [PatinaTabs] or radio buttons. The [label] sits above the field, as in the text field.
  */
+@Suppress("LongParameterList", "LongMethod")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PatinaSelect(
@@ -49,7 +50,7 @@ fun PatinaSelect(
     label: String? = null,
     placeholder: String? = null,
     enabled: Boolean = true,
-    isError: Boolean = false,
+    isError: Boolean = false
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
@@ -75,19 +76,19 @@ fun PatinaSelect(
                     .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
                     .padding(horizontal = PatinaSpace.space3),
                 horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space1_5),
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = chosen ?: placeholder.orEmpty(),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = if (chosen != null) scheme.onSurface else scheme.onSurfaceVariant,
+                    color = if (chosen != null) scheme.onSurface else scheme.onSurfaceVariant
                 )
                 Icon(
                     PatinaIcons.CaretDown,
                     contentDescription = null,
                     modifier = Modifier.size(PatinaSize.iconMd),
-                    tint = scheme.onSurfaceVariant,
+                    tint = scheme.onSurfaceVariant
                 )
             }
             ExposedDropdownMenu(
@@ -97,7 +98,7 @@ fun PatinaSelect(
                 containerColor = colors.popover,
                 tonalElevation = 0.dp,
                 shadowElevation = SELECT_ELEVATION,
-                border = BorderStroke(PatinaStroke.hairline, scheme.outlineVariant),
+                border = BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
             ) {
                 options.forEachIndexed { index, option ->
                     DropdownMenuItem(
@@ -111,7 +112,7 @@ fun PatinaSelect(
                                 Icon(
                                     PatinaIcons.Check,
                                     contentDescription = null,
-                                    modifier = Modifier.size(PatinaSize.iconMd),
+                                    modifier = Modifier.size(PatinaSize.iconMd)
                                 )
                             }
                         } else {
@@ -119,8 +120,8 @@ fun PatinaSelect(
                         },
                         colors = MenuDefaults.itemColors(
                             textColor = colors.onPopover,
-                            trailingIconColor = colors.onPopover,
-                        ),
+                            trailingIconColor = colors.onPopover
+                        )
                     )
                 }
             }

@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package patina.ui
 
 import androidx.compose.foundation.BorderStroke
@@ -27,12 +29,12 @@ fun PatinaCard(
     modifier: Modifier = Modifier,
     size: PatinaCardSize = PatinaCardSize.Default,
     onClick: (() -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val spacing: Dp = if (size == PatinaCardSize.Small) PatinaSpace.space4 else PatinaSpace.space6
     val colors = CardDefaults.cardColors(
         containerColor = PatinaTheme.colors.card,
-        contentColor = PatinaTheme.colors.onCard,
+        contentColor = PatinaTheme.colors.onCard
     )
     val elevation = CardDefaults.cardElevation(defaultElevation = CARD_ELEVATION)
     val border = BorderStroke(PatinaStroke.hairline, MaterialTheme.colorScheme.outlineVariant)
@@ -40,7 +42,7 @@ fun PatinaCard(
         Column(
             modifier = Modifier.padding(spacing),
             verticalArrangement = Arrangement.spacedBy(spacing),
-            content = content,
+            content = content
         )
     }
     if (onClick != null) {
@@ -51,7 +53,7 @@ fun PatinaCard(
             colors = colors,
             elevation = elevation,
             border = border,
-            content = inner,
+            content = inner
         )
     } else {
         Card(
@@ -60,7 +62,7 @@ fun PatinaCard(
             colors = colors,
             elevation = elevation,
             border = border,
-            content = inner,
+            content = inner
         )
     }
 }

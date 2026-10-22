@@ -13,12 +13,12 @@ const color = colorKt(set, version);
 const type = typeKt(set, version);
 const shape = shapeKt(set, version);
 
-/** `role = Color(0xFFRRGGBB),` lines of one `val Name = ...Scheme(` block. */
+/** `role = Color(0xFFRRGGBB)` lines of one `val Name = ...Scheme(` block. */
 function colorBlock(source: string, name: string): Record<string, string> {
   const start = source.indexOf(`val ${name} =`);
   const end = source.indexOf("\n)", start);
   return Object.fromEntries(
-    [...source.slice(start, end).matchAll(/^\s+(\w+) = Color\(0xFF([0-9A-F]{6})\),$/gm)].map((match) => [
+    [...source.slice(start, end).matchAll(/^\s+(\w+) = Color\(0xFF([0-9A-F]{6})\),?$/gm)].map((match) => [
       match[1],
       match[2],
     ]),
@@ -84,10 +84,13 @@ describe("Color.kt", () => {
   });
 });
 
+/** The CSS weights the type tokens use, and the Compose constants that stand for them. */
+const WEIGHT_NAMES: Record<string, string> = { "400": "Normal", "500": "Medium", "600": "SemiBold", "700": "Bold" };
+
 describe("Type.kt", () => {
   // The arguments of `slot = TextStyle(...)`, which the generator writes one per line, joined back with commas.
   const textStyleArgs = (slot: string): string | undefined =>
-    new RegExp(`^\\s+${slot} = TextStyle\\(\\n((?:\\s+\\w+ = .*,\\n)+)\\s+\\),$`, "m")
+    new RegExp(`^\\s+${slot} = TextStyle\\(\\n((?:\\s+\\w+ = .*,?\\n)+)\\s+\\),?$`, "m")
       .exec(type)?.[1]
       ?.trim()
       .split(/,\n\s+/)
@@ -110,7 +113,7 @@ describe("Type.kt", () => {
     for (const row of rows) {
       const [, slots = "", , size = "", line = "", weight = "", tracking] = row;
       const expectedTracking = tracking === undefined ? "0.sp" : `(${-(Number(tracking) * Number(size))}).sp`;
-      const expected = `fontFamily = ui, fontWeight = FontWeight(${weight}), fontSize = ${size}.sp, lineHeight = ${line}.sp, letterSpacing = ${expectedTracking}`;
+      const expected = `fontFamily = ui, fontWeight = FontWeight.${WEIGHT_NAMES[weight]}, fontSize = ${size}.sp, lineHeight = ${line}.sp, letterSpacing = ${expectedTracking}`;
       const generated = (slots.match(/\w+/g) ?? []).map((slot) => ({
         slot,
         style: textStyleArgs(slot),
@@ -119,6 +122,11 @@ describe("Type.kt", () => {
         generated.map(({ slot, style }) => ({ slot, style })),
       );
     }
+  });
+
+  it("names every weight and keeps number literals out, so detekt's MagicNumber stays quiet", () => {
+    expect(type).not.toMatch(/FontWeight\(\d/);
+    expect(type).toContain('@file:Suppress("MagicNumber", "LongMethod")');
   });
 
   it("leaves display and headlineLarge at Material defaults with the UI family and no tracking", () => {
@@ -139,7 +147,7 @@ describe("Shape.kt", () => {
   it("equals the Shapes block of Android.md", () => {
     const slots = (source: string) =>
       Object.fromEntries(
-        [...source.matchAll(/^\s+(\w+) = RoundedCornerShape\((\d+)\.dp\),/gm)].map((match) => [match[1], match[2]]),
+        [...source.matchAll(/^\s+(\w+) = RoundedCornerShape\((\d+)\.dp\),?/gm)].map((match) => [match[1], match[2]]),
       );
     expect(slots(shape)).toEqual({ extraSmall: "4", small: "8", medium: "12", large: "16", extraLarge: "16" });
     expect(slots(shape)).toEqual(slots(androidMd));

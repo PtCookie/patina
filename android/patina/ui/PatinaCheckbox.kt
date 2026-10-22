@@ -28,6 +28,7 @@ import patina.theme.PatinaTheme
  * for the thumb). The whole row is one 48dp touch target. [isError] draws the `error` outline. For a setting that
  * applies immediately use [PatinaSwitch].
  */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaCheckbox(
     checked: Boolean,
@@ -35,7 +36,7 @@ fun PatinaCheckbox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
-    label: String? = null,
+    label: String? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     val toggle = if (onCheckedChange != null) {
@@ -46,28 +47,28 @@ fun PatinaCheckbox(
     Row(
         modifier = modifier.alpha(if (enabled) 1f else DISABLED_ALPHA).then(toggle).minimumInteractiveComponentSize(),
         horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space2),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
                 .size(PatinaSize.iconLg)
                 .background(
                     if (checked) scheme.primary else PatinaTheme.colors.controlStrong,
-                    MaterialTheme.shapes.extraSmall,
+                    MaterialTheme.shapes.extraSmall
                 )
                 .border(
                     PatinaStroke.ring,
                     if (isError) scheme.error else Color.Transparent,
-                    MaterialTheme.shapes.extraSmall,
+                    MaterialTheme.shapes.extraSmall
                 ),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             if (checked) {
                 Icon(
                     PatinaIcons.Check,
                     contentDescription = null,
                     modifier = Modifier.size(PatinaSize.iconMd),
-                    tint = scheme.onPrimary,
+                    tint = scheme.onPrimary
                 )
             }
         }

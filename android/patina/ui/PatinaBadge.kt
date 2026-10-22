@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package patina.ui
 
 import androidx.compose.foundation.BorderStroke
@@ -33,7 +35,7 @@ fun PatinaBadge(
     text: String,
     modifier: Modifier = Modifier,
     variant: PatinaBadgeVariant = PatinaBadgeVariant.Primary,
-    icon: ImageVector? = null,
+    icon: ImageVector? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
@@ -55,12 +57,12 @@ fun PatinaBadge(
             BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
         } else {
             null
-        },
+        }
     ) {
         Row(
             modifier = Modifier.height(BADGE_HEIGHT).padding(horizontal = PatinaSpace.space2),
             horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space1),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (icon != null) {
                 Icon(icon, contentDescription = null, modifier = Modifier.size(PatinaSize.iconSm))

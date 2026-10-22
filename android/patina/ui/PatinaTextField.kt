@@ -34,6 +34,7 @@ import patina.theme.PatinaTheme
  * The label sits above the field (14sp medium), not inside it. Focus draws the 2dp `ring` outline; [isError] draws
  * the `error` outline and turns [supportingText] to `error`. Text is 16sp so the field is easy to read on a phone.
  */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaTextField(
     value: String,
@@ -48,7 +49,7 @@ fun PatinaTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailing: (@Composable () -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     val interaction = remember { MutableInteractionSource() }
@@ -81,27 +82,27 @@ fun PatinaTextField(
                         .background(PatinaTheme.colors.control, MaterialTheme.shapes.small)
                         .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
                         .padding(horizontal = PatinaSpace.space3),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.weight(1f)) {
                         if (value.isEmpty() && placeholder != null) {
                             Text(
                                 text = placeholder,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = scheme.onSurfaceVariant,
+                                color = scheme.onSurfaceVariant
                             )
                         }
                         inner()
                     }
                     trailing?.invoke()
                 }
-            },
+            }
         )
         if (supportingText != null) {
             Text(
                 text = supportingText,
                 style = MaterialTheme.typography.bodySmall,
-                color = if (isError) scheme.error else scheme.onSurfaceVariant,
+                color = if (isError) scheme.error else scheme.onSurfaceVariant
             )
         }
     }

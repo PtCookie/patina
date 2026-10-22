@@ -61,7 +61,7 @@ describe("Android.md", () => {
     const end = markdown.indexOf("\n)", start);
     const body = markdown.slice(start, end);
     return Object.fromEntries(
-      [...body.matchAll(/^\s+(\w+) = Color\(0xFF([0-9A-F]{6})\),$/gm)].map((match) => [match[1], `#${match[2]}`]),
+      [...body.matchAll(/^\s+(\w+) = Color\(0xFF([0-9A-F]{6})\),?$/gm)].map((match) => [match[1], `#${match[2]}`]),
     );
   };
 

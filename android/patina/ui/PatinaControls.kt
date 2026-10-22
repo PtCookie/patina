@@ -25,7 +25,7 @@ fun PatinaSwitch(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     val scheme = MaterialTheme.colorScheme
     val light = scheme.background.luminance() > LIGHT_BACKGROUND
@@ -43,14 +43,14 @@ fun PatinaSwitch(
         disabledCheckedBorderColor = scheme.primary,
         disabledUncheckedThumbColor = thumbOff,
         disabledUncheckedTrackColor = off,
-        disabledUncheckedBorderColor = off,
+        disabledUncheckedBorderColor = off
     )
     Switch(
         checked = checked,
         onCheckedChange = onCheckedChange,
         modifier = modifier.alpha(if (enabled) 1f else DISABLED_ALPHA),
         enabled = enabled,
-        colors = colors,
+        colors = colors
     )
 }
 
@@ -60,7 +60,7 @@ fun PatinaRadioButton(
     selected: Boolean,
     onClick: (() -> Unit)?,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     val scheme = MaterialTheme.colorScheme
     RadioButton(
@@ -72,8 +72,8 @@ fun PatinaRadioButton(
             selectedColor = scheme.primary,
             unselectedColor = scheme.outline,
             disabledSelectedColor = scheme.primary,
-            disabledUnselectedColor = scheme.outline,
-        ),
+            disabledUnselectedColor = scheme.outline
+        )
     )
 }
 
@@ -81,6 +81,7 @@ fun PatinaRadioButton(
  * A toggle chip for choosing several items from a short set, such as days of the week: `radius` corners, a
  * `border` hairline when off, the `secondary` fill when on.
  */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaFilterChip(
     selected: Boolean,
@@ -88,7 +89,7 @@ fun PatinaFilterChip(
     label: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    interactionSource: MutableInteractionSource? = null,
+    interactionSource: MutableInteractionSource? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     FilterChip(
@@ -105,7 +106,7 @@ fun PatinaFilterChip(
             selectedLabelColor = scheme.onSecondaryContainer,
             disabledContainerColor = Color.Transparent,
             disabledLabelColor = scheme.onSurface,
-            disabledSelectedContainerColor = scheme.secondaryContainer,
+            disabledSelectedContainerColor = scheme.secondaryContainer
         ),
         border = FilterChipDefaults.filterChipBorder(
             enabled = enabled,
@@ -115,8 +116,8 @@ fun PatinaFilterChip(
             disabledBorderColor = scheme.outlineVariant,
             disabledSelectedBorderColor = Color.Transparent,
             borderWidth = PatinaStroke.hairline,
-            selectedBorderWidth = PatinaStroke.hairline,
+            selectedBorderWidth = PatinaStroke.hairline
         ),
-        interactionSource = interactionSource,
+        interactionSource = interactionSource
     )
 }

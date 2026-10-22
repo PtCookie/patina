@@ -25,7 +25,7 @@ fun PatinaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     uiFont: FontFamily = FontFamily.Default,
     monoFont: FontFamily = FontFamily.Monospace,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     val extension = if (darkTheme) PatinaDarkExtension else PatinaLightExtension
     val typography = remember(uiFont) { patinaTypography(uiFont) }
@@ -35,7 +35,7 @@ fun PatinaTheme(
             colorScheme = if (darkTheme) PatinaDark else PatinaLight,
             typography = typography,
             shapes = PatinaShapes,
-            content = content,
+            content = content
         )
     }
 }
@@ -44,9 +44,11 @@ fun PatinaTheme(
 object PatinaTheme {
     /** Status, card, popover and control colours for the current theme. */
     val colors: PatinaColors
-        @Composable @ReadOnlyComposable get() = LocalPatinaColors.current
+        @Composable @ReadOnlyComposable
+        get() = LocalPatinaColors.current
 
     /** `mono` and `monoSmall` text styles for SHAs, paths and other identifiers. */
     val code: PatinaCodeStyles
-        @Composable @ReadOnlyComposable get() = LocalPatinaCode.current
+        @Composable @ReadOnlyComposable
+        get() = LocalPatinaCode.current
 }

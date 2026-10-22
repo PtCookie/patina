@@ -1,3 +1,5 @@
+@file:Suppress("MatchingDeclarationName")
+
 package patina.ui
 
 import androidx.compose.foundation.BorderStroke
@@ -27,6 +29,7 @@ enum class PatinaAlertVariant { Default, Destructive, Success, Warning, Info }
  * surface with a hairline `border`; Success, Warning and Info are their solid tint with the status colour on the icon
  * and title. Always pair the tone with an icon and a word, never colour alone.
  */
+@Suppress("LongParameterList", "CyclomaticComplexMethod")
 @Composable
 fun PatinaAlert(
     title: String,
@@ -34,11 +37,12 @@ fun PatinaAlert(
     modifier: Modifier = Modifier,
     variant: PatinaAlertVariant = PatinaAlertVariant.Default,
     description: String? = null,
-    action: (@Composable () -> Unit)? = null,
+    action: (@Composable () -> Unit)? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
-    val tinted = variant == PatinaAlertVariant.Success || variant == PatinaAlertVariant.Warning ||
+    val tinted = variant == PatinaAlertVariant.Success ||
+        variant == PatinaAlertVariant.Warning ||
         variant == PatinaAlertVariant.Info
     val container = when (variant) {
         PatinaAlertVariant.Success -> colors.successContainer
@@ -62,12 +66,12 @@ fun PatinaAlert(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         color = container,
-        border = if (tinted) null else BorderStroke(PatinaStroke.hairline, scheme.outlineVariant),
+        border = if (tinted) null else BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = PatinaSpace.space4, vertical = PatinaSpace.space3),
             horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space3),
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.Top
         ) {
             Icon(icon, contentDescription = null, modifier = Modifier.size(PatinaSize.iconLg), tint = tone)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatinaSpace.space1)) {

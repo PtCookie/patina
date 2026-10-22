@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
  * A list row: an optional leading icon or image, a headline, an optional supporting line in `muted-foreground`
  * and an optional trailing control such as a [PatinaSwitch]. The row has no fill; divide rows with spacing.
  */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaListItem(
     headline: String,
@@ -21,7 +22,7 @@ fun PatinaListItem(
     supporting: String? = null,
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     val scheme = MaterialTheme.colorScheme
     ListItem(
@@ -35,9 +36,9 @@ fun PatinaListItem(
         colors = ListItemDefaults.colors(
             containerColor = Color.Transparent,
             headlineColor = scheme.onSurface,
-            supportingColor = scheme.onSurfaceVariant,
+            supportingColor = scheme.onSurfaceVariant
         ),
         tonalElevation = 0.dp,
-        shadowElevation = 0.dp,
+        shadowElevation = 0.dp
     )
 }

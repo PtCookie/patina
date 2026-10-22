@@ -26,7 +26,7 @@ fun PatinaSkeleton(modifier: Modifier = Modifier, shape: Shape = MaterialTheme.s
         initialValue = 1f,
         targetValue = PULSE_LOW,
         animationSpec = infiniteRepeatable(tween(durationMillis = PULSE_HALF_MS), RepeatMode.Reverse),
-        label = "skeleton alpha",
+        label = "skeleton alpha"
     )
     Box(modifier = modifier.alpha(pulse).background(MaterialTheme.colorScheme.surfaceVariant, shape))
 }

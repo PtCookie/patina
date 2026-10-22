@@ -31,7 +31,7 @@ fun PatinaDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     DropdownMenu(
         expanded = expanded,
@@ -42,11 +42,12 @@ fun PatinaDropdownMenu(
         tonalElevation = 0.dp,
         shadowElevation = MENU_ELEVATION,
         border = BorderStroke(PatinaStroke.hairline, MaterialTheme.colorScheme.outlineVariant),
-        content = content,
+        content = content
     )
 }
 
 /** A menu row: an optional leading [icon] and a label. A [destructive] row is `error` text and icon. */
+@Suppress("LongParameterList")
 @Composable
 fun PatinaDropdownMenuItem(
     text: String,
@@ -54,7 +55,7 @@ fun PatinaDropdownMenuItem(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     destructive: Boolean = false,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     val scheme = MaterialTheme.colorScheme
     val content = if (destructive) scheme.error else PatinaTheme.colors.onPopover
@@ -72,8 +73,8 @@ fun PatinaDropdownMenuItem(
             trailingIconColor = content,
             disabledTextColor = content,
             disabledLeadingIconColor = content,
-            disabledTrailingIconColor = content,
-        ),
+            disabledTrailingIconColor = content
+        )
     )
 }
 
@@ -86,10 +87,10 @@ fun PatinaDropdownMenuLabel(text: String, modifier: Modifier = Modifier) {
             start = PatinaSpace.space3,
             end = PatinaSpace.space3,
             top = PatinaSpace.space2,
-            bottom = PatinaSpace.space1,
+            bottom = PatinaSpace.space1
         ),
         style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
     )
 }
 
@@ -99,7 +100,7 @@ fun PatinaDropdownMenuDivider(modifier: Modifier = Modifier) {
     HorizontalDivider(
         modifier = modifier.padding(vertical = PatinaSpace.space1),
         thickness = PatinaStroke.hairline,
-        color = MaterialTheme.colorScheme.outlineVariant,
+        color = MaterialTheme.colorScheme.outlineVariant
     )
 }
 
