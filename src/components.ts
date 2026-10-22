@@ -165,8 +165,9 @@ export const COMPONENTS: readonly ComponentSpec[] = [
     description:
       "Recharts charts on the sequential teal ramp: border grid and axes, muted tabular ticks and a popover tooltip.",
     file: "registry/ui/chart.tsx",
-    // The same recharts release the stock shadcn chart pins.
-    dependencies: ["cn", "recharts@3.8.0"],
+    // The floor is the recharts release the stock shadcn chart pins. The caret keeps a project that already has a
+    // newer 3.x from being downgraded, and stops at 4.x: the chart styles recharts' own class names.
+    dependencies: ["cn", "recharts@^3.8.0"],
     registryDependencies: [],
   },
   {

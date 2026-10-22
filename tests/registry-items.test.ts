@@ -43,8 +43,9 @@ const ALL_COMPONENTS = [
 ];
 
 describe("packageName", () => {
-  it("drops a pinned version and keeps scoped names whole", () => {
+  it("drops a version or range and keeps scoped names whole", () => {
     expect(packageName("recharts@3.8.0")).toBe("recharts");
+    expect(packageName("recharts@^3.8.0")).toBe("recharts");
     expect(packageName("@scope/pkg@1.2.3")).toBe("@scope/pkg");
     expect(packageName("@base-ui/react")).toBe("@base-ui/react");
     expect(packageName("class-variance-authority")).toBe("class-variance-authority");
@@ -82,7 +83,7 @@ describe("the component items", () => {
   });
 
   it("pin the one dependency whose version matters", () => {
-    expect(COMPONENTS.find((spec) => spec.name === "chart")?.dependencies).toEqual(["cn", "recharts@3.8.0"]);
+    expect(COMPONENTS.find((spec) => spec.name === "chart")?.dependencies).toEqual(["cn", "recharts@^3.8.0"]);
   });
 
   it("depend on each other only through items that exist, without cycles", () => {
