@@ -23,7 +23,8 @@
         "format:check": "prettier --check .",
         "test": "vitest",
         "check": "pnpm typecheck && pnpm lint && pnpm format:check && vitest run",
-        "slint:shot": "node --import tsx scripts/slint-shot.ts"
+        "slint:shot": "node --import tsx scripts/slint-shot.ts",
+        "android:lint": "cd scripts/android-gallery && ./gradlew ktlintCheck detekt"
     },
     "devDependencies": {
         "@base-ui/react": "^1.9.0",

@@ -11,3 +11,13 @@ max_line_length = 120
 
 [*.{css,json}]
 indent_size = 4
+
+# The Android library is linted the way the apps that vendor it lint it (Android Studio style, 4 spaces).
+[*.{kt,kts}]
+indent_size = 4
+ktlint_code_style = android_studio
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+# The gallery app is a harness, not the library: only public/android is linted (see scripts/android-gallery).
+[scripts/android-gallery/app/src/**.kt]
+ktlint = disabled

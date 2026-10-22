@@ -1,0 +1,4 @@
+# Everything else is the detekt default. This is the one change every Compose project makes.
+naming:
+  FunctionNaming:
+    ignoreAnnotated: ["Composable"]
