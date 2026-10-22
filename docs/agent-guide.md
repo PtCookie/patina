@@ -130,7 +130,7 @@ PatinaTheme(darkTheme = resolvedDark, uiFont = pretendard, monoFont = jetBrainsM
 }
 ```
 
-The files pass ktlint in Android Studio style (`android.set(true)`, so no trailing commas) and detekt with its default rules (checked with the ktlint Gradle plugin 14.2.0 and detekt 1.23.8), as long as composables may be PascalCase: set `FunctionNaming: ignoreAnnotated: ["Composable"]` in the detekt config and `ktlint_function_naming_ignore_when_annotated_with = Composable` in `.editorconfig`, as any Compose project does. Do not run a formatter of another style over them; a formatter that adds trailing commas makes `ktlintCheck` fail.
+The files pass ktlint in its default `ktlint_official` style (leave `ktlint_code_style` unset or set it to `ktlint_official`; the Gradle plugin's `android` flag does not change the style) and detekt with its default rules (checked with the ktlint Gradle plugin 14.2.0 and detekt 1.23.8), as long as composables may be PascalCase: set `FunctionNaming: ignoreAnnotated: ["Composable"]` in the detekt config and `ktlint_function_naming_ignore_when_annotated_with = Composable` in `.editorconfig`, as any Compose project does. The two ktlint styles disagree about trailing commas, so with `android_studio` the vendored files fail `ktlintCheck` and a `ktlintFormat` would rewrite them.
 
 Read colours from `MaterialTheme.colorScheme` (the Material roles are mapped from the tokens, see `/android.md`), and from `PatinaTheme.colors` for what Material has no role for: `success`, `warning` (and their `Container` tints), `card`, `popover`, `control`, `controlStrong`. Spacing and sizes are `PatinaSpace.space3` and `PatinaSize.controlMd`; never write a colour literal, `Color(0x…)`, a `.copy(alpha = …)` on a colour or a raw dp value for spacing.
 
