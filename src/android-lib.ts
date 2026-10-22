@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ANDROID_ICONS } from "./emit/android";
 
-/** Path below public/ (`android/components/PatinaButton.kt`) to content, for every .kt file under android/. */
+/** Path below public/ (`android/patina/ui/PatinaButton.kt`) to content, for every .kt file under android/. */
 export function loadAndroidLibrary(root: URL): Record<string, string> {
   const base = fileURLToPath(new URL("android/", root));
   const files: Record<string, string> = {};

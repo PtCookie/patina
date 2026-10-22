@@ -153,10 +153,10 @@ describe("generate", () => {
 
   it("produces the planned URL space", () => {
     expect(Object.keys(files).sort()).toEqual([
-      "android/Color.kt",
-      "android/Shape.kt",
-      "android/Size.kt",
-      "android/Type.kt",
+      "android/patina/theme/Color.kt",
+      "android/patina/theme/Shape.kt",
+      "android/patina/theme/Size.kt",
+      "android/patina/theme/Type.kt",
       "fonts/patina-fonts.css",
       "r/base.json",
       "r/registry.json",

@@ -39,7 +39,7 @@ describe("Size.kt", () => {
   });
 });
 
-describe("Icons.kt", () => {
+describe("PatinaIcons.kt", () => {
   const icons = iconsKt(loadPhosphorIcons(root), version);
 
   it("draws every listed Phosphor icon from its single path", () => {
@@ -101,7 +101,7 @@ describe("the library sources", () => {
         "PatinaSkeleton",
       ]),
     );
-    expect(library["android/PatinaTheme.kt"]).toContain("fun PatinaTheme(");
+    expect(library["android/patina/theme/PatinaTheme.kt"]).toContain("fun PatinaTheme(");
   });
 
   it("never write a colour literal: colours come from the theme", () => {

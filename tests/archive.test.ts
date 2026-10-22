@@ -62,7 +62,7 @@ describe("slintArchive", () => {
         "slint/tokens.slint": "b",
         "slint/components/button.slint": "c",
         "r/base.json": "{}",
-        "android/Color.kt": "d",
+        "android/patina/theme/Color.kt": "d",
       }),
       "slint",
     );
@@ -75,16 +75,16 @@ describe("slintArchive", () => {
 });
 
 describe("androidArchive", () => {
-  it("packs only the Kotlin files below android/, under patina/", () => {
+  it("packs only the Kotlin files below android/, and keeps their path under patina/", () => {
     const { listing } = unpack(
       androidArchive({
-        "android/Color.kt": "a",
-        "android/components/PatinaButton.kt": "b",
+        "android/patina/theme/Color.kt": "a",
+        "android/patina/ui/PatinaButton.kt": "b",
         "android/patina-android.tar.gz": "not a source",
         "slint/patina.slint": "c",
       }),
       "android",
     );
-    expect(listing.trim().split("\n")).toEqual(["patina/Color.kt", "patina/components/PatinaButton.kt"]);
+    expect(listing.trim().split("\n")).toEqual(["patina/theme/Color.kt", "patina/ui/PatinaButton.kt"]);
   });
 });

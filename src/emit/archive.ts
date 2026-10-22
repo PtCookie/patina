@@ -56,10 +56,10 @@ export function slintArchive(files: Record<string, string>): Buffer {
   return tarGz(Object.fromEntries(entries));
 }
 
-/** The Android library (generated and hand-written Kotlin) as an archive that unpacks to `patina/…`. */
+/** The Android library (generated and hand-written Kotlin): `android/patina/theme/X.kt` becomes `patina/theme/X.kt`. */
 export function androidArchive(files: Record<string, string>): Buffer {
   const entries = Object.entries(files)
     .filter(([path]) => path.startsWith("android/") && path.endsWith(".kt"))
-    .map(([path, text]): [string, string] => [`patina/${path.slice("android/".length)}`, text]);
+    .map(([path, text]): [string, string] => [path.slice("android/".length), text]);
   return tarGz(Object.fromEntries(entries));
 }

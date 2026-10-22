@@ -52,7 +52,7 @@ describe("THIRD_PARTY_NOTICES.md", () => {
 });
 
 describe("the notices that travel with generated files", () => {
-  it("keeps the Phosphor copyright line in Icons.kt", () => {
+  it("keeps the Phosphor copyright line in PatinaIcons.kt", () => {
     const icons = iconsKt(loadPhosphorIcons(root), "test");
     expect(icons).toContain("Copyright (c) 2020-2024 Phosphor Icons");
     expect(ANDROID_ICONS.length).toBeGreaterThan(0);
