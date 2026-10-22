@@ -30,3 +30,6 @@ site/dist/
 site/.astro/
 site/public/header.svg
 site/public/social-preview.png
+
+# codegraph
+.codegraph/
