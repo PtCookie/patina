@@ -1,7 +1,7 @@
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A two-state button: off is transparent with `muted-foreground` content, on fills `muted` with `foreground`.
 // `grouped` is set by ToggleGroup: items share hairlines and only the outer corners are rounded.

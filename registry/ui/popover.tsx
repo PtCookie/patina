@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A floating `popover` surface anchored to its trigger: for a small form or detail that should not leave the
 // page. Opens 4px from the trigger, closes on Escape and outside click, and returns focus to the trigger.

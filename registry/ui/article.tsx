@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // Long-form reading text: Newsreader (with MaruBuri for Korean) at 17/28, headings in the `heading` family.
 // It styles the plain elements inside it (h1, h2, p, blockquote, code), so write ordinary markup. The text column

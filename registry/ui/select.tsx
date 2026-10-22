@@ -2,7 +2,7 @@ import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CaretDownIcon, CheckIcon } from "@phosphor-icons/react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A field that opens a solid list, the same surface and rows as DropdownMenu. The trigger is a 36px
 // `control` field with a muted caret that turns while the list is open; the selected row shows a check.

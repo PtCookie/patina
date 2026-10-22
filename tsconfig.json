@@ -12,10 +12,7 @@
         "verbatimModuleSyntax": true,
         "isolatedModules": true,
         "skipLibCheck": true,
-        "noEmit": true,
-        "paths": {
-            "@/*": ["./registry/*"]
-        }
+        "noEmit": true
     },
     "include": ["src", "tests", "scripts", "registry", "*.config.ts"]
 }

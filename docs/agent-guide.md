@@ -41,6 +41,8 @@ npx shadcn@latest add @patina/button @patina/input @patina/card
 
 **Order matters.** Install Patina components before stock ones. A stock component that depends on one that Patina replaces (`alert-dialog` needs `button`) will ask "The file button.tsx already exists. Would you like to overwrite?" — answer **no**, and never pass `--overwrite`. Components that Patina does not provide resolve from the stock registry and are rewritten for Phosphor and Base UI.
 
+**`cn`.** Patina components import `cn` from the `cn` package (`import { cn } from "cn"`), as current shadcn components do. Each item declares `cn` as a dependency, so `shadcn add` installs it, and no `utils` file is written or overwritten: a project's own `src/lib/utils.ts` is left alone. Code in the project can keep importing `cn` from `@/lib/utils` if that file re-exports it (`export { cn } from "cn"`); `npx shadcn@latest migrate cn` moves a project that still uses `clsx` and `tailwind-merge` over. `cn` merges Tailwind 4 class names only.
+
 **Dark mode** is the project's own switch: the tokens define `:root` (light) and `.dark`, and the variant is `@custom-variant dark (&:is(.dark *))`. Toggle the `dark` class on `<html>`.
 
 **Fonts.** Inter, JetBrains Mono and Newsreader come from Fontsource variable packages that the base item installs. Pretendard comes from the `pretendard` npm package. D2Coding and MaruBuri are official files you copy from `https://patina.ptcookie.net/fonts/` into `public/fonts` together with their `*-OFL.txt` licence texts, then load `/fonts/patina-fonts.css`. Pretendard, D2Coding and MaruBuri must stay the unmodified official files: do not subset, convert or re-encode them.

@@ -1,6 +1,6 @@
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A short label on an inverted surface (`foreground` on `background`) that opens on hover or focus. Put a
 // TooltipProvider once near the root so neighbouring tooltips open without the delay. A Kbd inside flips to

@@ -1,6 +1,6 @@
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A 1px `border` hairline. Never thicker and never another colour.
 function Separator({ className, orientation = "horizontal", ...props }: SeparatorPrimitive.Props) {

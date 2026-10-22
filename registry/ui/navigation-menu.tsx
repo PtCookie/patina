@@ -3,7 +3,7 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 import { CaretDownIcon } from "@phosphor-icons/react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // The site's top navigation: ghost items in a row, with optional panels of links. Below 640px, use a Sheet.
 function NavigationMenu({

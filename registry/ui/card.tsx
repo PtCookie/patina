@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A `card` surface with a 1px foreground ring and a soft shadow (`--shadow-card`) instead of a border.
 // `interactive` is for a card that is one link: the ring strengthens on hover.

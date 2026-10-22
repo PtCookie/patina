@@ -1,6 +1,6 @@
 // shadcn registry output: the `registry:base` item that initialises a project, and the registry index.
 // Schema: https://ui.shadcn.com/schema/registry-item.json. The fields used here (extends, config, dependencies,
-// registryDependencies, cssVars with theme/light/dark, css with @import and @layer keys, meta) are documented.
+// cssVars with theme/light/dark, css with @import and @layer keys, meta) are documented.
 // Not documented, so deliberately left out: @font-face and @custom-variant entries in `css`.
 
 import type { TokenSet } from "../tokens";
@@ -16,6 +16,7 @@ export const BASE_DEPENDENCIES = [
   "@fontsource-variable/newsreader",
   "@phosphor-icons/react",
   "class-variance-authority",
+  "cn",
   "pretendard",
   "tw-animate-css",
 ] as const;
@@ -62,7 +63,6 @@ export function baseItem(set: TokenSet, version: string): RegistryItem {
       tailwind: { baseColor: "mist" },
     },
     dependencies: [...BASE_DEPENDENCIES],
-    registryDependencies: ["utils"],
     cssVars: registryCssVars(set),
     css,
     meta: { snapshot: version },

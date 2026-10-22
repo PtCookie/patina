@@ -3,7 +3,7 @@ import { Menu as MenuPrimitive } from "@base-ui/react/menu";
 import { CaretRightIcon, CheckIcon } from "@phosphor-icons/react";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A solid menu with full-width rows: an opaque `popover` surface, rounded to `radius-2xl` and clipped, with no
 // padding. Rows run edge to edge with no radius, so the first and last highlight meets the rounded corners.

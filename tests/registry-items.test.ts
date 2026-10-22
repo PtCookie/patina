@@ -58,12 +58,12 @@ import * as React from "react";
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { mergeProps } from "@base-ui/react/merge-props";
 import { cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 import { local } from "./local";
 import type { X } from "lodash/fp";
 const text = 'import nothing from "ignored"';
 `;
-    expect(importedPackages(source)).toEqual(["@base-ui/react", "class-variance-authority", "lodash"]);
+    expect(importedPackages(source)).toEqual(["@base-ui/react", "class-variance-authority", "cn", "lodash"]);
   });
 });
 
@@ -82,7 +82,7 @@ describe("the component items", () => {
   });
 
   it("pin the one dependency whose version matters", () => {
-    expect(COMPONENTS.find((spec) => spec.name === "chart")?.dependencies).toEqual(["recharts@3.8.0"]);
+    expect(COMPONENTS.find((spec) => spec.name === "chart")?.dependencies).toEqual(["cn", "recharts@3.8.0"]);
   });
 
   it("depend on each other only through items that exist, without cycles", () => {
@@ -115,14 +115,16 @@ describe("the component items", () => {
         type: "registry:ui",
         meta: { snapshot: version },
       });
-      expect(item.registryDependencies).toContain("utils");
+      // `cn` is an npm dependency, as in the stock shadcn items, so there is no `utils` file to overwrite.
+      expect(item.registryDependencies).not.toContain("utils");
+      expect(item.dependencies).toContain("cn");
       const files = item.files as { path: string; type: string; content: string }[];
       expect(files).toHaveLength(1);
       expect(files[0]?.path).toBe(`ui/${item.name}.tsx`);
       expect(files[0]?.type).toBe("registry:ui");
       expect(files[0]?.content).toBe(read(`registry/ui/${item.name}.tsx`));
-      // The CLI rewrites this alias to the project's own `cn`.
-      expect(files[0]?.content).toContain('from "@/lib/utils"');
+      expect(files[0]?.content).toContain('import { cn } from "cn";');
+      expect(files[0]?.content).not.toContain("@/lib/utils");
     }
   });
 
@@ -173,7 +175,7 @@ describe("loadComponents detects inconsistent sources", () => {
     const path = new URL("registry/ui/card.tsx", root);
     writeFileSync(path, `import { thing } from "lodash";\n${readFileSync(path, "utf8")}`);
     expect(loadComponents(root, version).problems).toEqual([
-      "registry/ui/card.tsx imports [lodash] but card declares dependencies []",
+      "registry/ui/card.tsx imports [cn, lodash] but card declares dependencies [cn]",
     ]);
   });
 
@@ -183,7 +185,7 @@ describe("loadComponents detects inconsistent sources", () => {
     writeFileSync(path, readFileSync(path, "utf8").replace(/import \{ Input as InputPrimitive \}.*\n/, ""));
     const { problems } = loadComponents(root, version);
     expect(problems).toHaveLength(1);
-    expect(problems[0]).toContain("registry/ui/input.tsx imports []");
+    expect(problems[0]).toContain("registry/ui/input.tsx imports [cn]");
   });
 
   it("reports a missing source", () => {

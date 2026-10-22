@@ -1,7 +1,7 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // Each class group is set by exactly one variant, so the result does not depend on `cn` merging conflicts.
 const buttonVariants = cva(

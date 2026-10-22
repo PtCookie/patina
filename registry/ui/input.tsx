@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A borderless field on a 50% `input` fill. Invalid state: a 3px ring (plus a border in dark mode) and a
 // destructive description, set by the consumer with `aria-invalid`.

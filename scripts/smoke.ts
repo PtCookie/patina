@@ -317,6 +317,13 @@ async function main(): Promise<void> {
       if (install.code !== 0) throw new Error(`pnpm ${args.join(" ")} failed:\n${tail(install.output)}`);
     }
 
+    // A project that already moved to the `cn` package keeps its own helpers in src/lib/utils.ts, without `cn`.
+    // Neither init nor any add may overwrite that file.
+    const utilsPath = join(dir, "src/lib/utils.ts");
+    const ownUtils = "export const localePath = (path: string): string => `/en${path}`;\n";
+    mkdirSync(dirname(utilsPath), { recursive: true });
+    writeFileSync(utilsPath, ownUtils);
+
     step(`shadcn init ${baseUrl}`);
     const init = await run("pnpm", ["exec", "shadcn", "init", baseUrl, "--yes"], dir);
     // Nothing after a failed init is meaningful, so stop here instead of piling up follow-up failures.
@@ -365,7 +372,7 @@ async function main(): Promise<void> {
         missingVars.length === 0,
         `${missingVars.length} variable(s) missing or changed in global.css: ${missingVars.slice(0, 8).join(", ")}`,
       );
-      check(existsSync(join(dir, "src/lib/utils.ts")), "init did not write src/lib/utils.ts");
+      check(readFileSync(utilsPath, "utf8") === ownUtils, "init changed the project's own src/lib/utils.ts");
     }
 
     step("shadcn add @patina/* (the Patina components, through the @patina namespace)");
@@ -394,6 +401,8 @@ async function main(): Promise<void> {
         `${spec.name}.tsx differs from registry source ${spec.file}`,
       );
       check(!installed.includes("color-mix"), `${spec.name}.tsx computes a colour with color-mix`);
+      check(installed.includes('from "cn"'), `${spec.name}.tsx does not import cn from the cn package`);
+      check(!installed.includes("@/lib/utils"), `${spec.name}.tsx imports @/lib/utils`);
     }
     const sheet = existsSync(join(dir, "src/components/ui/sheet.tsx"))
       ? readFileSync(join(dir, "src/components/ui/sheet.tsx"), "utf8")
@@ -402,10 +411,13 @@ async function main(): Promise<void> {
     const sourcePackages = readFileSync(join(dir, "package.json"), "utf8");
     check(sourcePackages.includes('"recharts"'), "recharts was not installed for the chart");
 
+    check(readFileSync(utilsPath, "utf8") === ownUtils, "adding the Patina components changed src/lib/utils.ts");
+
     // A stock component that Patina does not replace still comes from the stock registry, with Phosphor icons.
     step("shadcn add accordion (a stock component)");
     const add = await run("pnpm", ["exec", "shadcn", "add", "accordion", "--yes"], dir);
     check(add.code === 0, `shadcn add accordion exited with ${add.code}:\n${tail(add.output)}`);
+    check(readFileSync(utilsPath, "utf8") === ownUtils, "adding accordion changed src/lib/utils.ts");
     const accordionPath = join(dir, "src/components/ui/accordion.tsx");
     if (existsSync(accordionPath)) {
       const accordion = readFileSync(accordionPath, "utf8");

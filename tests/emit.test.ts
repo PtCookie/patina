@@ -115,7 +115,6 @@ describe("registry items", () => {
       type: "registry:base",
       extends: "none",
       config: { style: "base-luma", iconLibrary: "phosphor", tailwind: { baseColor: "mist" } },
-      registryDependencies: ["utils"],
       meta: { snapshot: version },
     });
   });

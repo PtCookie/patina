@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A `muted` placeholder that pulses at 2s and stays still under prefers-reduced-motion. Text lines use the
 // default radius, blocks `block`, avatars `circle`. Give it the width and height of the real content.

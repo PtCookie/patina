@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // An inline message on the `card` surface. The tinted variants (success, warning, info) drop the border and
 // colour the icon and title; the description stays `foreground` so the body keeps full contrast. Always add an

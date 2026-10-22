@@ -3,7 +3,7 @@ import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
 import { type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 // Both files are installed into the same folder, so a relative import works in every project.
 import { toggleVariants } from "./toggle";
 

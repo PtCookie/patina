@@ -2,7 +2,7 @@ import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 import type { TooltipValueType } from "recharts";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // Recharts charts on the teal ramp `chart-1`…`chart-5`. The ramp is sequential, not categorical: use it for one
 // series or for ordered values (light = less, dark = more) and never give unrelated series different steps.

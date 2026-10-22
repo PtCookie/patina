@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A keyboard key: a small `muted` chip with muted text. Inside a Tooltip it flips to the page colours; inside
 // an input, pass `className="bg-kbd"` for the quieter `kbd` tint.

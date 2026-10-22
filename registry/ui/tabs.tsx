@@ -1,6 +1,6 @@
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A pill segmented control: the list is a `muted` track and the active tab a raised `tab-active` pill.
 function Tabs({ className, ...props }: TabsPrimitive.Root.Props) {

@@ -1,6 +1,6 @@
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A header row with a ghost icon button that shows or hides the content below it. The trigger is the button
 // (`render={<Button variant="ghost" size="icon-sm" />}` with a caret inside); its icon turns 180° when open.

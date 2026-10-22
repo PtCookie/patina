@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // Hairline-ruled data table. `containerClassName` styles the scroll wrapper: give it a max-height so a sticky
 // header row scrolls inside the table instead of the page. Columns that hold numbers are `numeric`

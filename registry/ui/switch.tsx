@@ -1,6 +1,6 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A 44x20 track with a 24x16 thumb. Off sits on the `control-strong` fill; on fills `primary`, and the thumb
 // swaps to its own tokens so it stays visible in both themes.

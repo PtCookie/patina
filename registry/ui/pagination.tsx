@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { CaretLeftIcon, CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // Page links: ghost 36px squares, the current page outlined on `background`. Use real links (an href per
 // page) so pages are crawlable. Show first, last, current ± 1 and an ellipsis for the gaps.

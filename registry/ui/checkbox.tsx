@@ -1,7 +1,7 @@
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { CheckIcon } from "@phosphor-icons/react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "cn";
 
 // A 16px square: `control-strong` when off, `primary` with a `primary-foreground` check when on. Put the Label
 // to its right and dim the whole row when disabled.
