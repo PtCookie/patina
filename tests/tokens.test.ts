@@ -58,9 +58,9 @@ describe("parseTokens on the snapshot", () => {
   });
 
   it("keeps single-string colours shared by both themes", () => {
-    const chart = set.colorIndex.get("chart-3");
-    expect(chart?.themed).toBe(false);
-    expect(chart?.values.light).toEqual(chart?.values.dark);
+    const sidebarRing = set.colorIndex.get("sidebar-ring");
+    expect(sidebarRing?.themed).toBe(false);
+    expect(sidebarRing?.values.light).toEqual(sidebarRing?.values.dark);
     expect(set.colorIndex.get("background")?.themed).toBe(true);
   });
 

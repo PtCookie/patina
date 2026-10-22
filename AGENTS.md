@@ -65,7 +65,7 @@ Port `cc.py` / `m3.py` to TypeScript rather than shelling out to Python. Keep th
 ```
 name, version, meta
 color.themes[{id,name}]  color.tokens[{name, value, usage}]
-   value = "oklch(L C H)" | "oklch(L C H / A%)" | "{other-token}"      (single string: same in both themes, e.g. chart-1..5)
+   value = "oklch(L C H)" | "oklch(L C H / A%)" | "{other-token}"      (single string: same in both themes, e.g. sidebar-ring)
          | { "light": …, "dark": … }
 type.fonts[{family,file,weight,style}]  type.families{sans,heading,mono,mono-ko,serif}  type.groups[{name,family,styles[…]}]
 spacing / radius / size / shadow : { note, tokens[{name, value, usage}] }   (shadow values may be { light, dark })
@@ -98,6 +98,7 @@ Alpha scale means `base alpha × pct` (dark `input` is already `oklch(1 0 0 / 15
 | `overlay` | black@30% | same |
 | `outline-fill` | `{background}` | transparent |
 | `switch-thumb` / `switch-thumb-checked` | `{background}` / `{background}` | `{foreground}` / `{primary-foreground}` |
+| `primary-muted` | `link`@10% | `link`@20% |
 | `success/warning/info-muted` | base@10% | base@20% |
 | `shadow-card-hover` | `shadow-card` with ring alpha doubled (5 to 10%) | (10 to 20%) |
 
@@ -116,7 +117,7 @@ Targets are in each token's `usage` (e.g. `muted-foreground` ≥ 4.5 on `backgro
   The last seven (Kbd, Switch, Alert, Tooltip, Tabs, Select, Article) were compared the same way afterwards, about 40 pairs in light and dark, and again found real gaps that are fixed: the standalone `Kbd` fill is `muted` (the `kbd` token is the quieter tint for use inside an input, pass `bg-kbd`), `Alert` forced `items-start` on the grid, inline `code` in `Article` took the 20px line height of `text-sm` instead of inheriting 28px, and the article measure was 592px of text instead of 640px (the preview has no `box-sizing` reset, so its `max-width: 640px` is text only; the component is `max-w-172` with 24px padding). On purpose: `Alert` is `w-full` (the preview fixes 420px), a tooltip wraps at `max-w-xs` instead of never wrapping, tabs do not wrap, and `SelectValue` shows the selected item's text without its icon.
 - The component set: Alert, Article, Badge, Button, Card, Chart, Checkbox, Collapsible, DropdownMenu, Input, Kbd, Label, NavigationMenu, Pagination, Popover, Select, Separator, Sheet, Skeleton, Switch, Table, Tabs, Toggle, ToggleGroup, Tooltip (DesktopShell and Cover are previews only, not components).
 - First override batch (the 18 shadcn components the first consumers use): Badge, Button, Card, Chart, Checkbox, Collapsible, DropdownMenu, Input, Label, NavigationMenu, Pagination, Popover, Separator, Sheet, Skeleton, Table, Toggle, ToggleGroup. **All 18 are done**, and so are the other seven (Alert, Article, Kbd, Select, Switch, Tabs, Tooltip): the whole component set above is built. Two of them build on another: `sheet` depends on `@patina/button` and `toggle-group` on `@patina/toggle` (registry dependencies, imported relatively as `./button` and `./toggle`), and `chart` asks for `recharts@^3.8.0` (the release the stock shadcn chart pins is the floor; a newer 3.x already in a project is kept, and 4.x is excluded because the chart styles recharts' own class names; 3.10.1 passes `tests/chart*.test.tsx`). Stock components that depend on one of the finished ones (for example `alert-dialog` needs `button`) will ask before overwriting the Patina file: answer no.
-- Chart: `chart-1…5` is a sequential teal ramp, not categorical; a single series uses `chart-3`.
+- Chart: `chart-1…5` is a sequential teal ramp, not categorical; a single series uses `chart-3` (`chart-4` on hover). Light and dark have their own values so that every step is at least 3:1 on `background` and `card` (WCAG 1.4.11, enforced in `src/contrast.ts`): lightest to darkest in light, lightest to dimmest in dark. Label series directly rather than by hue alone.
 - Icons: Phosphor, regular weight, fill only for selected/active. Web uses `@phosphor-icons/react`, Slint uses SVG via `@image-url`.
 - The shadcn docs cover namespaces, `{name}` / `{style}` URL placeholders, `registryDependencies` across namespaces and `shadcn build` to `public/r`. They also document the `registry:base` item itself: `extends: "none"`, `config` (style, iconLibrary, `tailwind.baseColor`, aliases), `dependencies`, `registryDependencies`, `cssVars` (`theme`, `light`, `dark`) and `css`, and that resolved registry files are deduplicated by target path (last one wins). `src/emit/registry.ts` sticks to those fields.
 - **Verified with a real install** (2026-10-16, `shadcn` 4.21.5, `r/base.json` served from a local static server, into a scratch Astro 7 + React + Tailwind 4.3 project):

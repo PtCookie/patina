@@ -7,7 +7,7 @@ Everything is served as static files from `https://patina.ptcookie.net`. Fetch `
 ## Rules that always apply
 
 1. **Colour only by semantic token name.** Use `bg-background`, `text-foreground`, `bg-primary`, `text-muted-foreground`, `border-border` and the other names listed under "Colour tokens". Never write a hex, `oklch()` or `rgb()` literal, a Tailwind palette class (`bg-emerald-600`, `text-zinc-500`), an arbitrary colour (`bg-[#…]`), a `dark:` colour override or an opacity modifier on a colour (`bg-primary/80`). Dark mode is handled by the tokens; a component never branches on the theme.
-2. **Never compute a state colour.** No `color-mix()` and no ad-hoc opacity. Hover, selected, tint and ring colours are tokens (`primary-hover`, `muted-hover`, `destructive-muted`, `invalid-ring`, …). If a state has no token, say so instead of inventing one.
+2. **Never compute a state colour.** No `color-mix()` and no ad-hoc opacity. Hover, selected, tint and ring colours are tokens (`primary-hover`, `muted-hover`, `primary-muted`, `destructive-muted`, `invalid-ring`, …). If a state has no token, say so instead of inventing one.
 3. **Use the Patina component before writing your own.** The components below replace the shadcn components of the same name. Install them with `shadcn add @patina/<name>`; do not copy markup from the stock shadcn registry.
 4. **One primary action per view.** `primary` (emerald) marks that action, check marks and active states. It is never decoration and never a large area. Destructive actions are a tint (`destructive` text on `destructive-muted`), never a solid red button.
 5. **Emerald text is `link`, not `primary`.** In dark mode `primary` is a dim fill; text that must read as emerald uses `text-link`.
@@ -16,6 +16,7 @@ Everything is served as static files from `https://patina.ptcookie.net`. Fetch `
 8. **UI copy is sentence case, starts with a verb, and is short.** "Commit", "Delete branch", "Fetch from origin". No Title Case, no all caps, no emoji. Buttons take one to three words. Identifiers (SHAs, branches, paths, SQL, timestamps) are set in the mono family.
 9. **Two densities, never mixed on one screen.** Comfortable for the web (controls 36px), compact for dense desktop tools (controls 28px, the `compact-*` tokens).
 10. **Radius comes from the scale.** Buttons, inputs and selects are `rounded-lg` (8px); menus and popovers `rounded-2xl`; cards `rounded-3xl`. `shape="pill"` (fully round) is an opt-in that you apply to a whole group or screen at once, never to a single control among square ones.
+11. **Charts use the teal ramp.** One series is `chart-3` (`chart-4` on hover). `chart-1…5` is a sequential ramp for ordered values, with its own values per theme so every step reads on the page and on a card; do not give unrelated series different steps, and label series directly.
 
 ## Web (shadcn, Base UI, Tailwind 4)
 

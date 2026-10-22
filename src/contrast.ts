@@ -97,6 +97,14 @@ export const REQUIREMENTS: readonly Requirement[] = [
   }),
   ...on("tab-foreground", ["muted"], { min: AA, source: `${FLOOR}; the tabs track is \`muted\`` }),
 
+  // The chart ramp is graphics, not text: every step must reach the 3:1 of WCAG 1.4.11 on the page and on a card.
+  ...[1, 2, 3, 4, 5].flatMap((step) =>
+    on(`chart-${step}`, ["background", "card"], { min: both(3), source: usage(`chart-${step}`) }),
+  ),
+
+  // Emerald text on the primary tint (a selected toggle, the targeted line of a listing).
+  ...on("link", [tint("primary-muted"), tint("primary-muted", "card")], { min: AA, source: usage("primary-muted") }),
+
   // Destructive text: 5.3:1 on the page, 4.8:1 on its own tint over the page, 4.5:1 on that tint over a card.
   ...on("destructive", ["background"], { min: both(5.3), source: usage("destructive") }),
   ...on("destructive", [tint("destructive-muted")], { min: both(4.8), source: usage("destructive") }),

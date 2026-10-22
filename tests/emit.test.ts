@@ -62,8 +62,8 @@ describe("registry CSS variables", () => {
   });
 
   it("declares a shared value once, in :root", () => {
-    expect(vars.light["chart-3"]).toBeDefined();
-    expect("chart-3" in vars.dark).toBe(false);
+    expect(vars.light["sidebar-ring"]).toBeDefined();
+    expect("sidebar-ring" in vars.dark).toBe(false);
   });
 
   it("exposes the radius scale, sizes and shadows", () => {

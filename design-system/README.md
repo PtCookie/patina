@@ -25,7 +25,8 @@ A single emerald accent on a calm blue-gray neutral (Mist). The web starts from 
 - `primary` (emerald) is for **one primary action per screen** and for check marks and active states only. Never for decoration or large areas.
 - Destructive actions use `destructive` text on a `destructive-muted` tint (10% light / 20% dark). There is no solid red button.
 - The status colours `success` / `warning` / `info` appear as text or icons on a `-muted` tint; add `-foreground` only when a solid fill is needed. Success is distinguished from `primary`, and destructive from the others, by hue alone, so **always pair them with an icon and a word**.
-- Charts use `chart-1`…`chart-5`, a sequential teal ramp. Use it for ordered data; label categorical data directly.
+- `primary-muted` is the tint of a selected or highlighted primary state (a selected toggle or row, the targeted line of a code listing); `link` text sits on it.
+- Charts use `chart-1`…`chart-5`, a sequential teal ramp. Use it for ordered data; label categorical data directly. Light and dark have their own values so that every step is visible on the page and on a card.
 - Emerald text (links, the link button) uses `link`, not `primary`. In dark mode `primary` is a fill only.
 - All neutrals come from the single Mist family (hue 197–229): `secondary` sits on the same step as `muted` (Mist 100 / 800).
 
@@ -92,6 +93,7 @@ A single emerald accent on a calm blue-gray neutral (Mist). The web starts from 
 
 - Every text colour is at least 4.5:1 in both themes on the background named in its usage note: `muted-foreground` is 4.7:1 even on `muted`, `destructive` is 4.8:1 on its own tint over `background` (4.5:1 over `card`), and `link` is at least 4.8:1 in light and 5.9:1 in dark.
 - `ring` is at least 3:1 on `background`, `card` and `muted`.
+- Every `chart-*` step is at least 3:1 on `background` and `card` in both themes (graphics need 3:1, not 4.5:1). The steps sit close together in lightness, so label series directly rather than by hue alone.
 - `border` is a decorative divider (1.25:1). Mark a control's boundary with the `input` fill; where a control must have a border, use `ring` or `muted-foreground`.
 - Success, primary and destructive differ by hue alone, so status is always shown as an icon plus a word.
 

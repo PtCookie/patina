@@ -30,8 +30,8 @@ describe("checkDerived on the snapshot", () => {
     expect(checkDerived(set)).toEqual([]);
   });
 
-  it("covers the 21 recipes of the AGENTS.md table plus shadow-card-hover", () => {
-    expect(Object.keys(DERIVED)).toHaveLength(21);
+  it("covers the 22 recipes of the AGENTS.md table plus shadow-card-hover", () => {
+    expect(Object.keys(DERIVED)).toHaveLength(22);
     expect(set.shadow.tokens.some((token) => token.name === "shadow-card-hover")).toBe(true);
   });
 });
@@ -90,11 +90,15 @@ describe("mixOklch", () => {
 
 describe("checkDerived detects drift", () => {
   it("reports a stale alpha derivative after its base token changed", () => {
-    // Change `primary` in light; `primary-hover` still carries the old colour.
+    // Change `primary` in light; `primary-hover` still carries the old colour, and so does `primary-muted`, whose
+    // base `link` is the same colour in light.
     const issues = issuesAfter((doc) => (colorValue(doc, "primary").light = "oklch(0.6 0.118 165.612)"));
-    expect(issues).toHaveLength(1);
-    expect(issues[0]).toMatchObject({ token: "primary-hover", theme: "light" });
-    expect(issues[0]?.message).toMatch(/L differ: expected oklch\(0\.6 0\.118 165\.612 \/ 80%\)/);
+    expect(issues.map(({ token, theme }) => `${token} ${theme}`).sort()).toEqual([
+      "primary-hover light",
+      "primary-muted light",
+    ]);
+    const hover = issues.find(({ token }) => token === "primary-hover");
+    expect(hover?.message).toMatch(/L differ: expected oklch\(0\.6 0\.118 165\.612 \/ 80%\)/);
   });
 
   it("reports a wrong alpha", () => {

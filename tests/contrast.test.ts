@@ -59,6 +59,23 @@ describe("measure", () => {
     expect(ratio("ring on muted", "dark")).toBeGreaterThanOrEqual(3);
   });
 
+  it("holds the chart ramp at 3:1 or more on the page and on a card, in both themes", () => {
+    for (const step of [1, 2, 3, 4, 5]) {
+      for (const surface of ["background", "card"]) {
+        for (const theme of THEMES) {
+          expect(measure(set, requirement(`chart-${step} on ${surface}`), theme)).toBeGreaterThanOrEqual(3);
+        }
+      }
+    }
+  });
+
+  it("keeps emerald text readable on the primary tint", () => {
+    const over = (surface: string, theme: "light" | "dark") =>
+      measure(set, requirement(`link on primary-muted (over ${surface})`), theme);
+    expect(over("background", "light")).toBeCloseTo(4.66, 2);
+    expect(over("card", "dark")).toBeGreaterThanOrEqual(4.5);
+  });
+
   it("composites a tint over the surface it sits on", () => {
     const overBackground = measure(set, requirement("destructive on destructive-muted (over background)"), "dark");
     const overCard = measure(set, requirement("destructive on destructive-muted (over card)"), "dark");
@@ -91,6 +108,16 @@ describe("checkContrast detects regressions", () => {
       if (token && typeof token.value === "object") token.value.dark = "oklch(0.45 0.02 214)";
     });
     expect(checkContrast(faint).map(({ id }) => id)).toContain("ring on background");
+  });
+
+  it("fails when a chart step is too pale for the page it sits on", () => {
+    // The first ramp used one value in both themes: its lightest step was 1.47:1 on a white page.
+    const pale = mutated((doc) => {
+      const token = doc.color.tokens.find((candidate) => candidate.name === "chart-1");
+      if (token && typeof token.value === "object") token.value.light = "oklch(0.855 0.138 181.071)";
+    });
+    const failing = checkContrast(pale).map(({ id, theme }) => `${id} ${theme}`);
+    expect(failing).toEqual(["chart-1 on background light", "chart-1 on card light"]);
   });
 
   it("reports the measured ratio and the rule it broke", () => {

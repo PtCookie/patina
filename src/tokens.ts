@@ -13,7 +13,7 @@ export type ColorValue =
 interface TokenBase {
   name: string;
   usage: string;
-  /** False when the token has a single string value shared by both themes (e.g. `chart-1`). */
+  /** False when the token has a single string value shared by both themes (e.g. `sidebar-ring`). */
   themed: boolean;
 }
 

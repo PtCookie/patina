@@ -11,8 +11,9 @@
   .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
   .art svg { display:block; width:480px; height:288px; }
   .brand { fill:var(--primary); }
-  .teal { fill:var(--chart-2); }
-  .mint { fill:var(--chart-1); }
+  /* Brand art, not data: teal and mint keep their first values (the former chart-2 and chart-1) so the cover does not follow the chart ramp. */
+  .teal { fill:oklch(0.704 0.14 182.503); }
+  .mint { fill:oklch(0.855 0.138 181.071); }
   .ink { fill:var(--foreground); }
   .dot { fill:var(--background); }
   .blk { rx:var(--radius-3xl); }
@@ -26,7 +27,7 @@
 <div class="art" aria-hidden="true">
 <svg viewBox="0 0 480 288" width="480" height="288">
 <!--
-  blocks      primary 168×290 slab bled off the top (the identity hue, largest) · chart-2 teal 112×160 · foreground ink 168×224 bleeding off the right edge · chart-1 mint 112×48 pill — ≈35% of 960×288
+  blocks      primary 168×290 slab bled off the top (the identity hue, largest) · teal 112×160 · foreground ink 168×224 bleeding off the right edge · mint 112×48 pill — ≈35% of 960×288
   arrangement one tall emerald slab with satellites, bottoms on one line space-6 above the edge, space-4 gutters
   pattern     dot grid, from "precise, technical, mono headings, a 4px grid": 35 dots cut out of the ink block in `background` at a space-4 (16px) pitch
   scales      sides in space-4 multiples (168 = 10.5×16 rounded to the slab, 112 = 7×16, 48 = 3×16); gutters space-4; pitch space-4; corners radius-3xl, the pill rx = half its 48px side

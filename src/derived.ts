@@ -42,6 +42,7 @@ export const DERIVED: Readonly<Record<string, Record<Theme, Recipe>>> = {
   "outline-fill": split(ref("background"), { kind: "transparent" }),
   "switch-thumb": split(ref("background"), ref("foreground")),
   "switch-thumb-checked": split(ref("background"), ref("primary-foreground")),
+  "primary-muted": split(alpha("link", 10), alpha("link", 20)),
   "success-muted": split(alpha("success", 10), alpha("success", 20)),
   "warning-muted": split(alpha("warning", 10), alpha("warning", 20)),
   "info-muted": split(alpha("info", 10), alpha("info", 20)),
