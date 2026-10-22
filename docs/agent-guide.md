@@ -50,6 +50,8 @@ npx shadcn@latest add @patina/button @patina/input @patina/card
 
 **Tailwind names.** Use the shadcn names as they are (`bg-primary`, `text-muted-foreground`, `rounded-lg`, `shadow-(--shadow-card)`). Control heights are `h-(--control-md)`; spacing is the default Tailwind scale (4px steps).
 
+**Sticky table cells.** A pinned column or sticky header must be opaque, but the row hover `muted-hover` is translucent. Set `bg-background` (`bg-card` inside a card) and add the hover as a gradient of the same token: `group-hover/row:bg-[linear-gradient(var(--muted-hover),var(--muted-hover))]` with `group/row` on the `TableRow`. It renders the exact hover colour without a new token or `color-mix()`.
+
 **Font families.** `font-sans` (Inter then Pretendard) for text and controls, `font-heading` (JetBrains Mono then Pretendard) for headings, `font-mono` for identifiers and code, `font-serif` (Newsreader then MaruBuri) for long-form reading only. Titles and UI never use the serif.
 
 **When a component needs something the system does not have** (a new variant, a state without a token), keep the change inside the component file, use only existing tokens, and report the gap to the maintainer rather than adding a literal.
