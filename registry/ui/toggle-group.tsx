@@ -23,6 +23,7 @@ function ToggleGroup({
   return (
     <ToggleGroupPrimitive
       data-slot="toggle-group"
+      data-testid="toggle-group"
       data-variant={variant}
       data-size={size}
       className={cn("inline-flex w-fit flex-row items-center", className)}
@@ -38,6 +39,7 @@ function ToggleGroupItem({ className, children, ...props }: TogglePrimitive.Prop
   return (
     <TogglePrimitive
       data-slot="toggle-group-item"
+      data-testid="toggle-group-item"
       className={cn(toggleVariants({ variant, size, grouped: true }), className)}
       {...props}
     >

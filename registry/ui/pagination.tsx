@@ -22,12 +22,15 @@ const paginationLinkVariants = cva(
   },
 );
 
-function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+// The English strings are defaults. `label` is the accessible name (screen readers), `text` the visible words;
+// pass translations for both. A plain `aria-label` on the element still wins over `label`.
+function Pagination({ className, label = "Pagination", ...props }: React.ComponentProps<"nav"> & { label?: string }) {
   return (
     <nav
       role="navigation"
-      aria-label="Pagination"
+      aria-label={label}
       data-slot="pagination"
+      data-testid="pagination"
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
     />
@@ -35,11 +38,18 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
 }
 
 function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) {
-  return <ul data-slot="pagination-content" className={cn("flex items-center gap-1", className)} {...props} />;
+  return (
+    <ul
+      data-slot="pagination-content"
+      data-testid="pagination-content"
+      className={cn("flex items-center gap-1", className)}
+      {...props}
+    />
+  );
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />;
+  return <li data-slot="pagination-item" data-testid="pagination-item" {...props} />;
 }
 
 type PaginationLinkProps = { isActive?: boolean } & VariantProps<typeof paginationLinkVariants> &
@@ -50,6 +60,7 @@ function PaginationLink({ className, isActive, edge, ...props }: PaginationLinkP
     <a
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
+      data-testid="pagination-link"
       data-active={isActive}
       className={cn(paginationLinkVariants({ edge }), className)}
       {...props}
@@ -60,10 +71,11 @@ function PaginationLink({ className, isActive, edge, ...props }: PaginationLinkP
 function PaginationPrevious({
   className,
   text = "Previous",
+  label = "Go to previous page",
   ...props
-}: React.ComponentProps<"a"> & { isActive?: boolean; text?: string }) {
+}: React.ComponentProps<"a"> & { isActive?: boolean; text?: string; label?: string }) {
   return (
-    <PaginationLink aria-label="Go to previous page" edge="start" className={className} {...props}>
+    <PaginationLink aria-label={label} data-testid="pagination-previous" edge="start" className={className} {...props}>
       <CaretLeftIcon className="size-4" aria-hidden />
       <span>{text}</span>
     </PaginationLink>
@@ -73,21 +85,27 @@ function PaginationPrevious({
 function PaginationNext({
   className,
   text = "Next",
+  label = "Go to next page",
   ...props
-}: React.ComponentProps<"a"> & { isActive?: boolean; text?: string }) {
+}: React.ComponentProps<"a"> & { isActive?: boolean; text?: string; label?: string }) {
   return (
-    <PaginationLink aria-label="Go to next page" edge="end" className={className} {...props}>
+    <PaginationLink aria-label={label} data-testid="pagination-next" edge="end" className={className} {...props}>
       <span>{text}</span>
       <CaretRightIcon className="size-4" aria-hidden />
     </PaginationLink>
   );
 }
 
-function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
+function PaginationEllipsis({
+  className,
+  label = "More pages",
+  ...props
+}: React.ComponentProps<"span"> & { label?: string }) {
   return (
     <span
       aria-hidden
       data-slot="pagination-ellipsis"
+      data-testid="pagination-ellipsis"
       className={cn(
         "pointer-events-none inline-flex h-(--control-md) min-w-(--control-md) items-center justify-center border border-transparent px-2.5 text-sm text-muted-foreground",
         className,
@@ -95,7 +113,7 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span"
       {...props}
     >
       <DotsThreeIcon className="size-4" />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{label}</span>
     </span>
   );
 }

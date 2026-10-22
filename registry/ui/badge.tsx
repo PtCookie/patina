@@ -31,14 +31,12 @@ function Badge({
   render,
   ...props
 }: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
+  // A variable, not a literal in the call: the props type has no `data-*` keys, but the attribute is valid.
+  const defaults = { "data-testid": "badge", className: cn(badgeVariants({ variant }), className) };
+
   return useRender({
     defaultTagName: "span",
-    props: mergeProps<"span">(
-      {
-        className: cn(badgeVariants({ variant }), className),
-      },
-      props,
-    ),
+    props: mergeProps<"span">(defaults, props),
     render,
     state: {
       slot: "badge",

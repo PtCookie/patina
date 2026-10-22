@@ -14,7 +14,7 @@ function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
 }
 
 function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" data-testid="tooltip-trigger" {...props} />;
 }
 
 function TooltipContent({
@@ -38,6 +38,7 @@ function TooltipContent({
       >
         <TooltipPrimitive.Popup
           data-slot="tooltip-content"
+          data-testid="tooltip-content"
           className={cn(
             "z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs/4 text-background transition-opacity duration-150 data-ending-style:opacity-0 data-starting-style:opacity-0 [&_[data-slot=kbd]]:bg-background [&_[data-slot=kbd]]:text-foreground",
             className,

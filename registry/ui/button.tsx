@@ -50,6 +50,7 @@ function Button({
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-testid="button"
       className={cn(buttonVariants({ variant, size, shape, className }))}
       {...props}
     />

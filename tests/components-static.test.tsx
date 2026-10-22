@@ -132,7 +132,7 @@ describe("Table", () => {
   const markup = renderToStaticMarkup(table);
 
   it("wraps the table in a scroll container that takes its own class", () => {
-    expect(markup).toMatch(/^<div data-slot="table-container" class="[^"]*max-h-64/);
+    expect(markup).toMatch(/^<div data-slot="table-container" data-testid="table-container" class="[^"]*max-h-64/);
     expect(classes(markup)).toEqual(expect.arrayContaining(["relative", "w-full", "overflow-x-auto"]));
     expect(classes(markup, "table")).toEqual(expect.arrayContaining(["w-full", "text-sm"]));
   });

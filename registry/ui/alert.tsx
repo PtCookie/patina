@@ -25,16 +25,36 @@ const alertVariants = cva(
 );
 
 function Alert({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
-  return <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />;
+  return (
+    <div
+      data-slot="alert"
+      data-testid="alert"
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    />
+  );
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="alert-title" className={cn("col-start-2 font-medium", className)} {...props} />;
+  return (
+    <div
+      data-slot="alert-title"
+      data-testid="alert-title"
+      className={cn("col-start-2 font-medium", className)}
+      {...props}
+    />
+  );
 }
 
 function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div data-slot="alert-description" className={cn("col-start-2 text-muted-foreground", className)} {...props} />
+    <div
+      data-slot="alert-description"
+      data-testid="alert-description"
+      className={cn("col-start-2 text-muted-foreground", className)}
+      {...props}
+    />
   );
 }
 

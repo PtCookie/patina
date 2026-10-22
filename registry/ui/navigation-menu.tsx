@@ -15,6 +15,7 @@ function NavigationMenu({
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
+      data-testid="navigation-menu"
       className={cn("group/navigation-menu relative flex max-w-max flex-1 items-center justify-center", className)}
       {...props}
     >
@@ -28,6 +29,7 @@ function NavigationMenuList({ className, ...props }: React.ComponentPropsWithRef
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
+      data-testid="navigation-menu-list"
       className={cn("group flex flex-1 list-none items-center justify-center gap-0", className)}
       {...props}
     />
@@ -36,7 +38,12 @@ function NavigationMenuList({ className, ...props }: React.ComponentPropsWithRef
 
 function NavigationMenuItem({ className, ...props }: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>) {
   return (
-    <NavigationMenuPrimitive.Item data-slot="navigation-menu-item" className={cn("relative", className)} {...props} />
+    <NavigationMenuPrimitive.Item
+      data-slot="navigation-menu-item"
+      data-testid="navigation-menu-item"
+      className={cn("relative", className)}
+      {...props}
+    />
   );
 }
 
@@ -50,6 +57,7 @@ function NavigationMenuTrigger({ className, children, ...props }: NavigationMenu
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
+      data-testid="navigation-menu-trigger"
       className={cn(navigationMenuTriggerStyle(), className)}
       {...props}
     >
@@ -67,6 +75,7 @@ function NavigationMenuContent({ className, ...props }: NavigationMenuPrimitive.
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
+      data-testid="navigation-menu-content"
       className={cn("grid h-full w-[420px] grid-cols-2 gap-1 p-1.5", className)}
       {...props}
     />
@@ -125,19 +134,28 @@ function NavigationMenuLink({
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
+      data-testid="navigation-menu-link"
       className={cn(navigationMenuLinkVariants({ variant }), className)}
       {...props}
     />
   );
 }
 function NavigationMenuLinkTitle({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="navigation-menu-link-title" className={cn("font-medium", className)} {...props} />;
+  return (
+    <span
+      data-slot="navigation-menu-link-title"
+      data-testid="navigation-menu-link-title"
+      className={cn("font-medium", className)}
+      {...props}
+    />
+  );
 }
 
 function NavigationMenuLinkDescription({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="navigation-menu-link-description"
+      data-testid="navigation-menu-link-description"
       className={cn("text-[13px]/[18px] text-muted-foreground", className)}
       {...props}
     />

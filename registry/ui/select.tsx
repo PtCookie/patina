@@ -9,11 +9,11 @@ import { cn } from "cn";
 const Select = SelectPrimitive.Root;
 
 function SelectGroup({ ...props }: SelectPrimitive.Group.Props) {
-  return <SelectPrimitive.Group data-slot="select-group" {...props} />;
+  return <SelectPrimitive.Group data-slot="select-group" data-testid="select-group" {...props} />;
 }
 
 function SelectValue({ ...props }: SelectPrimitive.Value.Props) {
-  return <SelectPrimitive.Value data-slot="select-value" {...props} />;
+  return <SelectPrimitive.Value data-slot="select-value" data-testid="select-value" {...props} />;
 }
 
 function SelectTrigger({
@@ -25,6 +25,7 @@ function SelectTrigger({
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
+      data-testid="select-trigger"
       className={cn(
         "group/select flex h-(--control-md) w-full cursor-pointer items-center justify-between gap-1.5 border border-transparent bg-control px-3 text-left text-sm whitespace-nowrap text-foreground transition-colors duration-150 outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-invalid-border aria-invalid:ring-3 aria-invalid:ring-invalid-ring data-placeholder:text-muted-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         shape === "pill" ? "rounded-full" : "rounded-lg",
@@ -68,6 +69,7 @@ function SelectContent({
       >
         <SelectPrimitive.Popup
           data-slot="select-content"
+          data-testid="select-content"
           className={cn(
             "z-50 max-h-(--available-height) min-w-(--anchor-width) origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-2xl bg-popover p-0 text-popover-foreground shadow-(--shadow-menu) outline-none",
             className,
@@ -85,6 +87,7 @@ function SelectLabel({ className, ...props }: SelectPrimitive.GroupLabel.Props) 
   return (
     <SelectPrimitive.GroupLabel
       data-slot="select-label"
+      data-testid="select-label"
       className={cn("px-3 pt-2.5 pb-1 text-xs/4 text-muted-foreground", className)}
       {...props}
     />
@@ -95,6 +98,7 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
+      data-testid="select-item"
       className={cn(
         "relative flex cursor-default items-center gap-2.5 px-3 py-2 text-sm font-medium outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-accent data-highlighted:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
@@ -113,6 +117,7 @@ function SelectSeparator({ className, ...props }: SelectPrimitive.Separator.Prop
   return (
     <SelectPrimitive.Separator
       data-slot="select-separator"
+      data-testid="select-separator"
       className={cn("my-1 h-px bg-border", className)}
       {...props}
     />

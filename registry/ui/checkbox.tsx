@@ -9,6 +9,7 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
+      data-testid="checkbox"
       className={cn(
         "peer relative flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-transparent bg-control-strong text-primary-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-invalid-border aria-invalid:ring-3 aria-invalid:ring-invalid-ring data-checked:border-primary data-checked:bg-primary",
         className,
@@ -17,6 +18,7 @@ function Checkbox({ className, ...props }: CheckboxPrimitive.Root.Props) {
     >
       <CheckboxPrimitive.Indicator
         data-slot="checkbox-indicator"
+        data-testid="checkbox-indicator"
         className="grid place-content-center text-current [&>svg]:size-3.5"
       >
         <CheckIcon />

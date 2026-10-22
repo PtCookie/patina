@@ -19,7 +19,14 @@ const skeletonVariants = cva("animate-pulse bg-muted motion-reduce:animate-none"
 });
 
 function Skeleton({ className, shape, ...props }: React.ComponentProps<"div"> & VariantProps<typeof skeletonVariants>) {
-  return <div data-slot="skeleton" className={cn(skeletonVariants({ shape }), className)} {...props} />;
+  return (
+    <div
+      data-slot="skeleton"
+      data-testid="skeleton"
+      className={cn(skeletonVariants({ shape }), className)}
+      {...props}
+    />
+  );
 }
 
 export { Skeleton, skeletonVariants };

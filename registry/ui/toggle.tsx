@@ -41,6 +41,7 @@ function Toggle({
   return (
     <TogglePrimitive
       data-slot="toggle"
+      data-testid="toggle"
       className={cn(toggleVariants({ variant, size, grouped, className }))}
       {...props}
     />
