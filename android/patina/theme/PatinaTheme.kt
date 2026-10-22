@@ -25,7 +25,7 @@ fun PatinaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     uiFont: FontFamily = FontFamily.Default,
     monoFont: FontFamily = FontFamily.Monospace,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val extension = if (darkTheme) PatinaDarkExtension else PatinaLightExtension
     val typography = remember(uiFont) { patinaTypography(uiFont) }
@@ -35,7 +35,7 @@ fun PatinaTheme(
             colorScheme = if (darkTheme) PatinaDark else PatinaLight,
             typography = typography,
             shapes = PatinaShapes,
-            content = content
+            content = content,
         )
     }
 }

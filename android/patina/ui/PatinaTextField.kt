@@ -49,16 +49,17 @@ fun PatinaTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailing: (@Composable () -> Unit)? = null
+    trailing: (@Composable () -> Unit)? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
-    val outline = when {
-        isError -> scheme.error
-        focused -> scheme.outline
-        else -> Color.Transparent
-    }
+    val outline =
+        when {
+            isError -> scheme.error
+            focused -> scheme.outline
+            else -> Color.Transparent
+        }
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(PatinaSpace.space2)) {
         if (label != null) {
             Text(text = label, style = MaterialTheme.typography.labelLarge, color = scheme.onSurface)
@@ -77,32 +78,33 @@ fun PatinaTextField(
             interactionSource = interaction,
             decorationBox = { inner ->
                 Row(
-                    modifier = Modifier
-                        .heightIn(min = PatinaSize.controlLg)
-                        .background(PatinaTheme.colors.control, MaterialTheme.shapes.small)
-                        .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
-                        .padding(horizontal = PatinaSpace.space3),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier =
+                        Modifier
+                            .heightIn(min = PatinaSize.controlLg)
+                            .background(PatinaTheme.colors.control, MaterialTheme.shapes.small)
+                            .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
+                            .padding(horizontal = PatinaSpace.space3),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Box(modifier = Modifier.weight(1f)) {
                         if (value.isEmpty() && placeholder != null) {
                             Text(
                                 text = placeholder,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = scheme.onSurfaceVariant
+                                color = scheme.onSurfaceVariant,
                             )
                         }
                         inner()
                     }
                     trailing?.invoke()
                 }
-            }
+            },
         )
         if (supportingText != null) {
             Text(
                 text = supportingText,
                 style = MaterialTheme.typography.bodySmall,
-                color = if (isError) scheme.error else scheme.onSurfaceVariant
+                color = if (isError) scheme.error else scheme.onSurfaceVariant,
             )
         }
     }

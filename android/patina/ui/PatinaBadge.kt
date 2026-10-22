@@ -35,34 +35,36 @@ fun PatinaBadge(
     text: String,
     modifier: Modifier = Modifier,
     variant: PatinaBadgeVariant = PatinaBadgeVariant.Primary,
-    icon: ImageVector? = null
+    icon: ImageVector? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
-    val (container, content) = when (variant) {
-        PatinaBadgeVariant.Primary -> scheme.primary to scheme.onPrimary
-        PatinaBadgeVariant.Secondary -> scheme.secondaryContainer to scheme.onSecondaryContainer
-        PatinaBadgeVariant.Outline -> Color.Transparent to scheme.onSurface
-        PatinaBadgeVariant.Destructive -> scheme.errorContainer to scheme.error
-        PatinaBadgeVariant.Success -> colors.successContainer to colors.success
-        PatinaBadgeVariant.Warning -> colors.warningContainer to colors.warning
-        PatinaBadgeVariant.Info -> scheme.tertiaryContainer to scheme.tertiary
-    }
+    val (container, content) =
+        when (variant) {
+            PatinaBadgeVariant.Primary -> scheme.primary to scheme.onPrimary
+            PatinaBadgeVariant.Secondary -> scheme.secondaryContainer to scheme.onSecondaryContainer
+            PatinaBadgeVariant.Outline -> Color.Transparent to scheme.onSurface
+            PatinaBadgeVariant.Destructive -> scheme.errorContainer to scheme.error
+            PatinaBadgeVariant.Success -> colors.successContainer to colors.success
+            PatinaBadgeVariant.Warning -> colors.warningContainer to colors.warning
+            PatinaBadgeVariant.Info -> scheme.tertiaryContainer to scheme.tertiary
+        }
     Surface(
         modifier = modifier,
         shape = CircleShape,
         color = container,
         contentColor = content,
-        border = if (variant == PatinaBadgeVariant.Outline) {
-            BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
-        } else {
-            null
-        }
+        border =
+            if (variant == PatinaBadgeVariant.Outline) {
+                BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
+            } else {
+                null
+            },
     ) {
         Row(
             modifier = Modifier.height(BADGE_HEIGHT).padding(horizontal = PatinaSpace.space2),
             horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space1),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             if (icon != null) {
                 Icon(icon, contentDescription = null, modifier = Modifier.size(PatinaSize.iconSm))

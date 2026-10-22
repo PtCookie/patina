@@ -25,7 +25,7 @@ import patina.theme.PatinaTheme
 fun PatinaBottomSheet(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
@@ -33,12 +33,12 @@ fun PatinaBottomSheet(
         shape = MaterialTheme.shapes.extraLarge,
         containerColor = PatinaTheme.colors.popover,
         contentColor = PatinaTheme.colors.onPopover,
-        tonalElevation = 0.dp
+        tonalElevation = 0.dp,
     ) {
         Column(
             modifier = Modifier.navigationBarsPadding().padding(PatinaSpace.space6),
             verticalArrangement = Arrangement.spacedBy(PatinaSpace.space4),
-            content = content
+            content = content,
         )
     }
 }

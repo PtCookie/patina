@@ -22,23 +22,25 @@ fun PatinaListItem(
     supporting: String? = null,
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
     ListItem(
         headlineContent = { Text(text = headline, style = MaterialTheme.typography.bodyLarge) },
         modifier = if (onClick != null) modifier.clickable(onClick = onClick) else modifier,
-        supportingContent = supporting?.let { line ->
-            { Text(text = line, style = MaterialTheme.typography.bodySmall) }
-        },
+        supportingContent =
+            supporting?.let { line ->
+                { Text(text = line, style = MaterialTheme.typography.bodySmall) }
+            },
         leadingContent = leading,
         trailingContent = trailing,
-        colors = ListItemDefaults.colors(
-            containerColor = Color.Transparent,
-            headlineColor = scheme.onSurface,
-            supportingColor = scheme.onSurfaceVariant
-        ),
+        colors =
+            ListItemDefaults.colors(
+                containerColor = Color.Transparent,
+                headlineColor = scheme.onSurface,
+                supportingColor = scheme.onSurfaceVariant,
+            ),
         tonalElevation = 0.dp,
-        shadowElevation = 0.dp
+        shadowElevation = 0.dp,
     )
 }

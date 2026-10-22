@@ -50,45 +50,47 @@ fun PatinaSelect(
     label: String? = null,
     placeholder: String? = null,
     enabled: Boolean = true,
-    isError: Boolean = false
+    isError: Boolean = false,
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
     var expanded by remember { mutableStateOf(false) }
     val chosen = selectedIndex?.let { options.getOrNull(it) }
-    val outline = when {
-        isError -> scheme.error
-        expanded -> scheme.outline
-        else -> Color.Transparent
-    }
+    val outline =
+        when {
+            isError -> scheme.error
+            expanded -> scheme.outline
+            else -> Color.Transparent
+        }
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(PatinaSpace.space2)) {
         if (label != null) {
             Text(text = label, style = MaterialTheme.typography.labelLarge, color = scheme.onSurface)
         }
         ExposedDropdownMenuBox(expanded = expanded && enabled, onExpandedChange = { expanded = it }) {
             Row(
-                modifier = Modifier
-                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled)
-                    .fillMaxWidth()
-                    .alpha(if (enabled) 1f else DISABLED_ALPHA)
-                    .heightIn(min = PatinaSize.controlLg)
-                    .background(colors.control, MaterialTheme.shapes.small)
-                    .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
-                    .padding(horizontal = PatinaSpace.space3),
+                modifier =
+                    Modifier
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, enabled)
+                        .fillMaxWidth()
+                        .alpha(if (enabled) 1f else DISABLED_ALPHA)
+                        .heightIn(min = PatinaSize.controlLg)
+                        .background(colors.control, MaterialTheme.shapes.small)
+                        .border(PatinaStroke.ring, outline, MaterialTheme.shapes.small)
+                        .padding(horizontal = PatinaSpace.space3),
                 horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space1_5),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = chosen ?: placeholder.orEmpty(),
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = if (chosen != null) scheme.onSurface else scheme.onSurfaceVariant
+                    color = if (chosen != null) scheme.onSurface else scheme.onSurfaceVariant,
                 )
                 Icon(
                     PatinaIcons.CaretDown,
                     contentDescription = null,
                     modifier = Modifier.size(PatinaSize.iconMd),
-                    tint = scheme.onSurfaceVariant
+                    tint = scheme.onSurfaceVariant,
                 )
             }
             ExposedDropdownMenu(
@@ -98,7 +100,7 @@ fun PatinaSelect(
                 containerColor = colors.popover,
                 tonalElevation = 0.dp,
                 shadowElevation = SELECT_ELEVATION,
-                border = BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
+                border = BorderStroke(PatinaStroke.hairline, scheme.outlineVariant),
             ) {
                 options.forEachIndexed { index, option ->
                     DropdownMenuItem(
@@ -107,21 +109,23 @@ fun PatinaSelect(
                             onSelectedChange(index)
                             expanded = false
                         },
-                        trailingIcon = if (index == selectedIndex) {
-                            {
-                                Icon(
-                                    PatinaIcons.Check,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(PatinaSize.iconMd)
-                                )
-                            }
-                        } else {
-                            null
-                        },
-                        colors = MenuDefaults.itemColors(
-                            textColor = colors.onPopover,
-                            trailingIconColor = colors.onPopover
-                        )
+                        trailingIcon =
+                            if (index == selectedIndex) {
+                                {
+                                    Icon(
+                                        PatinaIcons.Check,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(PatinaSize.iconMd),
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        colors =
+                            MenuDefaults.itemColors(
+                                textColor = colors.onPopover,
+                                trailingIconColor = colors.onPopover,
+                            ),
                     )
                 }
             }

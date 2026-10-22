@@ -47,8 +47,8 @@ const EXTENSION: readonly { property: string; token: string; tint?: { light: num
 export function colorKt(set: TokenSet, version: string): string {
   const schemes = THEMES.map((theme) => {
     const scheme = m3Scheme(set, theme);
-    const roles = M3_ROLES.map((role: M3Role) => `    ${role} = ${argb(scheme[role])}`);
-    return `val ${SCHEMES[theme].name} = ${SCHEMES[theme].factory}(\n${roles.join(",\n")}\n)`;
+    const roles = M3_ROLES.map((role: M3Role) => `        ${role} = ${argb(scheme[role])},`);
+    return `val ${SCHEMES[theme].name} =\n    ${SCHEMES[theme].factory}(\n${roles.join("\n")}\n    )`;
   });
 
   const extension = THEMES.map((theme) => {
@@ -57,9 +57,9 @@ export function colorKt(set: TokenSet, version: string): string {
       const value = tint
         ? compositeOver(oklchToLinear(resolveColor(set, token, theme)), tint[theme], background)
         : flatten(resolveColor(set, token, theme), background);
-      return `    ${property} = ${argb(value)}`;
+      return `        ${property} = ${argb(value)},`;
     });
-    return `val ${SCHEMES[theme].name}Extension = PatinaColors(\n${fields.join(",\n")}\n)`;
+    return `val ${SCHEMES[theme].name}Extension =\n    PatinaColors(\n${fields.join("\n")}\n    )`;
   });
 
   return `${header(version, "Color.kt", "MagicNumber", "LongParameterList")}package ${ANDROID_PACKAGE}
@@ -78,7 +78,7 @@ ${schemes.join("\n")}
  */
 @Immutable
 class PatinaColors(
-${EXTENSION.map(({ property }) => `    val ${property}: Color`).join(",\n")}
+${EXTENSION.map(({ property }) => `    val ${property}: Color,`).join("\n")}
 )
 
 ${extension.join("\n")}
@@ -124,8 +124,8 @@ function fontWeight(weight: number): string {
   return `FontWeight.${name}`;
 }
 
-/** A `TextStyle(...)` call with one argument per line, so no generated line passes 120 characters. */
-function textStyle(set: TokenSet, name: string, family: string, indent: number): string {
+/** A `slot = TextStyle(...)` argument, one text-style argument per line, as ktlint formats it. */
+function textStyle(set: TokenSet, name: string, slot: string, family: string, indent: number): string {
   const style = set.type.groups.flatMap((group) => group.styles).find((candidate) => candidate.name === name);
   if (!style) throw new Error(`Text style ${name} is missing from tokens.json`);
   const size = Number.parseFloat(style.fontSize);
@@ -139,14 +139,15 @@ function textStyle(set: TokenSet, name: string, family: string, indent: number):
     `letterSpacing = ${tracking === 0 ? "0.sp" : sp(tracking)}`,
   ];
   const pad = " ".repeat(indent);
-  return `TextStyle(\n${args.map((arg) => `${pad}    ${arg}`).join(",\n")}\n${pad})`;
+  const lines = args.map((arg) => `${pad}        ${arg},`).join("\n");
+  return `${pad}${slot} =\n${pad}    TextStyle(\n${lines}\n${pad}    ),`;
 }
 
 export function typeKt(set: TokenSet, version: string): string {
-  const mapped = TYPE_MAP.flatMap(({ m3, style }) =>
-    m3.map((slot) => `        ${slot} = ${textStyle(set, style, "ui", 8)}`),
+  const mapped = TYPE_MAP.flatMap(({ m3, style }) => m3.map((slot) => textStyle(set, style, slot, "ui", 8)));
+  const unmapped = UNMAPPED.map(
+    (slot) => `        ${slot} = base.${slot}.copy(fontFamily = ui, letterSpacing = 0.sp),`,
   );
-  const unmapped = UNMAPPED.map((slot) => `        ${slot} = base.${slot}.copy(fontFamily = ui, letterSpacing = 0.sp)`);
 
   return `${header(version, "Type.kt", "MagicNumber", "LongMethod")}package ${ANDROID_PACKAGE}
 
@@ -163,17 +164,21 @@ import androidx.compose.ui.unit.sp
 fun patinaTypography(ui: FontFamily): Typography {
     val base = Typography()
     return Typography(
-${[...unmapped, ...mapped].join(",\n")}
+${[...unmapped, ...mapped].join("\n")}
     )
 }
 
 /** Identifiers and code. Hangul inside JetBrains Mono falls back to the system font, so keep it to Latin text. */
-class PatinaCodeStyles(val mono: TextStyle, val monoSmall: TextStyle)
-
-fun patinaCodeStyles(mono: FontFamily): PatinaCodeStyles = PatinaCodeStyles(
-    mono = ${textStyle(set, "mono", "mono", 4)},
-    monoSmall = ${textStyle(set, "mono-sm", "mono", 4)}
+class PatinaCodeStyles(
+    val mono: TextStyle,
+    val monoSmall: TextStyle,
 )
+
+fun patinaCodeStyles(mono: FontFamily): PatinaCodeStyles =
+    PatinaCodeStyles(
+${textStyle(set, "mono", "mono", "mono", 8)}
+${textStyle(set, "mono-sm", "monoSmall", "mono", 8)}
+    )
 `;
 }
 
@@ -192,10 +197,7 @@ export function shapeKt(set: TokenSet, version: string): string {
     if (!token) throw new Error(`Radius token ${name} is missing from tokens.json`);
     return `${Number.parseFloat(token.values.light)}.dp`;
   };
-  const slots = SHAPES.map(
-    ({ slot, token }, index) =>
-      `    ${slot} = RoundedCornerShape(${radius(token)})${index < SHAPES.length - 1 ? "," : ""} // ${token}`,
-  );
+  const slots = SHAPES.map(({ slot, token }) => `        ${slot} = RoundedCornerShape(${radius(token)}), // ${token}`);
 
   return `${header(version, "Shape.kt", "MagicNumber")}package ${ANDROID_PACKAGE}
 
@@ -207,9 +209,10 @@ import androidx.compose.ui.unit.dp
  * Material 3 components pick other slots than this system, so pass shapes explicitly: buttons and text fields
  * \`small\`, cards \`large\`, menus \`medium\`. The pill stays the opt-in \`CircleShape\`.
  */
-val PatinaShapes = Shapes(
+val PatinaShapes =
+    Shapes(
 ${slots.join("\n")}
-)
+    )
 `;
 }
 
@@ -274,7 +277,7 @@ export function iconsKt(svgs: Record<string, string>, version: string): string {
       .map((piece) => `"${piece}"`)
       .join(" +\n                ");
     const property = kotlinName(name).replace(/^./, (char) => char.toUpperCase());
-    return `    val ${property}: ImageVector by lazy {\n        icon(\n            "${name}",\n            ${data}\n        )\n    }`;
+    return `    val ${property}: ImageVector by lazy {\n        icon(\n            "${name}",\n            ${data},\n        )\n    }`;
   });
   return `${header(version, "PatinaIcons.kt")}package ${ANDROID_PACKAGE}
 
@@ -293,15 +296,19 @@ import androidx.compose.ui.unit.dp
 object PatinaIcons {
 ${entries.join("\n\n")}
 
-    private fun icon(name: String, pathData: String): ImageVector = ImageVector.Builder(
-        name = name,
-        defaultWidth = 16.dp,
-        defaultHeight = 16.dp,
-        viewportWidth = 256f,
-        viewportHeight = 256f
-    )
-        .addPath(pathData = PathParser().parsePathString(pathData).toNodes(), fill = SolidColor(Color.Black))
-        .build()
+    private fun icon(
+        name: String,
+        pathData: String,
+    ): ImageVector =
+        ImageVector
+            .Builder(
+                name = name,
+                defaultWidth = 16.dp,
+                defaultHeight = 16.dp,
+                viewportWidth = 256f,
+                viewportHeight = 256f,
+            ).addPath(pathData = PathParser().parsePathString(pathData).toNodes(), fill = SolidColor(Color.Black))
+            .build()
 }
 `;
 }

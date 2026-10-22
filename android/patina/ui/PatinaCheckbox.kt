@@ -36,39 +36,45 @@ fun PatinaCheckbox(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     isError: Boolean = false,
-    label: String? = null
+    label: String? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
-    val toggle = if (onCheckedChange != null) {
-        Modifier.toggleable(value = checked, enabled = enabled, role = Role.Checkbox, onValueChange = onCheckedChange)
-    } else {
-        Modifier
-    }
+    val toggle =
+        if (onCheckedChange != null) {
+            Modifier.toggleable(
+                value = checked,
+                enabled = enabled,
+                role = Role.Checkbox,
+                onValueChange = onCheckedChange,
+            )
+        } else {
+            Modifier
+        }
     Row(
         modifier = modifier.alpha(if (enabled) 1f else DISABLED_ALPHA).then(toggle).minimumInteractiveComponentSize(),
         horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space2),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(PatinaSize.iconLg)
-                .background(
-                    if (checked) scheme.primary else PatinaTheme.colors.controlStrong,
-                    MaterialTheme.shapes.extraSmall
-                )
-                .border(
-                    PatinaStroke.ring,
-                    if (isError) scheme.error else Color.Transparent,
-                    MaterialTheme.shapes.extraSmall
-                ),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(PatinaSize.iconLg)
+                    .background(
+                        if (checked) scheme.primary else PatinaTheme.colors.controlStrong,
+                        MaterialTheme.shapes.extraSmall,
+                    ).border(
+                        PatinaStroke.ring,
+                        if (isError) scheme.error else Color.Transparent,
+                        MaterialTheme.shapes.extraSmall,
+                    ),
+            contentAlignment = Alignment.Center,
         ) {
             if (checked) {
                 Icon(
                     PatinaIcons.Check,
                     contentDescription = null,
                     modifier = Modifier.size(PatinaSize.iconMd),
-                    tint = scheme.onPrimary
+                    tint = scheme.onPrimary,
                 )
             }
         }

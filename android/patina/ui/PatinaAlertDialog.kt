@@ -20,7 +20,7 @@ fun PatinaAlertDialog(
     modifier: Modifier = Modifier,
     dismissButton: (@Composable () -> Unit)? = null,
     title: (@Composable () -> Unit)? = null,
-    text: (@Composable () -> Unit)? = null
+    text: (@Composable () -> Unit)? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
@@ -29,16 +29,18 @@ fun PatinaAlertDialog(
         confirmButton = confirmButton,
         modifier = modifier,
         dismissButton = dismissButton,
-        title = title?.let { content ->
-            { ProvideTextStyle(MaterialTheme.typography.titleMedium) { content() } }
-        },
-        text = text?.let { content ->
-            { ProvideTextStyle(MaterialTheme.typography.bodyMedium) { content() } }
-        },
+        title =
+            title?.let { content ->
+                { ProvideTextStyle(MaterialTheme.typography.titleMedium) { content() } }
+            },
+        text =
+            text?.let { content ->
+                { ProvideTextStyle(MaterialTheme.typography.bodyMedium) { content() } }
+            },
         shape = MaterialTheme.shapes.extraLarge,
         containerColor = colors.popover,
         titleContentColor = colors.onPopover,
         textContentColor = scheme.onSurfaceVariant,
-        tonalElevation = 0.dp
+        tonalElevation = 0.dp,
     )
 }

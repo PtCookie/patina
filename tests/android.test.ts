@@ -13,10 +13,11 @@ const color = colorKt(set, version);
 const type = typeKt(set, version);
 const shape = shapeKt(set, version);
 
-/** `role = Color(0xFFRRGGBB)` lines of one `val Name = ...Scheme(` block. */
+/** `role = Color(0xFFRRGGBB)` lines of one `val Name = ...Scheme(` block (Android.md or the generated file). */
 function colorBlock(source: string, name: string): Record<string, string> {
   const start = source.indexOf(`val ${name} =`);
-  const end = source.indexOf("\n)", start);
+  // The block closes with `)` at the start of a line in Android.md and indented once in the generated file.
+  const end = start + source.slice(start).search(/\n {0,4}\)/);
   return Object.fromEntries(
     [...source.slice(start, end).matchAll(/^\s+(\w+) = Color\(0xFF([0-9A-F]{6})\),?$/gm)].map((match) => [
       match[1],
@@ -90,7 +91,7 @@ const WEIGHT_NAMES: Record<string, string> = { "400": "Normal", "500": "Medium",
 describe("Type.kt", () => {
   // The arguments of `slot = TextStyle(...)`, which the generator writes one per line, joined back with commas.
   const textStyleArgs = (slot: string): string | undefined =>
-    new RegExp(`^\\s+${slot} = TextStyle\\(\\n((?:\\s+\\w+ = .*,?\\n)+)\\s+\\),?$`, "m")
+    new RegExp(`^\\s+${slot} =\\s+TextStyle\\(\\n((?:\\s+\\w+ = .*,?\\n)+)\\s+\\),?$`, "m")
       .exec(type)?.[1]
       ?.trim()
       .split(/,\n\s+/)

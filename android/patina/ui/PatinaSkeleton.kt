@@ -21,12 +21,15 @@ import androidx.compose.ui.graphics.Shape
  * only after about 300ms of waiting.
  */
 @Composable
-fun PatinaSkeleton(modifier: Modifier = Modifier, shape: Shape = MaterialTheme.shapes.small) {
+fun PatinaSkeleton(
+    modifier: Modifier = Modifier,
+    shape: Shape = MaterialTheme.shapes.small,
+) {
     val pulse by rememberInfiniteTransition(label = "skeleton").animateFloat(
         initialValue = 1f,
         targetValue = PULSE_LOW,
         animationSpec = infiniteRepeatable(tween(durationMillis = PULSE_HALF_MS), RepeatMode.Reverse),
-        label = "skeleton alpha"
+        label = "skeleton alpha",
     )
     Box(modifier = modifier.alpha(pulse).background(MaterialTheme.colorScheme.surfaceVariant, shape))
 }

@@ -25,7 +25,7 @@ fun PatinaTopAppBar(
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
     backDescription: String = "Back",
-    actions: @Composable RowScope.() -> Unit = {}
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     val scheme = MaterialTheme.colorScheme
     TopAppBar(
@@ -37,18 +37,19 @@ fun PatinaTopAppBar(
                     Icon(
                         imageVector = PatinaIcons.ArrowLeft,
                         contentDescription = backDescription,
-                        modifier = Modifier.size(PatinaSize.iconLg)
+                        modifier = Modifier.size(PatinaSize.iconLg),
                     )
                 }
             }
         },
         actions = actions,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = scheme.background,
-            scrolledContainerColor = scheme.background,
-            titleContentColor = scheme.onBackground,
-            navigationIconContentColor = scheme.onBackground,
-            actionIconContentColor = scheme.onBackground
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor = scheme.background,
+                scrolledContainerColor = scheme.background,
+                titleContentColor = scheme.onBackground,
+                navigationIconContentColor = scheme.onBackground,
+                actionIconContentColor = scheme.onBackground,
+            ),
     )
 }

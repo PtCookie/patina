@@ -40,7 +40,7 @@ fun PatinaButton(
     enabled: Boolean = true,
     pill: Boolean = false,
     icon: ImageVector? = null,
-    content: @Composable RowScope.() -> Unit
+    content: @Composable RowScope.() -> Unit,
 ) {
     val scheme = MaterialTheme.colorScheme
     val shape = if (pill) CircleShape else MaterialTheme.shapes.small
@@ -60,12 +60,13 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.buttonColors(
-                    disabledContainerColor = scheme.primary,
-                    disabledContentColor = scheme.onPrimary
-                ),
+                colors =
+                    ButtonDefaults.buttonColors(
+                        disabledContainerColor = scheme.primary,
+                        disabledContentColor = scheme.onPrimary,
+                    ),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
         PatinaButtonVariant.Secondary ->
             FilledTonalButton(
@@ -73,12 +74,13 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    disabledContainerColor = scheme.secondaryContainer,
-                    disabledContentColor = scheme.onSecondaryContainer
-                ),
+                colors =
+                    ButtonDefaults.filledTonalButtonColors(
+                        disabledContainerColor = scheme.secondaryContainer,
+                        disabledContentColor = scheme.onSecondaryContainer,
+                    ),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
         PatinaButtonVariant.Outline ->
             OutlinedButton(
@@ -86,13 +88,14 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = scheme.onSurface,
-                    disabledContentColor = scheme.onSurface
-                ),
+                colors =
+                    ButtonDefaults.outlinedButtonColors(
+                        contentColor = scheme.onSurface,
+                        disabledContentColor = scheme.onSurface,
+                    ),
                 border = BorderStroke(PatinaStroke.hairline, scheme.outlineVariant),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
         PatinaButtonVariant.Ghost ->
             TextButton(
@@ -100,12 +103,13 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = scheme.onSurface,
-                    disabledContentColor = scheme.onSurface
-                ),
+                colors =
+                    ButtonDefaults.textButtonColors(
+                        contentColor = scheme.onSurface,
+                        disabledContentColor = scheme.onSurface,
+                    ),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
         PatinaButtonVariant.Destructive ->
             FilledTonalButton(
@@ -113,14 +117,15 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = scheme.errorContainer,
-                    contentColor = scheme.error,
-                    disabledContainerColor = scheme.errorContainer,
-                    disabledContentColor = scheme.error
-                ),
+                colors =
+                    ButtonDefaults.filledTonalButtonColors(
+                        containerColor = scheme.errorContainer,
+                        contentColor = scheme.error,
+                        disabledContainerColor = scheme.errorContainer,
+                        disabledContentColor = scheme.error,
+                    ),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
         PatinaButtonVariant.Link ->
             TextButton(
@@ -128,12 +133,13 @@ fun PatinaButton(
                 modifier = sized,
                 enabled = enabled,
                 shape = shape,
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = scheme.primary,
-                    disabledContentColor = scheme.primary
-                ),
+                colors =
+                    ButtonDefaults.textButtonColors(
+                        contentColor = scheme.primary,
+                        disabledContentColor = scheme.primary,
+                    ),
                 contentPadding = padding,
-                content = body
+                content = body,
             )
     }
 }

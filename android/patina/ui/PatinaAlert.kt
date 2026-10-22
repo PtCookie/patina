@@ -37,41 +37,45 @@ fun PatinaAlert(
     modifier: Modifier = Modifier,
     variant: PatinaAlertVariant = PatinaAlertVariant.Default,
     description: String? = null,
-    action: (@Composable () -> Unit)? = null
+    action: (@Composable () -> Unit)? = null,
 ) {
     val scheme = MaterialTheme.colorScheme
     val colors = PatinaTheme.colors
-    val tinted = variant == PatinaAlertVariant.Success ||
-        variant == PatinaAlertVariant.Warning ||
-        variant == PatinaAlertVariant.Info
-    val container = when (variant) {
-        PatinaAlertVariant.Success -> colors.successContainer
-        PatinaAlertVariant.Warning -> colors.warningContainer
-        PatinaAlertVariant.Info -> scheme.tertiaryContainer
-        else -> colors.card
-    }
-    val tone = when (variant) {
-        PatinaAlertVariant.Default -> colors.onCard
-        PatinaAlertVariant.Destructive -> scheme.error
-        PatinaAlertVariant.Success -> colors.success
-        PatinaAlertVariant.Warning -> colors.warning
-        PatinaAlertVariant.Info -> scheme.tertiary
-    }
-    val body = when {
-        variant == PatinaAlertVariant.Destructive -> scheme.error
-        tinted -> scheme.onSurface
-        else -> scheme.onSurfaceVariant
-    }
+    val tinted =
+        variant == PatinaAlertVariant.Success ||
+            variant == PatinaAlertVariant.Warning ||
+            variant == PatinaAlertVariant.Info
+    val container =
+        when (variant) {
+            PatinaAlertVariant.Success -> colors.successContainer
+            PatinaAlertVariant.Warning -> colors.warningContainer
+            PatinaAlertVariant.Info -> scheme.tertiaryContainer
+            else -> colors.card
+        }
+    val tone =
+        when (variant) {
+            PatinaAlertVariant.Default -> colors.onCard
+            PatinaAlertVariant.Destructive -> scheme.error
+            PatinaAlertVariant.Success -> colors.success
+            PatinaAlertVariant.Warning -> colors.warning
+            PatinaAlertVariant.Info -> scheme.tertiary
+        }
+    val body =
+        when {
+            variant == PatinaAlertVariant.Destructive -> scheme.error
+            tinted -> scheme.onSurface
+            else -> scheme.onSurfaceVariant
+        }
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,
         color = container,
-        border = if (tinted) null else BorderStroke(PatinaStroke.hairline, scheme.outlineVariant)
+        border = if (tinted) null else BorderStroke(PatinaStroke.hairline, scheme.outlineVariant),
     ) {
         Row(
             modifier = Modifier.padding(horizontal = PatinaSpace.space4, vertical = PatinaSpace.space3),
             horizontalArrangement = Arrangement.spacedBy(PatinaSpace.space3),
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
         ) {
             Icon(icon, contentDescription = null, modifier = Modifier.size(PatinaSize.iconLg), tint = tone)
             Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(PatinaSpace.space1)) {

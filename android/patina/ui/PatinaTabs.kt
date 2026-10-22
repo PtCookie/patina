@@ -35,40 +35,41 @@ fun PatinaTabs(
     selectedIndex: Int,
     onSelectedChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
 ) {
     val scheme = MaterialTheme.colorScheme
     val light = scheme.background.luminance() > LIGHT_BACKGROUND
     val lifted = if (light) scheme.background else PatinaTheme.colors.controlStrong
     Row(
-        modifier = modifier
-            .alpha(if (enabled) 1f else DISABLED_ALPHA)
-            .minimumInteractiveComponentSize()
-            .background(scheme.surfaceVariant, CircleShape)
-            .padding(PatinaSpace.space1)
-            .selectableGroup(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .alpha(if (enabled) 1f else DISABLED_ALPHA)
+                .minimumInteractiveComponentSize()
+                .background(scheme.surfaceVariant, CircleShape)
+                .padding(PatinaSpace.space1)
+                .selectableGroup(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         labels.forEachIndexed { index, label ->
             val selected = index == selectedIndex
             Box(
-                modifier = Modifier
-                    .height(PatinaSize.compactControl)
-                    .clip(CircleShape)
-                    .background(if (selected) lifted else Color.Transparent)
-                    .selectable(
-                        selected = selected,
-                        enabled = enabled,
-                        role = Role.Tab,
-                        onClick = { onSelectedChange(index) }
-                    )
-                    .padding(horizontal = PatinaSpace.space3),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .height(PatinaSize.compactControl)
+                        .clip(CircleShape)
+                        .background(if (selected) lifted else Color.Transparent)
+                        .selectable(
+                            selected = selected,
+                            enabled = enabled,
+                            role = Role.Tab,
+                            onClick = { onSelectedChange(index) },
+                        ).padding(horizontal = PatinaSpace.space3),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelLarge,
-                    color = if (selected) scheme.onSurface else scheme.onSurfaceVariant
+                    color = if (selected) scheme.onSurface else scheme.onSurfaceVariant,
                 )
             }
         }

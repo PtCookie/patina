@@ -31,7 +31,7 @@ fun PatinaDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     DropdownMenu(
         expanded = expanded,
@@ -42,7 +42,7 @@ fun PatinaDropdownMenu(
         tonalElevation = 0.dp,
         shadowElevation = MENU_ELEVATION,
         border = BorderStroke(PatinaStroke.hairline, MaterialTheme.colorScheme.outlineVariant),
-        content = content
+        content = content,
     )
 }
 
@@ -55,7 +55,7 @@ fun PatinaDropdownMenuItem(
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     destructive: Boolean = false,
-    enabled: Boolean = true
+    enabled: Boolean = true,
 ) {
     val scheme = MaterialTheme.colorScheme
     val content = if (destructive) scheme.error else PatinaTheme.colors.onPopover
@@ -63,34 +63,40 @@ fun PatinaDropdownMenuItem(
         text = { Text(text = text, style = MaterialTheme.typography.labelLarge) },
         onClick = onClick,
         modifier = modifier.alpha(if (enabled) 1f else DISABLED_ALPHA),
-        leadingIcon = icon?.let { vector ->
-            { Icon(vector, contentDescription = null, modifier = Modifier.size(PatinaSize.iconMd)) }
-        },
+        leadingIcon =
+            icon?.let { vector ->
+                { Icon(vector, contentDescription = null, modifier = Modifier.size(PatinaSize.iconMd)) }
+            },
         enabled = enabled,
-        colors = MenuDefaults.itemColors(
-            textColor = content,
-            leadingIconColor = content,
-            trailingIconColor = content,
-            disabledTextColor = content,
-            disabledLeadingIconColor = content,
-            disabledTrailingIconColor = content
-        )
+        colors =
+            MenuDefaults.itemColors(
+                textColor = content,
+                leadingIconColor = content,
+                trailingIconColor = content,
+                disabledTextColor = content,
+                disabledLeadingIconColor = content,
+                disabledTrailingIconColor = content,
+            ),
     )
 }
 
 /** A group label above a run of items: `muted-foreground`, small. */
 @Composable
-fun PatinaDropdownMenuLabel(text: String, modifier: Modifier = Modifier) {
+fun PatinaDropdownMenuLabel(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = text,
-        modifier = modifier.padding(
-            start = PatinaSpace.space3,
-            end = PatinaSpace.space3,
-            top = PatinaSpace.space2,
-            bottom = PatinaSpace.space1
-        ),
+        modifier =
+            modifier.padding(
+                start = PatinaSpace.space3,
+                end = PatinaSpace.space3,
+                top = PatinaSpace.space2,
+                bottom = PatinaSpace.space1,
+            ),
         style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }
 
@@ -100,7 +106,7 @@ fun PatinaDropdownMenuDivider(modifier: Modifier = Modifier) {
     HorizontalDivider(
         modifier = modifier.padding(vertical = PatinaSpace.space1),
         thickness = PatinaStroke.hairline,
-        color = MaterialTheme.colorScheme.outlineVariant
+        color = MaterialTheme.colorScheme.outlineVariant,
     )
 }
 
