@@ -56,7 +56,7 @@ One TypeScript build script, no separate tools: `design-system/tokens.json` to `
 3. Generate: shadcn registry items (`:root` / `.dark` cssVars, fonts CSS), `tokens.slint`, Android `Color.kt` / `Type.kt` / `Shape.kt`.
 4. Alpha tokens are checked **composited over their background**; Slint gets `#RRGGBBAA`, Android `Color(0xAARRGGBB)`. oklch to sRGB must clamp gamut the way `tools/cc.py` does so web, Slint and Android agree.
 
-The generator emits `:root` / `.dark` with class-based dark mode (`@custom-variant dark (&:is(.dark, .dark *))`). The component previews use `[data-theme]` for demo purposes only.
+The generator emits `:root` / `.dark` for class-based dark mode. It leaves the `@custom-variant` line out (the shadcn CLI writes `&:is(.dark *)` itself), and consumers set it to `@custom-variant dark (&:is(.dark, .dark *))` so that `dark:` utilities also match `<html>` itself; `docs/agent-guide.md` says so. The component previews use `[data-theme]` for demo purposes only.
 
 Port `cc.py` / `m3.py` to TypeScript rather than shelling out to Python. Keep their numbers as test fixtures: `m3.py` prints the contrast of every M3 pair and writes the resulting hex values to `m3.json`.
 
