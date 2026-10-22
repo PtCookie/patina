@@ -42,7 +42,7 @@ kotlin {
 // The library is linted with the defaults of both tools (ktlint in Android Studio style, detekt with its default rule
 // set), which is what an app that vendors it runs. The only addition is the one every Compose app makes: composables
 // are PascalCase (config/detekt/detekt.yml and .editorconfig). ktlint finds the library through the source set above;
-// detekt has to be pointed at it. Run `pnpm android:lint` after `pnpm build`.
+// detekt has to be pointed at it. `pnpm android:lint` builds the library and runs both.
 ktlint {
     android.set(true)
 }
