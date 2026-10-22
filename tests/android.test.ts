@@ -26,6 +26,10 @@ function colorBlock(source: string, name: string): Record<string, string> {
 }
 
 describe("Color.kt", () => {
+  it("keeps every line within the 120 characters that Kotlin linters expect", () => {
+    for (const line of color.split("\n")) expect(line.length).toBeLessThanOrEqual(120);
+  });
+
   it.each(["PatinaLight", "PatinaDark"])("%s equals the Kotlin block published in Android.md", (name) => {
     const generated = colorBlock(color, name);
     expect(Object.keys(generated)).toHaveLength(36);
@@ -81,6 +85,15 @@ describe("Color.kt", () => {
 });
 
 describe("Type.kt", () => {
+  // The arguments of `slot = TextStyle(...)`, which the generator writes one per line, joined back with commas.
+  const textStyleArgs = (slot: string): string | undefined =>
+    new RegExp(`^\\s+${slot} = TextStyle\\(\\n((?:\\s+\\w+ = .*,\\n)+)\\s+\\),$`, "m")
+      .exec(type)?.[1]
+      ?.trim()
+      .split(/,\n\s+/)
+      .join(", ")
+      .replace(/,$/, "");
+
   // The M3 type table in Android.md: `| \`titleSmall\`, \`labelLarge\` | \`label\` | 14 / 20 sp | 500 |`.
   const rows = androidMd
     .split("\n")
@@ -100,7 +113,7 @@ describe("Type.kt", () => {
       const expected = `fontFamily = ui, fontWeight = FontWeight(${weight}), fontSize = ${size}.sp, lineHeight = ${line}.sp, letterSpacing = ${expectedTracking}`;
       const generated = (slots.match(/\w+/g) ?? []).map((slot) => ({
         slot,
-        style: new RegExp(`^\\s+${slot} = TextStyle\\((.*)\\),$`, "m").exec(type)?.[1],
+        style: textStyleArgs(slot),
       }));
       expect(generated.map(({ slot }) => ({ slot, style: expected }))).toEqual(
         generated.map(({ slot, style }) => ({ slot, style })),
@@ -115,8 +128,9 @@ describe("Type.kt", () => {
   });
 
   it("provides code styles from the mono tokens", () => {
-    expect(type).toContain("fontSize = 13.sp, lineHeight = 20.sp");
-    expect(type).toContain("fontSize = 12.sp, lineHeight = 16.sp");
+    expect(textStyleArgs("mono")).toContain("fontSize = 13.sp, lineHeight = 20.sp");
+    expect(textStyleArgs("monoSmall")).toContain("fontSize = 12.sp, lineHeight = 16.sp");
+    for (const line of type.split("\n")) expect(line.length).toBeLessThanOrEqual(120);
     expect(type).toContain("fun patinaCodeStyles(mono: FontFamily)");
   });
 });

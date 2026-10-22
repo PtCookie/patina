@@ -15,9 +15,10 @@ import patina.theme.PatinaSpace
 import patina.theme.PatinaTheme
 
 /**
- * A panel that slides up from the bottom edge over the dimmed screen: the `popover` surface (a step above the page in dark mode, where the page is darker), `radius-3xl`
- * corners, the system scrim. Padding is `space-6` and the gap between children `space-4`. Close it before navigating away so the screen underneath is
- * never left inert; swiping down and tapping the scrim call [onDismissRequest].
+ * A panel that slides up from the bottom edge over the dimmed screen: the `popover` surface (a step above the page
+ * in dark mode, where the page is darker), `radius-3xl` corners, the system scrim. Padding is `space-6` and the gap
+ * between children `space-4`. Close it before navigating away so the screen underneath is never left inert;
+ * swiping down and tapping the scrim call [onDismissRequest].
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

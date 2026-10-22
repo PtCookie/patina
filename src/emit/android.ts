@@ -66,7 +66,10 @@ import androidx.compose.ui.graphics.Color
 
 ${schemes.join("\n")}
 
-/** Colours that Material 3 has no role for: status, card, popover and control fills. Provide the set for the current theme. */
+/**
+ * Colours that Material 3 has no role for: status, card, popover and control fills.
+ * Provide the set for the current theme.
+ */
 @Immutable
 class PatinaColors(
 ${EXTENSION.map(({ property }) => `    val ${property}: Color,`).join("\n")}
@@ -96,18 +99,27 @@ const UNMAPPED = ["displayLarge", "displayMedium", "displaySmall", "headlineLarg
 
 const sp = (value: number): string => (value < 0 ? `(${value}).sp` : `${value}.sp`);
 
-function textStyle(set: TokenSet, name: string, family: string): string {
+/** A `TextStyle(...)` call with one argument per line, so no generated line passes 120 characters. */
+function textStyle(set: TokenSet, name: string, family: string, indent: number): string {
   const style = set.type.groups.flatMap((group) => group.styles).find((candidate) => candidate.name === name);
   if (!style) throw new Error(`Text style ${name} is missing from tokens.json`);
   const size = Number.parseFloat(style.fontSize);
   const em = /^(-?[\d.]+)em$/.exec(style.letterSpacing ?? "");
   const tracking = em?.[1] === undefined ? 0 : +(Number(em[1]) * size).toFixed(3);
-  return `TextStyle(fontFamily = ${family}, fontWeight = FontWeight(${style.fontWeight}), fontSize = ${sp(size)}, lineHeight = ${sp(Number.parseFloat(style.lineHeight))}, letterSpacing = ${tracking === 0 ? "0.sp" : sp(tracking)})`;
+  const args = [
+    `fontFamily = ${family}`,
+    `fontWeight = FontWeight(${style.fontWeight})`,
+    `fontSize = ${sp(size)}`,
+    `lineHeight = ${sp(Number.parseFloat(style.lineHeight))}`,
+    `letterSpacing = ${tracking === 0 ? "0.sp" : sp(tracking)}`,
+  ];
+  const pad = " ".repeat(indent);
+  return `TextStyle(\n${args.map((arg) => `${pad}    ${arg},`).join("\n")}\n${pad})`;
 }
 
 export function typeKt(set: TokenSet, version: string): string {
   const mapped = TYPE_MAP.flatMap(({ m3, style }) =>
-    m3.map((slot) => `        ${slot} = ${textStyle(set, style, "ui")},`),
+    m3.map((slot) => `        ${slot} = ${textStyle(set, style, "ui", 8)},`),
   );
   const unmapped = UNMAPPED.map(
     (slot) => `        ${slot} = base.${slot}.copy(fontFamily = ui, letterSpacing = 0.sp),`,
@@ -139,8 +151,8 @@ class PatinaCodeStyles(
 )
 
 fun patinaCodeStyles(mono: FontFamily): PatinaCodeStyles = PatinaCodeStyles(
-    mono = ${textStyle(set, "mono", "mono")},
-    monoSmall = ${textStyle(set, "mono-sm", "mono")},
+    mono = ${textStyle(set, "mono", "mono", 4)},
+    monoSmall = ${textStyle(set, "mono-sm", "mono", 4)},
 )
 `;
 }
@@ -214,12 +226,32 @@ export const ANDROID_ICONS = [
   "x-circle",
 ] as const;
 
+/** Path data cut before a command letter into pieces of at most `max` characters, for a Kotlin string concatenation. */
+export function splitPath(data: string, max: number): string[] {
+  const segments = data.match(/[A-Za-z][^A-Za-z]*/g) ?? [data];
+  const pieces: string[] = [];
+  let current = "";
+  for (const segment of segments) {
+    if (current !== "" && current.length + segment.length > max) {
+      pieces.push(current);
+      current = "";
+    }
+    current += segment;
+  }
+  if (current !== "") pieces.push(current);
+  return pieces;
+}
+
 /** `svgs` maps an icon name to its SVG source; each regular-weight icon is one `<path d="…">` in a 256 viewBox. */
 export function iconsKt(svgs: Record<string, string>, version: string): string {
   const entries = ANDROID_ICONS.map((name) => {
     const paths = [...(svgs[name] ?? "").matchAll(/<path\b[^>]*\bd="([^"]+)"/g)].map((match) => match[1] ?? "");
     if (paths.length !== 1) throw new Error(`Phosphor icon ${name} has ${paths.length} paths; expected exactly one`);
-    return `    val ${kotlinName(name).replace(/^./, (char) => char.toUpperCase())}: ImageVector by lazy { icon("${name}", "${paths[0]}") }`;
+    const data = splitPath(paths[0] ?? "", 90)
+      .map((piece) => `"${piece}"`)
+      .join(" +\n                ");
+    const property = kotlinName(name).replace(/^./, (char) => char.toUpperCase());
+    return `    val ${property}: ImageVector by lazy {\n        icon(\n            "${name}",\n            ${data},\n        )\n    }`;
   });
   return `${header(version, "Icons.kt")}package ${ANDROID_PACKAGE}
 
@@ -236,10 +268,16 @@ import androidx.compose.ui.unit.dp
  * The default size is 16dp ([PatinaSize.iconMd]): set \`Modifier.size\` to change it.
  */
 object PatinaIcons {
-${entries.join("\n")}
+${entries.join("\n\n")}
 
     private fun icon(name: String, pathData: String): ImageVector =
-        ImageVector.Builder(name = name, defaultWidth = 16.dp, defaultHeight = 16.dp, viewportWidth = 256f, viewportHeight = 256f)
+        ImageVector.Builder(
+            name = name,
+            defaultWidth = 16.dp,
+            defaultHeight = 16.dp,
+            viewportWidth = 256f,
+            viewportHeight = 256f,
+        )
             .addPath(pathData = PathParser().parsePathString(pathData).toNodes(), fill = SolidColor(Color.Black))
             .build()
 }

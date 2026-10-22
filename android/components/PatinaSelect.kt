@@ -107,7 +107,13 @@ fun PatinaSelect(
                             expanded = false
                         },
                         trailingIcon = if (index == selectedIndex) {
-                            { Icon(PatinaIcons.Check, contentDescription = null, modifier = Modifier.size(PatinaSize.iconMd)) }
+                            {
+                                Icon(
+                                    PatinaIcons.Check,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(PatinaSize.iconMd),
+                                )
+                            }
                         } else {
                             null
                         },

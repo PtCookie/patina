@@ -82,7 +82,12 @@ fun PatinaDropdownMenuItem(
 fun PatinaDropdownMenuLabel(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
-        modifier = modifier.padding(start = PatinaSpace.space3, end = PatinaSpace.space3, top = PatinaSpace.space2, bottom = PatinaSpace.space1),
+        modifier = modifier.padding(
+            start = PatinaSpace.space3,
+            end = PatinaSpace.space3,
+            top = PatinaSpace.space2,
+            bottom = PatinaSpace.space1,
+        ),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )

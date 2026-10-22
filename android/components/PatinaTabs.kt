@@ -25,9 +25,9 @@ import patina.theme.PatinaTheme
 
 /**
  * A `muted` pill track (36dp, padding `space-1`) holding pill triggers; the selected trigger lifts onto the page
- * colour (`controlStrong` in dark mode, where the page is darker than the track). Inactive labels are `muted-foreground`.
- * Use two to five short [labels]; the panels they switch are yours: show the one that [selectedIndex] names. The
- * track keeps a 48dp touch target.
+ * colour (`controlStrong` in dark mode, where the page is darker than the track). Inactive labels are
+ * `muted-foreground`. Use two to five short [labels]; the panels they switch are yours: show the one that
+ * [selectedIndex] names. The track keeps a 48dp touch target.
  */
 @Composable
 fun PatinaTabs(

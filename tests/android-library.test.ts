@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { ANDROID_ICONS, iconsKt, kotlinName, sizeKt } from "../src/emit/android";
+import { ANDROID_ICONS, iconsKt, kotlinName, sizeKt, splitPath } from "../src/emit/android";
 import { loadAndroidLibrary, loadPhosphorIcons } from "../src/android-lib";
 import { parseTokens } from "../src/tokens";
 
@@ -43,8 +43,20 @@ describe("Icons.kt", () => {
   const icons = iconsKt(loadPhosphorIcons(root), version);
 
   it("draws every listed Phosphor icon from its single path", () => {
-    for (const name of ANDROID_ICONS) expect(icons).toContain(`icon("${name}", "M`);
+    for (const name of ANDROID_ICONS) expect(icons).toMatch(new RegExp(`icon\\(\\s+"${name}",\\s+"M`));
     expect(icons.match(/val \w+: ImageVector by lazy/g)).toHaveLength(ANDROID_ICONS.length);
+  });
+
+  it("keeps every line within 120 characters", () => {
+    for (const line of icons.split("\n")) expect(line.length).toBeLessThanOrEqual(120);
+  });
+
+  it("splits path data without losing a character", () => {
+    const data = "M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72";
+    const pieces = splitPath(data, 20);
+    expect(pieces.join("")).toBe(data);
+    expect(pieces.every((piece) => /^[A-Za-z]/.test(piece))).toBe(true);
+    expect(pieces.length).toBeGreaterThan(1);
   });
 
   it("rejects an icon that has more than one path", () => {
@@ -54,6 +66,14 @@ describe("Icons.kt", () => {
 });
 
 describe("the library sources", () => {
+  it("keep every line within 120 characters, since apps lint the files they vendor", () => {
+    for (const [path, text] of files) {
+      for (const [index, line] of text.split("\n").entries()) {
+        expect(line.length, `${path}:${index + 1}`).toBeLessThanOrEqual(120);
+      }
+    }
+  });
+
   it("export the tier 1 and tier 2 components and the theme", () => {
     expect(composables).toEqual(
       expect.arrayContaining([
