@@ -52,7 +52,7 @@ Material 3 asks for more roles than the web palette has. The mapping keeps every
 | `surfaceBright` | light `background` · dark `muted` | `#FFFFFF` | `#22292B` |
 
 ```kotlin
-// ui/theme/Color.kt — generated from tokens.json; do not edit by hand
+// patina/theme/Color.kt — generated from tokens.json; do not edit by hand
 val PatinaLight = lightColorScheme(
     primary = Color(0xFF007A55),
     onPrimary = Color(0xFFECFDF5),
@@ -89,7 +89,7 @@ val PatinaLight = lightColorScheme(
     surfaceContainerHigh = Color(0xFFEEF1F1),
     surfaceContainerHighest = Color(0xFFEBEEEF),
     surfaceDim = Color(0xFFE3E7E8),
-    surfaceBright = Color(0xFFFFFFFF),
+    surfaceBright = Color(0xFFFFFFFF)
 )
 val PatinaDark = darkColorScheme(
     primary = Color(0xFF00BC7D),
@@ -127,7 +127,7 @@ val PatinaDark = darkColorScheme(
     surfaceContainerHigh = Color(0xFF1C2223),
     surfaceContainerHighest = Color(0xFF22292B),
     surfaceDim = Color(0xFF090B0C),
-    surfaceBright = Color(0xFF22292B),
+    surfaceBright = Color(0xFF22292B)
 )
 ```
 
@@ -161,7 +161,7 @@ val PatinaShapes = Shapes(
     small = RoundedCornerShape(8.dp),       // radius: buttons, text fields, chips
     medium = RoundedCornerShape(12.dp),     // radius-2xl: menus, popovers
     large = RoundedCornerShape(16.dp),      // radius-3xl: cards
-    extraLarge = RoundedCornerShape(16.dp), // radius-3xl: dialogs, bottom sheets
+    extraLarge = RoundedCornerShape(16.dp)  // radius-3xl: dialogs, bottom sheets
 )
 ```
 
@@ -170,6 +170,6 @@ M3 components pick different slots than this system, so pass shapes explicitly: 
 ## Density, icons, motion
 
 - Use the **comfortable** scale; never the desktop `compact-*` sizes. Every touch target is at least 48 dp even when the control draws at 36 dp.
-- **Icons: Phosphor**, imported as vector drawables from the official SVGs (`@phosphor-icons/core`, MIT) through Android Studio's Vector Asset tool; tint with `LocalContentColor`. Do not mix in Material Icons.
+- **Icons: Phosphor.** The Android library ships the icons it draws as `PatinaIcons` (`ImageVector`s built from the official SVGs, `@phosphor-icons/core`, MIT); import any other icon the same way, as a vector drawable through Android Studio's Vector Asset tool. Tint with `LocalContentColor`. Do not mix in Material Icons.
 - Motion as on the web: 150 ms color transitions, no decorative animation.
 - Ship `assets/Licenses/Pretendard-OFL.txt`, `JetBrainsMono-OFL.txt` and `Phosphor-MIT.txt` in the app's open-source licenses screen.
