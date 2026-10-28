@@ -3,6 +3,7 @@ import { defineConfig, includeIgnoreFile } from "eslint/config";
 import js from "@eslint/js";
 import globals from "globals";
 import tsEslint from "typescript-eslint";
+import pluginReact from "@eslint-react/eslint-plugin";
 import pluginVitest from "@vitest/eslint-plugin";
 
 export default defineConfig([
@@ -17,5 +18,6 @@ export default defineConfig([
   },
   tsEslint.configs.strict,
   tsEslint.configs.stylistic,
+  { files: ["**/*.{jsx,tsx}"], ...pluginReact.configs.strict },
   { files: ["tests/**"], ...pluginVitest.configs.recommended },
 ]);
