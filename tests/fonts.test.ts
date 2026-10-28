@@ -3,9 +3,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
-import { fontFaceCss } from "../src/emit/fontface";
-import { fileFonts, loadFonts, PACKAGE_FAMILIES, parseSums } from "../src/fonts";
-import { parseTokens } from "../src/tokens";
+import { fontFaceCss } from "../src/emit/fontface.ts";
+import { fileFonts, loadFonts, PACKAGE_FAMILIES, parseSums } from "../src/fonts.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const repo = new URL("../", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, repo), "utf8");

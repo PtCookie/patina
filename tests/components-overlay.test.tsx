@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../registry/ui/dropdown-menu";
+} from "../registry/ui/dropdown-menu.tsx";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,7 +24,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "../registry/ui/navigation-menu";
+} from "../registry/ui/navigation-menu.tsx";
 import {
   Popover,
   PopoverContent,
@@ -32,7 +32,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "../registry/ui/popover";
+} from "../registry/ui/popover.tsx";
 import {
   Sheet,
   SheetBody,
@@ -43,7 +43,7 @@ import {
   SheetLink,
   SheetTitle,
   SheetTrigger,
-} from "../registry/ui/sheet";
+} from "../registry/ui/sheet.tsx";
 
 // jsdom lacks the observers the popup positioning uses.
 beforeAll(() => {

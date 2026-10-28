@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeAll, describe, expect, it } from "vitest";
-import { Kbd } from "../registry/ui/kbd";
+import { Kbd } from "../registry/ui/kbd.tsx";
 import {
   Select,
   SelectContent,
@@ -11,8 +11,8 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "../registry/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../registry/ui/tooltip";
+} from "../registry/ui/select.tsx";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../registry/ui/tooltip.tsx";
 
 // jsdom lacks the observers the popup positioning uses.
 beforeAll(() => {

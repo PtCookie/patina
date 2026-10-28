@@ -4,7 +4,7 @@
 // variable families that the site loads (`webFontStack`). Not part of the registry: the registry item carries the
 // same tokens as shadcn `cssVars`.
 
-import { webFontStack } from "./css";
+import { webFontStack } from "./css.ts";
 
 interface RawScalar {
   name: string;

@@ -3,7 +3,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ANDROID_ICONS } from "./emit/android";
+import { ANDROID_ICONS } from "./emit/android.ts";
 
 /** Path below public/ (`android/patina/ui/PatinaButton.kt`) to content, for every .kt file under android/. */
 export function loadAndroidLibrary(root: URL): Record<string, string> {

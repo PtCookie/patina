@@ -3,7 +3,7 @@
 // plus a Tailwind theme colour (`--color-muted-foreground: var(--muted-foreground)`), which makes `text-link` or
 // `bg-primary-hover` real utilities.
 
-import type { ColorValue, TokenSet } from "../tokens";
+import type { ColorValue, TokenSet } from "../tokens.ts";
 
 export interface RegistryCssVars {
   /** Tailwind theme entries (the CLI writes them into `@theme inline`). */

@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { describe, expect, it } from "vitest";
-import { ChartContainer, type ChartConfig } from "../registry/ui/chart";
+import { ChartContainer, type ChartConfig } from "../registry/ui/chart.tsx";
 
 const config = { commits: { label: "Commits", color: "var(--chart-3)" } } satisfies ChartConfig;
 

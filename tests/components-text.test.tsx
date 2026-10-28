@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import { Badge } from "../registry/ui/badge";
-import { Button } from "../registry/ui/button";
-import { Card, CardHeader } from "../registry/ui/card";
+import { Badge } from "../registry/ui/badge.tsx";
+import { Button } from "../registry/ui/button.tsx";
+import { Card, CardHeader } from "../registry/ui/card.tsx";
 import {
   Pagination,
   PaginationContent,
@@ -11,8 +11,8 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from "../registry/ui/pagination";
-import { Sheet, SheetContent } from "../registry/ui/sheet";
+} from "../registry/ui/pagination.tsx";
+import { Sheet, SheetContent } from "../registry/ui/sheet.tsx";
 
 afterEach(cleanup);
 

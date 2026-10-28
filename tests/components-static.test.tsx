@@ -1,8 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { Checkbox } from "../registry/ui/checkbox";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../registry/ui/collapsible";
-import { Label } from "../registry/ui/label";
+import { Checkbox } from "../registry/ui/checkbox.tsx";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../registry/ui/collapsible.tsx";
+import { Label } from "../registry/ui/label.tsx";
 import {
   Pagination,
   PaginationContent,
@@ -11,9 +11,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../registry/ui/pagination";
-import { Separator } from "../registry/ui/separator";
-import { Skeleton } from "../registry/ui/skeleton";
+} from "../registry/ui/pagination.tsx";
+import { Separator } from "../registry/ui/separator.tsx";
+import { Skeleton } from "../registry/ui/skeleton.tsx";
 import {
   Table,
   TableBody,
@@ -23,9 +23,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../registry/ui/table";
-import { Toggle } from "../registry/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group";
+} from "../registry/ui/table.tsx";
+import { Toggle } from "../registry/ui/toggle.tsx";
+import { ToggleGroup, ToggleGroupItem } from "../registry/ui/toggle-group.tsx";
 
 /** The class list of the first element (or the n-th, counting `<` tags) in rendered markup. */
 function classes(markup: string, tag?: string): string[] {

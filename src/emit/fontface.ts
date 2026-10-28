@@ -1,7 +1,7 @@
 // public/fonts/patina-fonts.css: @font-face rules for the font files served from /fonts/*.
 
-import { fileFonts } from "../fonts";
-import type { TokenSet } from "../tokens";
+import { fileFonts } from "../fonts.ts";
+import type { TokenSet } from "../tokens.ts";
 
 const FORMATS: Record<string, string> = { ttf: "truetype", otf: "opentype", woff2: "woff2", woff: "woff" };
 

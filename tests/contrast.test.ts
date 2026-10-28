@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { checkContrast, contrastReport, measure, REQUIREMENTS, statedMismatches } from "../src/contrast";
-import { parseTokens, THEMES } from "../src/tokens";
+import { checkContrast, contrastReport, measure, REQUIREMENTS, statedMismatches } from "../src/contrast.ts";
+import { parseTokens, THEMES } from "../src/tokens.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const snapshot: unknown = JSON.parse(read("design-system/tokens.json"));

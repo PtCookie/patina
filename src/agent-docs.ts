@@ -1,8 +1,8 @@
 // Reads the sources of the agent-facing documentation (see emit/agent.ts) from the repo.
 
 import { readFileSync } from "node:fs";
-import { COMPONENTS } from "./components";
-import type { AgentDocs } from "./emit/agent";
+import { COMPONENTS } from "./components.ts";
+import type { AgentDocs } from "./emit/agent.ts";
 
 /** `dropdown-menu` is the folder `DropdownMenu` under design-system/components. */
 export const componentFolder = (name: string): string =>

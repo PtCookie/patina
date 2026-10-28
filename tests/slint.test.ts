@@ -3,8 +3,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import * as slint from "slint-ui";
 import { afterAll, describe, expect, it } from "vitest";
-import { firstFamily, slintName, slintTokens } from "../src/emit/slint";
-import { parseTokens } from "../src/tokens";
+import { firstFamily, slintName, slintTokens } from "../src/emit/slint.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const set = parseTokens(JSON.parse(read("design-system/tokens.json")));

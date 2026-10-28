@@ -1,8 +1,8 @@
 // Slint output: public/slint/tokens.slint, next to the hand-written library in slint/. Colours are `#RRGGBBAA`; lengths keep their px values.
 // The shadow tokens are CSS box-shadow lists, which Slint cannot express, so they are not emitted.
 
-import { toHex8 } from "../color";
-import { resolveColor, THEMES, type ScalarToken, type TextStyle, type Theme, type TokenSet } from "../tokens";
+import { toHex8 } from "../color.ts";
+import { resolveColor, THEMES, type ScalarToken, type TextStyle, type Theme, type TokenSet } from "../tokens.ts";
 
 /** Slint identifiers use letters, digits and `-`/`_`: `space-1.5` becomes `space-1-5`. */
 export const slintName = (name: string): string => name.replace(/\./g, "-");

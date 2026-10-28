@@ -3,9 +3,9 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
-import { generate } from "../src/generate";
-import { loadSlintLibrary } from "../src/slint-lib";
-import { parseTokens } from "../src/tokens";
+import { generate } from "../src/generate.ts";
+import { loadSlintLibrary } from "../src/slint-lib.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 // Renders the development gallery with the real `slint-viewer` (headless, 1.17 or newer). Skipped where the viewer
 // is not installed: it needs a download from the Slint releases.

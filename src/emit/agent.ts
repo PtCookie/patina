@@ -3,9 +3,9 @@
 // AGENTS.md snippet and plain-markdown copies of the design guide and the component notes. Pure: the sources
 // (docs/*.md, design-system/**) are read by the build and passed in.
 
-import type { ComponentSpec } from "../components";
-import type { ScalarGroup, TokenSet } from "../tokens";
-import { REGISTRY_HOMEPAGE } from "./registry";
+import type { ComponentSpec } from "../components.ts";
+import type { ScalarGroup, TokenSet } from "../tokens.ts";
+import { REGISTRY_HOMEPAGE } from "./registry.ts";
 
 export interface AgentDocs {
   /** docs/agent-guide.md: the hand-written part of the guide. */

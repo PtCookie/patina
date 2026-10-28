@@ -4,7 +4,7 @@
 // to the same file as the stock `button` would.
 
 import { existsSync, readFileSync } from "node:fs";
-import type { RegistryItem } from "./emit/registry";
+import type { RegistryItem } from "./emit/registry.ts";
 
 export interface ComponentSpec {
   name: string;

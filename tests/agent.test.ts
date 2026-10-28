@@ -1,13 +1,13 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { agentDocs, componentFolder } from "../src/agent-docs";
-import { COMPONENTS, loadComponents } from "../src/components";
-import { componentDocPath } from "../src/emit/agent";
-import { loadAndroidLibrary, loadPhosphorIcons } from "../src/android-lib";
-import { loadSlintLibrary } from "../src/slint-lib";
-import { REGISTRY_HOMEPAGE } from "../src/emit/registry";
-import { generate } from "../src/generate";
-import { parseTokens } from "../src/tokens";
+import { agentDocs, componentFolder } from "../src/agent-docs.ts";
+import { COMPONENTS, loadComponents } from "../src/components.ts";
+import { componentDocPath } from "../src/emit/agent.ts";
+import { loadAndroidLibrary, loadPhosphorIcons } from "../src/android-lib.ts";
+import { loadSlintLibrary } from "../src/slint-lib.ts";
+import { REGISTRY_HOMEPAGE } from "../src/emit/registry.ts";
+import { generate } from "../src/generate.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), "utf8");

@@ -3,9 +3,9 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import * as slint from "slint-ui";
 import { afterAll, describe, expect, it } from "vitest";
-import { loadSlintLibrary } from "../src/slint-lib";
-import { generate } from "../src/generate";
-import { parseTokens } from "../src/tokens";
+import { loadSlintLibrary } from "../src/slint-lib.ts";
+import { generate } from "../src/generate.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), "utf8");

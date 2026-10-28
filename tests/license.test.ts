@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { ANDROID_ICONS, iconsKt } from "../src/emit/android";
-import { loadPhosphorIcons } from "../src/android-lib";
+import { ANDROID_ICONS, iconsKt } from "../src/emit/android.ts";
+import { loadPhosphorIcons } from "../src/android-lib.ts";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), "utf8");

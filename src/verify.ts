@@ -1,9 +1,9 @@
 // Every check that must hold before anything is generated. An empty result means the token snapshot is sound.
 
-import { checkContrast } from "./contrast";
-import { checkDerived } from "./derived";
-import { m3Contrast, m3Scheme } from "./m3";
-import { THEMES, type TokenSet } from "./tokens";
+import { checkContrast } from "./contrast.ts";
+import { checkDerived } from "./derived.ts";
+import { m3Contrast, m3Scheme } from "./m3.ts";
+import { THEMES, type TokenSet } from "./tokens.ts";
 
 export function verifyTokens(set: TokenSet): string[] {
   const problems: string[] = [];

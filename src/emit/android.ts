@@ -1,9 +1,9 @@
 // Android output: Color.kt, Type.kt, Shape.kt, Size.kt and PatinaIcons.kt for a static Material 3 theme. The
 // mapping rules are design-system/Android.md; the colour roles come from src/m3.ts.
 
-import { compositeOver, flatten, oklchToLinear, toHex, type Linear } from "../color";
-import { M3_ROLES, m3Scheme, type M3Role } from "../m3";
-import { resolveColor, THEMES, type Theme, type TokenSet } from "../tokens";
+import { compositeOver, flatten, oklchToLinear, toHex, type Linear } from "../color.ts";
+import { M3_ROLES, m3Scheme, type M3Role } from "../m3.ts";
+import { resolveColor, THEMES, type Theme, type TokenSet } from "../tokens.ts";
 
 /** Package of the generated files. Consumers vendor them and change this line to their own package. */
 export const ANDROID_PACKAGE = "patina.theme";

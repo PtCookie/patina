@@ -2,8 +2,8 @@
 // "Derived tokens"). tokens.json stores the concrete result; this module recomputes it from the base
 // tokens and reports every token that disagrees, so a changed base token cannot leave a stale derivative.
 
-import { formatOklch, parseOklch, type Oklch } from "./color";
-import { resolveColor, THEMES, type Theme, type TokenSet } from "./tokens";
+import { formatOklch, parseOklch, type Oklch } from "./color.ts";
+import { resolveColor, THEMES, type Theme, type TokenSet } from "./tokens.ts";
 
 export type Recipe =
   /** The base colour with its own alpha multiplied by `pct` percent. */

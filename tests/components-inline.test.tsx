@@ -1,10 +1,10 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { Alert, AlertDescription, AlertTitle } from "../registry/ui/alert";
-import { Article, ArticleEyebrow } from "../registry/ui/article";
-import { Kbd, KbdGroup } from "../registry/ui/kbd";
-import { Switch } from "../registry/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../registry/ui/tabs";
+import { Alert, AlertDescription, AlertTitle } from "../registry/ui/alert.tsx";
+import { Article, ArticleEyebrow } from "../registry/ui/article.tsx";
+import { Kbd, KbdGroup } from "../registry/ui/kbd.tsx";
+import { Switch } from "../registry/ui/switch.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../registry/ui/tabs.tsx";
 
 /** The class list of the element that carries `data-slot="<slot>"`. */
 function slotClasses(markup: string, slot: string): string[] {

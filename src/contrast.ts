@@ -3,8 +3,8 @@
 // (translucent colours are composited over their backdrop first). The prose is never trusted: tests compare it
 // with the computed numbers.
 
-import { contrastRatio, flatten, type Linear } from "./color";
-import { resolveColor, THEMES, type Theme, type TokenSet } from "./tokens";
+import { contrastRatio, flatten, type Linear } from "./color.ts";
+import { resolveColor, THEMES, type Theme, type TokenSet } from "./tokens.ts";
 
 /** A background token. A translucent one (a `*-muted` tint) is composited over `over` (default `background`). */
 export type Surface = string | { token: string; over: string };

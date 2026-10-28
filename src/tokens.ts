@@ -2,7 +2,7 @@
 // It validates structure and value syntax and resolves `{refs}` per theme. It throws a TokenError that
 // names the offending path, so a broken snapshot fails the build with a precise message.
 
-import { parseOklch, type Oklch } from "./color";
+import { parseOklch, type Oklch } from "./color.ts";
 
 export const THEMES = ["light", "dark"] as const;
 export type Theme = (typeof THEMES)[number];

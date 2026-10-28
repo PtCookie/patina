@@ -1,11 +1,19 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { COMPONENTS } from "../src/components";
-import { Badge } from "../registry/ui/badge";
-import { Button } from "../registry/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../registry/ui/card";
-import { Input } from "../registry/ui/input";
+import { COMPONENTS } from "../src/components.ts";
+import { Badge } from "../registry/ui/badge.tsx";
+import { Button } from "../registry/ui/button.tsx";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../registry/ui/card.tsx";
+import { Input } from "../registry/ui/input.tsx";
 
 /** The class list of the first element in rendered markup. */
 function classes(markup: string): string[] {

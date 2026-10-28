@@ -6,8 +6,8 @@ import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import tokens from "../../../../design-system/tokens.json";
 import bundleCss from "../../../../design-system/components/bundle.css?url";
 import bundleJs from "../../../../design-system/components/bundle.js?url";
-import { previewCss, type RawTokens } from "../../../../src/emit/previewcss";
-import { componentDocs } from "../../lib/components";
+import { previewCss, type RawTokens } from "../../../../src/emit/previewcss.ts";
+import { componentDocs } from "../../lib/components.ts";
 
 export function getStaticPaths() {
   return componentDocs().map((doc) => ({ params: { name: doc.slug }, props: { doc } }));

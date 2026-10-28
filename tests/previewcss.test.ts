@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { previewCss, type RawTokens } from "../src/emit/previewcss";
+import { previewCss, type RawTokens } from "../src/emit/previewcss.ts";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string) => readFileSync(new URL(path, root), "utf8");

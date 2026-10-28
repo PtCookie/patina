@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
-import { androidArchive, slintArchive, tarGz } from "../src/emit/archive";
+import { androidArchive, slintArchive, tarGz } from "../src/emit/archive.ts";
 
 const dir = mkdtempSync(join(tmpdir(), "patina-tar-"));
 afterAll(() => rmSync(dir, { recursive: true, force: true }));

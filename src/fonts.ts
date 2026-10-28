@@ -4,7 +4,7 @@
 
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
-import type { FontFile, TokenSet } from "./tokens";
+import type { FontFile, TokenSet } from "./tokens.ts";
 
 /** Families delivered by npm packages. Every other family in tokens.json is delivered as a file. */
 export const PACKAGE_FAMILIES: readonly string[] = ["Inter", "JetBrains Mono", "Newsreader", "Pretendard"];

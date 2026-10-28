@@ -20,12 +20,12 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join } from "node:path";
-import { COMPONENTS, loadComponents } from "../src/components";
-import { registryCssVars } from "../src/emit/css";
-import { BASE_DEPENDENCIES, FONT_IMPORTS } from "../src/emit/registry";
-import { generate } from "../src/generate";
-import { parseTokens } from "../src/tokens";
-import { verifyTokens } from "../src/verify";
+import { COMPONENTS, loadComponents } from "../src/components.ts";
+import { registryCssVars } from "../src/emit/css.ts";
+import { BASE_DEPENDENCIES, FONT_IMPORTS } from "../src/emit/registry.ts";
+import { generate } from "../src/generate.ts";
+import { parseTokens } from "../src/tokens.ts";
+import { verifyTokens } from "../src/verify.ts";
 
 const root = new URL("../", import.meta.url);
 const read = (path: string): string => readFileSync(new URL(path, root), "utf8");
@@ -90,21 +90,21 @@ function block(css: string, selector: string): string {
 // Server-rendered only (no client directive): the HTML shows which classes the components produce.
 const PAGE = `---
 import "../styles/global.css";
-import { Badge } from "../components/ui/badge";
-import { Button } from "../components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card";
-import { Input } from "../components/ui/input";
-import { Checkbox } from "../components/ui/checkbox";
-import { Demo } from "../components/demo";
-import { Label } from "../components/ui/label";
-import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert";
-import { Article, ArticleEyebrow } from "../components/ui/article";
-import { Kbd } from "../components/ui/kbd";
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../components/ui/pagination";
-import { Separator } from "../components/ui/separator";
-import { Skeleton } from "../components/ui/skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
-import { Toggle } from "../components/ui/toggle";
+import { Badge } from "../components/ui/badge.tsx";
+import { Button } from "../components/ui/button.tsx";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card.tsx";
+import { Input } from "../components/ui/input.tsx";
+import { Checkbox } from "../components/ui/checkbox.tsx";
+import { Demo } from "../components/demo.tsx";
+import { Label } from "../components/ui/label.tsx";
+import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert.tsx";
+import { Article, ArticleEyebrow } from "../components/ui/article.tsx";
+import { Kbd } from "../components/ui/kbd.tsx";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "../components/ui/pagination.tsx";
+import { Separator } from "../components/ui/separator.tsx";
+import { Skeleton } from "../components/ui/skeleton.tsx";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table.tsx";
+import { Toggle } from "../components/ui/toggle.tsx";
 ---
 <html lang="en">
   <head><meta charset="utf-8" /><title>Patina smoke</title></head>
@@ -165,13 +165,13 @@ import { Toggle } from "../components/ui/toggle";
 // Compositions that rely on React context (toggle groups, collapsibles, charts) have to be built in a React file:
 // in an .astro file every nested component becomes its own React root and loses the context.
 const DEMO = `import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent, chartBarRadius } from "./ui/chart";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
-import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Switch } from "./ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, chartBarRadius } from "./ui/chart.tsx";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible.tsx";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group.tsx";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select.tsx";
+import { Switch } from "./ui/switch.tsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs.tsx";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip.tsx";
 
 const chartData = [
   { week: "Sep 15", commits: 35 },
@@ -407,7 +407,7 @@ async function main(): Promise<void> {
     const sheet = existsSync(join(dir, "src/components/ui/sheet.tsx"))
       ? readFileSync(join(dir, "src/components/ui/sheet.tsx"), "utf8")
       : "";
-    check(sheet.includes('from "./button"'), "sheet.tsx does not import the installed button");
+    check(sheet.includes('from "./button.tsx"'), "sheet.tsx does not import the installed button");
     const sourcePackages = readFileSync(join(dir, "package.json"), "utf8");
     check(sourcePackages.includes('"recharts"'), "recharts was not installed for the chart");
 

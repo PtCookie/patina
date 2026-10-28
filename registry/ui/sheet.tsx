@@ -4,7 +4,7 @@ import { XIcon } from "@phosphor-icons/react";
 
 import { cn } from "cn";
 // Both files are installed into the same folder, so a relative import works in every project.
-import { Button } from "./button";
+import { Button } from "./button.tsx";
 
 // A panel that slides in from a screen edge over a dimmed, blurred overlay: mobile navigation or a side form.
 // Side sheets are 75% wide up to 384px. Close it before client-side navigation so the page is never left inert.

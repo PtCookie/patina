@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { M3_PAIRS, M3_ROLES, m3Contrast, m3Hex, m3Scheme } from "../src/m3";
-import { parseTokens, THEMES, type Theme } from "../src/tokens";
+import { M3_PAIRS, M3_ROLES, m3Contrast, m3Hex, m3Scheme } from "../src/m3.ts";
+import { parseTokens, THEMES, type Theme } from "../src/tokens.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 

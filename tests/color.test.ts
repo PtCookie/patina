@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { contrast, flatten, oklchToLinear, parseOklch, toHex, WHITE } from "../src/color";
+import { contrast, flatten, oklchToLinear, parseOklch, toHex, WHITE } from "../src/color.ts";
 
 // Reference values come from `python3 tools/cc.py <fg> <bg>` and `cc.hexof()`.
 describe("parseOklch", () => {

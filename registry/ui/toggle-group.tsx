@@ -5,7 +5,7 @@ import { type VariantProps } from "class-variance-authority";
 
 import { cn } from "cn";
 // Both files are installed into the same folder, so a relative import works in every project.
-import { toggleVariants } from "./toggle";
+import { toggleVariants } from "./toggle.tsx";
 
 type ToggleGroupContextValue = Pick<VariantProps<typeof toggleVariants>, "variant" | "size">;
 

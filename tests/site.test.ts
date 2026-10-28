@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { componentDocs, componentGroups, kebab, label } from "../site/src/lib/components";
-import { rehypeLinks } from "../site/src/lib/rehype-links";
+import { componentDocs, componentGroups, kebab, label } from "../site/src/lib/components.ts";
+import { rehypeLinks } from "../site/src/lib/rehype-links.ts";
 
 describe("the component list of the site", () => {
   const docs = componentDocs();

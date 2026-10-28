@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { toHex8, parseOklch } from "../src/color";
-import { registryCssVars, spacingMatchesTailwind, webFontStack } from "../src/emit/css";
-import { baseItem, BASE_DEPENDENCIES, json, registryIndex } from "../src/emit/registry";
-import { generate } from "../src/generate";
-import { parseTokens } from "../src/tokens";
-import { verifyTokens } from "../src/verify";
+import { toHex8, parseOklch } from "../src/color.ts";
+import { registryCssVars, spacingMatchesTailwind, webFontStack } from "../src/emit/css.ts";
+import { baseItem, BASE_DEPENDENCIES, json, registryIndex } from "../src/emit/registry.ts";
+import { generate } from "../src/generate.ts";
+import { parseTokens } from "../src/tokens.ts";
+import { verifyTokens } from "../src/verify.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const snapshot: unknown = JSON.parse(read("design-system/tokens.json"));

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { checkDerived, DERIVED, evaluateRecipe, expectedCardHover, mixOklch } from "../src/derived";
-import { parseTokens } from "../src/tokens";
+import { checkDerived, DERIVED, evaluateRecipe, expectedCardHover, mixOklch } from "../src/derived.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const snapshot: unknown = JSON.parse(read("design-system/tokens.json"));

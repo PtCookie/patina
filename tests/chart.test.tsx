@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "../registry/ui/chart";
+} from "../registry/ui/chart.tsx";
 
 const config = { commits: { label: "Commits", color: chartSeries.color } } satisfies ChartConfig;
 

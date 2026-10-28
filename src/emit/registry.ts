@@ -3,8 +3,8 @@
 // cssVars with theme/light/dark, css with @import and @layer keys, meta) are documented.
 // Not documented, so deliberately left out: @font-face and @custom-variant entries in `css`.
 
-import type { TokenSet } from "../tokens";
-import { registryCssVars } from "./css";
+import type { TokenSet } from "../tokens.ts";
+import { registryCssVars } from "./css.ts";
 
 export const REGISTRY_HOMEPAGE = "https://patina.ptcookie.net";
 

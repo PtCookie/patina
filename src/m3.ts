@@ -2,8 +2,17 @@
 // design-system/Android.md. Roles are computed in linear sRGB so the contrast checks and the
 // generated hex values come from the same numbers.
 
-import { BLACK, compositeOver, contrastRatio, flatten, oklchToLinear, parseOklch, toHex, type Linear } from "./color";
-import { resolveColor, type Theme, type TokenSet } from "./tokens";
+import {
+  BLACK,
+  compositeOver,
+  contrastRatio,
+  flatten,
+  oklchToLinear,
+  parseOklch,
+  toHex,
+  type Linear,
+} from "./color.ts";
+import { resolveColor, type Theme, type TokenSet } from "./tokens.ts";
 
 export const M3_ROLES = [
   "primary",

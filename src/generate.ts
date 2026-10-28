@@ -2,13 +2,13 @@
 // The binary font files (src/fonts.ts) and the component sources (src/components.ts) are read by the build and
 // passed in.
 
-import type { ComponentSpec } from "./components";
-import { agentFiles, type AgentDocs } from "./emit/agent";
-import { colorKt, iconsKt, shapeKt, sizeKt, typeKt } from "./emit/android";
-import { fontFaceCss } from "./emit/fontface";
-import { baseItem, json, registryIndex, type RegistryItem } from "./emit/registry";
-import { slintTokens } from "./emit/slint";
-import type { TokenSet } from "./tokens";
+import type { ComponentSpec } from "./components.ts";
+import { agentFiles, type AgentDocs } from "./emit/agent.ts";
+import { colorKt, iconsKt, shapeKt, sizeKt, typeKt } from "./emit/android.ts";
+import { fontFaceCss } from "./emit/fontface.ts";
+import { baseItem, json, registryIndex, type RegistryItem } from "./emit/registry.ts";
+import { slintTokens } from "./emit/slint.ts";
+import type { TokenSet } from "./tokens.ts";
 
 /** Path below public/ to file content. */
 export function generate(

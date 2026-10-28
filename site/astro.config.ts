@@ -4,9 +4,9 @@ import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
-import { previewCss, type RawTokens } from "../src/emit/previewcss";
-import { componentGroups } from "./src/lib/components";
-import { rehypeLinks } from "./src/lib/rehype-links";
+import { previewCss, type RawTokens } from "../src/emit/previewcss.ts";
+import { componentGroups } from "./src/lib/components.ts";
+import { rehypeLinks } from "./src/lib/rehype-links.ts";
 
 const root = new URL("../", import.meta.url);
 const tokens = JSON.parse(readFileSync(new URL("design-system/tokens.json", root), "utf8")) as RawTokens;

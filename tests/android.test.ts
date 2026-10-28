@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { contrastRatio, type Linear } from "../src/color";
-import { ANDROID_PACKAGE, colorKt, shapeKt, typeKt } from "../src/emit/android";
-import { parseTokens } from "../src/tokens";
+import { contrastRatio, type Linear } from "../src/color.ts";
+import { ANDROID_PACKAGE, colorKt, shapeKt, typeKt } from "../src/emit/android.ts";
+import { parseTokens } from "../src/tokens.ts";
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 const set = parseTokens(JSON.parse(read("design-system/tokens.json")));
